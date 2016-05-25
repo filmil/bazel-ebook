@@ -40,3 +40,5 @@ Yes, it's that easy.
 * The builder does not produce equations for Kindle's mobi format.  
   This is because Kindle doesn't support formulas. I'm still 
   thinking how to have formulas rendered on Kindle.
+* The build script doesn't include a way to generate HTML output.  Feel
+  free to add.
