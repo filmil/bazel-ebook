@@ -2,7 +2,9 @@
 
 This is an example of using Markdown to write an ebook.
 
-# Prerequisites:
+# Prerequisites
+
+TODO(filmil): The "prerequisites" section is very skimpy and doesn't explain setting up in enough details.
 
 * scons (for `scons`)
 * calibre (for `ebook-convert`)
