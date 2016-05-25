@@ -3,3 +3,6 @@
 *.mobi
 *.epub
 *.log
+*.html
+*.xhtml
+*.opf
