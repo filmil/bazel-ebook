@@ -48,4 +48,18 @@ Yes, it's that easy.
   completely separate epub build rule that builds it directly. 
 * The build script generates html with embedded images for equations.  Probably
   we need something similar to epub production above.
+* The `epub-metadata.xml` file actually *must not* be well-formed XML.  Only
+  bare "Dublin core" markup elements are allowed if you want that markup XML to
+  make it into the actual book contents.   I don't quite understand why, but
+  that is how things are today.
+* Apparently the `epub-metadata.xml` gets ignored if you build your ebook from
+  markdown.  This matters for the directly-generated epub version which is made
+  directly from the Markdown source (in contrast to the `.mobi` version which
+  requires several steps to produce)
+
+# TODO
+
+* Add an example title page.
+* Add an example generated figure e.g. with tikZ or some other involved
+  drawing program.
 
