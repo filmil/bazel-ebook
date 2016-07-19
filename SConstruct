@@ -13,14 +13,14 @@ env.Append(BUILDERS={
     'Mobi': Builder(action='ebook-convert $SOURCE $TARGET')})
 
 SOURCES = Glob('*.ch???.md')
-pdf = env.EpubDirect(target='example.pdf', source=SOURCES)
-epub_direct = env.EpubDirect(target='example-direct.epub', source=SOURCES)
-htex = env.Htex(target='example.htex', source=SOURCES)
-gladtex = env.Gladtex(target='example.html', source='example.htex')
-htexepub = env.HtexEpub(target='example.epub', source='example.html')
+pdf = env.EpubDirect(target='book.pdf', source=SOURCES)
+epub_direct = env.EpubDirect(target='book-direct.epub', source=SOURCES)
+htex = env.Htex(target='book.htex', source=SOURCES)
+gladtex = env.Gladtex(target='book.html', source='book.htex')
+htexepub = env.HtexEpub(target='book.epub', source='book.html')
 
 Dir('outdir')
-mobi = env.Mobi(target='example.mobi', source='example.epub')
+mobi = env.Mobi(target='book.mobi', source='book.epub')
 
 #Depends(mobi, epub)
 Depends(pdf, File('epub-metadata.xml'))

@@ -29,9 +29,8 @@ setting up in enough details.
 scons
 ```
 
-Yes, it's that easy.  This will run the commands needed to produce a PDF file
-(`example.pdf`), an ePub file (`example.epub`) and a mobi (Kindle) format file
-(`example.mobi`).
+Yes, it's that easy.  This will run the commands needed to produce a PDF file,
+an ePub file and a mobi (Kindle) format file.
 
 # Cleanup
 
