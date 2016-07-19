@@ -17,7 +17,8 @@ env.Append(BUILDERS={
     'EpubDirect': Builder(
         action='pandoc --epub-metadata=epub-metadata.xml ' + 
                '--mathml -o $TARGET $SOURCES'),
-    'Mobi': Builder(action='ebook-convert $SOURCE $TARGET')})
+    'Mobi': Builder(
+        action='ebook-convert $SOURCE $TARGET')})
 
 SOURCES = Glob('*.ch???.md')
 pdf = env.EpubDirect(target='book.pdf', source=SOURCES)
