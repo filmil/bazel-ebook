@@ -83,3 +83,11 @@ $$
  f(x) &= (x+a)(x+b) \\
  &= x^2 + (a+b)x + ab
 \end{align*}
+
+# Images
+
+Let's try some images.
+
+![test](test.png)
+
+

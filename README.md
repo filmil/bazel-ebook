@@ -22,6 +22,7 @@ setting up in enough details.
 * pandoc (for, you guessed it, `pandoc` that produces epub format content)
 * texlive (for producing PDF)
 * gladtex (to produce equation images)
+* asymptote (for generating images)
 
 # Building
 
