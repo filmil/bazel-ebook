@@ -55,19 +55,17 @@ $$
 
 Here are some numbered equations:
 
-\begin{equation} 
+$$
  f(x)=(x+a)(x+b)
-\end{equation}
+$$
 
-
-\begin{equation}
+$$
 5^2 - 5 = 20
-\end{equation}
+$$
 
-
-\begin{equation}
+$$
 a = bq + r
-\end{equation}
+$$
 
 Here's some multi-line math stuff:
 
@@ -88,6 +86,6 @@ $$
 
 Let's try some images.
 
-![test](test.png)
+![Here is an image of a Pythagorean tree.](test.png)
 
 

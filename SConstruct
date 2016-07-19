@@ -10,12 +10,15 @@ env.Append(BUILDERS={
     ),
     'Gladtex': Builder(
         action='python3 ../gladtex/gladtex.py -r 300 -d outdir $SOURCES'),
-    'Htex': Builder(action='pandoc -s --gladtex -o $TARGET $SOURCES'),
+    'Htex': Builder(
+        action='pandoc -s --gladtex --filter=pandoc-eqnos -o $TARGET $SOURCES'),
     'HtexEpub': Builder(
         action='pandoc --epub-metadata=epub-metadata.xml ' + 
+               '--filter pandoc-eqnos ' +
                '-f html -t epub3 $SOURCES -o $TARGET'),
     'EpubDirect': Builder(
         action='pandoc --epub-metadata=epub-metadata.xml ' + 
+               '--filter pandoc-eqnos ' +
                '--mathml -o $TARGET $SOURCES'),
     'Mobi': Builder(
         action='ebook-convert $SOURCE $TARGET')})
