@@ -1,0 +1,8 @@
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<dc:title id="title1">Ebook Example</dc:title>
+	<meta refines="#title1" property="title-type">main</meta>
+	<dc:title id="title2">
+		How to make a book for the 21st century, very easily.
+	</dc:title>
+	<dc:creator>Filip Filmar</dc:creator>
+</metadata>
