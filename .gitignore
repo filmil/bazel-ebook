@@ -7,3 +7,4 @@
 *.xhtml
 *.opf
 outdir
+bazel-*

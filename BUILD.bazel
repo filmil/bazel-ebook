@@ -1,0 +1,74 @@
+load("@base_images_docker//util:run.bzl", "container_run_and_extract")
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_image",
+)
+load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
+
+# The following bit of gymnastics is used to build an asymptote file:
+# - create a new docker tar archive with the source files embedded inside
+# - create a new container with the tar archive from above included
+# - run the command in the container and evacuate output.
+
+pkg_tar(
+  name = "one_asymptote_file",
+  files = {
+    "test.asy": "/src/test.asy",
+  }
+)
+
+container_image(
+  name = "asymptote_test_asy",
+  base = "//tools:ebook_image.tar",
+  tars = [
+    ":one_asymptote_file",
+  ],
+  workdir = "/src",
+)
+
+container_run_and_extract(
+  name = "asymptote1",
+  commands = [
+    "mkdir -p /out",
+    "asy -render 5 -f png -o /out/test.png /src/test.asy",
+  ],
+  extract_file = "/out/test.png",
+  image = ":asymptote_test_asy.tar",
+)
+
+# Let's try to create gladtex action.
+
+pkg_tar(
+  name = "md_sources",
+  files = {
+    "book.ch001.md": "/src/book.ch001.md",
+  }
+)
+
+container_image(
+  name = "gladtex_action",
+  base = "//tools:ebook_image.tar",
+  tars = [
+	":md_sources",
+  ],
+  workdir = "/src",
+)
+
+# Hmmm, the practicality of this is suspect:
+# - it takes 40 seconds to execute the previous "container_image" step, just
+#   to build a single file.
+# - The build process is very opaque: if there is any error inside the container,
+#   it is not printed
+# - The "command" can be literally any nonsense.  The only signal of whether the
+#   step succeeded is whether the expected output file is there somewhere.
+container_run_and_extract(
+  name = "md_sources_run",
+  commands = [
+    "mkdir -p /out",
+    "jfdhsjfsahfd gladtex -r 300 -d /out/outdir /src/book.ch001.md",
+	"tar cf /images.tar /out/outdir/*",
+  ],
+  extract_file = "/src/book.ch001.md",
+  image = ":gladtex_action.tar",
+)
+
