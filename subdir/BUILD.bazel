@@ -1,4 +1,4 @@
-load("//:rules.bzl", "asy_to_png")
+load("//build:rules.bzl", "asy_to_png")
 
 asy_to_png(
   name = "test",

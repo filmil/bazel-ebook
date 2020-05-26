@@ -1,4 +1,4 @@
-load("//:rules.bzl", "asy_to_png")
+load("//build:rules.bzl", "asy_to_png", "extract_equations", "htex")
 
 asy_to_png(
   name = "test",
@@ -6,8 +6,15 @@ asy_to_png(
   output = "test.png",
 )
 
-sh_binary(
-  name = "asy_to_png",
-  srcs = ["asy_to_png.sh"],
-  visibility = ["//visibility:public"],
+extract_equations(
+  name = "equations",
+  srcs = [":htex"],
+  output = "file.tar",
+)
+
+htex(
+  name = "htex",
+  srcs = ["book.ch001.md"],
+  output = "file.htex",
+  html = "file.html",
 )

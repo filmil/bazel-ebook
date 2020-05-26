@@ -28,3 +28,20 @@ install_pkgs(
 	visibility = ["//visibility:public",],
 )
 
+sh_binary(
+  name = "asy_to_png",
+  srcs = ["asy_to_png.sh"],
+  visibility = ["//visibility:public"],
+)
+
+sh_binary(
+  name = "extract_equations",
+  srcs = ["extract_equations.sh"],
+  visibility = ["//visibility:public"],
+)
+
+sh_binary(
+  name = "htex",
+  srcs = ["htex.sh"],
+  visibility = ["//visibility:public"],
+)
