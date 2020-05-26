@@ -6,8 +6,3 @@ asy_to_png(
   output = "test.png",
 )
 
-sh_binary(
-  name = "asy_to_png",
-  srcs = ["asy_to_png.sh"],
-  visibility = ["//visibility:public"],
-)

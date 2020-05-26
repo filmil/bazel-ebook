@@ -9,19 +9,12 @@ env.Append(BUILDERS={
 	suffix='.png', src_suffix='.asy',
     ),
     'Gladtex': Builder(
-        action='python3 ../gladtex/gladtex.py -r 300 -d outdir $SOURCES'),
-    'Htex': Builder(
-        action='pandoc -s --gladtex --filter=pandoc-eqnos -o $TARGET $SOURCES'),
-    'HtexEpub': Builder(
-        action='pandoc --epub-metadata=epub-metadata.xml ' + 
-               '--filter pandoc-eqnos ' +
-               '-f html -t epub3 $SOURCES -o $TARGET'),
-    'EpubDirect': Builder(
-        action='pandoc --epub-metadata=epub-metadata.xml ' + 
-               '--filter pandoc-eqnos ' +
-               '--mathml -o $TARGET $SOURCES'),
-    'Mobi': Builder(
-        action='ebook-convert $SOURCE $TARGET')})
+        action='gladtex -r 200  -d outdir $SOURCES'),
+    'Htex': Builder(action='pandoc -s --gladtex -o $TARGET $SOURCES'),
+    'HtexEpub': Builder(action='pandoc --epub-metadata=epub-metadata.xml -f html -t epub3 $SOURCES -o $TARGET'),
+    'EpubDirect': Builder(action='pandoc --epub-metadata=epub-metadata.xml ' + 
+                           '--mathml -o $TARGET $SOURCES'),
+    'Mobi': Builder(action='ebook-convert $SOURCE $TARGET')})
 
 SOURCES = Glob('*.ch???.md')
 pdf = env.EpubDirect(target='book.pdf', source=SOURCES)
