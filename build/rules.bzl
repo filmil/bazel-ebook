@@ -1,7 +1,7 @@
 # Build rules for building ebooks.
 
 # This is the container
-CONTAINER = "ebook-buildenv:latest"
+CONTAINER = "filipfilmar/ebook-buildenv:testing"
 
 EbookInfo = provider(fields=["figures", "foos"])
 
