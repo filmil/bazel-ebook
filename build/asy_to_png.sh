@@ -18,33 +18,32 @@ if [[ ${OUTPUT} == "" ]]; then
   exit 1
 fi
 
-# These tricks are used to figure out what the real source and build root
-# directories are, so that they could be made available to the running
-# container command.
+# --- begin runfiles.bash initialization ---
+# Copy-pasted from Bazel's Bash runfiles library (tools/bash/runfiles/runfiles.bash).
+set -eo pipefail
+if [[ ! -d "${RUNFILES_DIR:-/dev/null}" && ! -f "${RUNFILES_MANIFEST_FILE:-/dev/null}" ]]; then
+  if [[ -f "$0.runfiles_manifest" ]]; then
+    export RUNFILES_MANIFEST_FILE="$0.runfiles_manifest"
+  elif [[ -f "$0.runfiles/MANIFEST" ]]; then
+    export RUNFILES_MANIFEST_FILE="$0.runfiles/MANIFEST"
+  elif [[ -f "$0.runfiles/bazel_tools/tools/bash/runfiles/runfiles.bash" ]]; then
+    export RUNFILES_DIR="$0.runfiles"
+  fi
+fi
+if [[ -f "${RUNFILES_DIR:-/dev/null}/bazel_tools/tools/bash/runfiles/runfiles.bash" ]]; then
+  source "${RUNFILES_DIR}/bazel_tools/tools/bash/runfiles/runfiles.bash"
+elif [[ -f "${RUNFILES_MANIFEST_FILE:-/dev/null}" ]]; then
+  source "$(grep -m1 "^bazel_tools/tools/bash/runfiles/runfiles.bash " \
+            "$RUNFILES_MANIFEST_FILE" | cut -d ' ' -f 2-)"
+else
+  echo >&2 "ERROR: cannot find @bazel_tools//tools/bash/runfiles:runfiles.bash"
+  exit 1
+fi
+# --- end runfiles.bash initialization ---
+readonly _docker_run="$(rlocation __main__/build/docker_run.sh)"
+# --- end manual script lookup.
 
-# Try to follow the symlinks of the input file as far as we can.  Once we're
-# done, the directory that we're left with is the directory we need to mount
-# in.
-readonly _real_source_dir="$(dirname $(readlink -m $INPUT))"
-
-# Figure out the bazel build root: using the knowledge that the build root
-# seems to have the string "/_bazel_" at the beginning of the directory that
-# is the user build root directory.
-readonly _build_root="${PWD%%/_bazel_*}"
-
-# Required, so that the docker command runs as your UID:GID, so that the output
-# file is created with your permissions.  Otherwise it will get created as
-# owned by "root:root", and bazel will complain that the target didn't 
-readonly _uid="$(id -u)"
-readonly _gid="$(id -g)"
-
-readonly _cmdline="asy -render 5 -f png -o \"${OUTPUT}\" \"${INPUT}\""
-docker run --rm --interactive \
-  -u "${_uid}:${_gid}" \
-  -v "${_build_root}:${_build_root}:rw" \
-  -v "${_real_source_dir}:${_real_source_dir}:ro" \
-  -v "${PWD}:/src" \
-  -w "/src" \
-  ebook-buildenv:latest \
-    bash -c "${_cmdline}"
+"${_docker_run}" --container=ebook-buildenv:latest \
+  --dir-reference=${INPUT} \
+    "asy -render 5 -f png -o \"${OUTPUT}\" \"${INPUT}\""
 

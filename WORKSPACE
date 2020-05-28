@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 # Download the rules_docker repository at release v0.14.1
 http_archive(
@@ -39,3 +40,20 @@ container_pull(
     repository = "ubuntu",
     tag = "18.04",
 )
+
+git_repository(
+    name = "bazel_bats",
+    remote = "https://github.com/filmil/bazel-bats",
+	commit = "78da0822ea339bd0292b5cc0b5de6930d91b3254",
+	shallow_since = "1569564445 -0700",
+)
+
+git_repository(
+    name = "gotopt2",
+    remote = "https://github.com/filmil/gotopt2",
+    branch = "master",
+)
+
+load("@gotopt2//build:deps.bzl", "gotopt2_dependencies")
+gotopt2_dependencies()
+

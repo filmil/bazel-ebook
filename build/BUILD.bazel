@@ -31,6 +31,7 @@ install_pkgs(
 sh_binary(
   name = "asy_to_png",
   srcs = ["asy_to_png.sh"],
+  deps = [":docker_run"],
   visibility = ["//visibility:public"],
 )
 
@@ -44,4 +45,14 @@ sh_binary(
   name = "htex",
   srcs = ["htex.sh"],
   visibility = ["//visibility:public"],
+)
+
+sh_binary(
+  name = "docker_run",
+  srcs = ["docker_run.sh"],
+  deps = ["@bazel_tools//tools/bash/runfiles"],
+  visibility = ["//visibility:public"],
+  data = [
+    "@gotopt2//cmd/gotopt2:gotopt2",
+  ],
 )
