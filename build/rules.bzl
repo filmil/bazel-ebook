@@ -1,32 +1,72 @@
 # Build rules for building ebooks.
 
-def _asy_to_png_impl(ctx):
-    in_file = ctx.file.input
-    out_file = ctx.outputs.output
+# This is the container
+CONTAINER = "ebook-buildenv:latest"
+
+EbookInfo = provider(fields=["figures"])
+
+# Returns the docker_run script invocation command based on the
+# script path and its reference directory.
+#
+# Params:
+#   script_path: (string) The full path to the script to invoke
+#   dir_reference: (string) The path to a file used for figuring out
+#       the reference directories (build root and repo root).
+def _script_cmd(script_path, dir_reference):
+    return """\
+      {script} \
+        --container={container} \
+        --dir-reference={dir_reference}""".format(
+            script=script_path,
+            container=CONTAINER,
+            dir_reference=dir_reference,
+       )
+
+
+def _asymptote_impl(ctx):
     asycc = ctx.executable._script
-    ctx.actions.run_shell(
-      progress_message = "ASY to PNG: {0}".format(in_file.short_path),
-      inputs = [in_file],
-      outputs = [out_file],
-      tools = [asycc],
-      command = """\
-      INPUT={in_file} \
-      OUTPUT={out_file} \
-      {script}""".format(
-          out_file=out_file.path, in_file=in_file.path, script=asycc.path),
-    )
+    figures = []
+
+    for target in ctx.attr.srcs:
+        for src in target.files.to_list():
+            in_file = src
+            out_file = ctx.actions.declare_file(in_file.path + ".png")
+            figures += [out_file]
+
+            script_cmd = _script_cmd(asycc.path, in_file.path)
+            ctx.actions.run_shell(
+              progress_message = "ASY to PNG: {0}".format(in_file.short_path),
+              inputs = [in_file],
+              outputs = [out_file],
+              tools = [asycc],
+              command = """\
+                {script} \
+                  asy -render 5 -f png -o "{out_file}" "{in_file}"
+              """.format(
+                  out_file=out_file.path, in_file=in_file.path, script=script_cmd),
+            )
+
+    deps = []
+    for target in ctx.attr.deps:
+        ebook_provider = target[EbookInfo]
+        if not ebook_provider:
+            continue
+        deps += ebook_provider.figures
+    return [EbookInfo(figures=figures+deps), DefaultInfo(files=depset(figures+deps))]
 
 
-asy_to_png = rule(implementation = _asy_to_png_impl,
+asymptote = rule(implementation = _asymptote_impl,
     attrs = {
-      "input": attr.label(
-          allow_single_file = True,
-          mandatory = True,
+      "srcs": attr.label_list(
+          allow_files = [".asy"],
+          doc = "The file to compile",
+        ),
+      "deps": attr.label_list(
           doc = "The file to compile",
         ),
       "output": attr.output(doc="The generated file"),
       "_script": attr.label(
-        default="//build:asy_to_png",
+        default="//build:docker_run",
         executable=True,
         cfg="host"),
     },
@@ -64,6 +104,9 @@ extract_equations = rule(implementation = _extract_equations_impl,
       "srcs": attr.label_list(
         allow_files = True,
         doc = "the source files",
+      ),
+      "deps": attr.label_list(
+        doc = "Other source files",
       ),
       "output": attr.output(doc="The generated file"),
       "_script": attr.label(

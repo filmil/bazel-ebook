@@ -1,9 +1,14 @@
-load("//build:rules.bzl", "asy_to_png", "extract_equations", "htex")
+load("//build:rules.bzl", "asymptote", "extract_equations", "htex")
 
-asy_to_png(
+asymptote(
   name = "test",
-  input = "test.asy",
-  output = "test.png",
+  srcs = ["test.asy", "test1.asy"],
+  deps = [":test2"],
+)
+
+asymptote(
+  name = "test2",
+  srcs = ["test2.asy"],
 )
 
 extract_equations(
