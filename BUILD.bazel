@@ -1,4 +1,4 @@
-load("//build:rules.bzl", "asymptote", "extract_equations", "htex")
+load("//build:rules.bzl", "asymptote")
 
 asymptote(
   name = "test",
@@ -9,17 +9,4 @@ asymptote(
 asymptote(
   name = "test2",
   srcs = ["test2.asy"],
-)
-
-extract_equations(
-  name = "equations",
-  srcs = [":htex"],
-  output = "file.tar",
-)
-
-htex(
-  name = "htex",
-  srcs = ["book.ch001.md"],
-  output = "file.htex",
-  html = "file.html",
 )
