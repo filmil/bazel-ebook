@@ -76,9 +76,20 @@ asymptote = rule(implementation = _asymptote_impl,
     doc = "Transform an asymptote file into png",
 )
 
+def _copy_file_to_workdir_renamed(ctx, src):
+    src_copy = ctx.actions.declare_file("{}_{}".format(ctx.label.name, src.short_path))
+    ctx.actions.run_shell(
+        progress_message = "Copying {} to {}".format(src.short_path, src_copy.short_path),
+        outputs = [src_copy],
+        inputs = [src],
+        command="cp {} {}".format(src.path, src_copy.path),
+    )
+    return src_copy
+
 def _copy_file_to_workdir(ctx, src):
     src_copy = ctx.actions.declare_file(src.short_path)
     ctx.actions.run_shell(
+        progress_message = "Copying {}".format(src.short_path),
         outputs = [src_copy],
         inputs = [src],
         command="cp {} {}".format(src.path, src_copy.path),
@@ -129,7 +140,8 @@ def _ebook_epub_impl(ctx):
     dir_reference = markdowns[0]
     htex_file = ctx.actions.declare_file("{}.htex".format(name))
 
-    markdowns_paths = _strip_reference_dir_from_files(dir_reference, markdowns)
+    markdowns_paths = [file.path for file in markdowns]
+    markdowns_paths_stripped =  _strip_reference_dir_from_files(dir_reference, markdowns)
 
     script = ctx.executable._script
     script_cmd = _script_cmd(script.path, markdowns_paths[0])
@@ -165,9 +177,9 @@ def _ebook_epub_impl(ctx):
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
     epub_metadata = ctx.attr.metadata_xml.files.to_list()[0]
-    epub_metadata = _copy_file_to_workdir(ctx, epub_metadata)
+    epub_metadata = _copy_file_to_workdir_renamed(ctx, epub_metadata)
     title_yaml = ctx.attr.title_yaml.files.to_list()[0]
-    title_yaml = _copy_file_to_workdir(ctx, epub_metadata)
+    title_yaml = _copy_file_to_workdir_renamed(ctx, epub_metadata)
     ebook_epub = ctx.actions.declare_file("{}.epub".format(name))
     inputs = [epub_metadata, title_yaml, html_file] + markdowns + figures
 
