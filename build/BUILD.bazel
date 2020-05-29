@@ -4,29 +4,29 @@ load("@base_images_docker//package_managers:install_pkgs.bzl", "install_pkgs")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-download_pkgs(
-    name = "ebook_pkgs",
-    image_tar = "@ubuntu1804//image",
-    packages = [
-		"python3",
-		"texlive-fonts-recommended",
-		"asymptote",
-		"bash",
-		"calibre",
-		"gladtex",
-		"pandoc",
-		"scons",
-    ],
-)
-
-install_pkgs(
-    name = "ebook_image",
-    image_tar = "@ubuntu1804//image",
-    installables_tar = ":ebook_pkgs.tar",
-    installation_cleanup_commands = "rm -rf /var/lib/apt/lists/*",
-    output_image_name = "ebook_image",
-	visibility = ["//visibility:public",],
-)
+#download_pkgs(
+#    name = "ebook_pkgs",
+#    image_tar = "@ubuntu1804//image",
+#    packages = [
+#		"python3",
+#		"texlive-fonts-recommended",
+#		"asymptote",
+#		"bash",
+#		"calibre",
+#		"gladtex",
+#		"pandoc",
+#		"scons",
+#    ],
+#)
+#
+#install_pkgs(
+#    name = "ebook_image",
+#    image_tar = "@ubuntu1804//image",
+#    installables_tar = ":ebook_pkgs.tar",
+#    installation_cleanup_commands = "rm -rf /var/lib/apt/lists/*",
+#    output_image_name = "ebook_image",
+#	visibility = ["//visibility:public",],
+#)
 
 sh_binary(
   name = "docker_run",

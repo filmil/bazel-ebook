@@ -19,7 +19,12 @@ asymptote(
 
 markdown_lib(
   name = "md",
-  srcs = ["book.ch001.md"],
+  srcs = [
+		# Ummm... bug... for some reason, you need to list the chapters in
+		# *reverse* order for them to be typeset properly.  Why?
+		"book.ch002.md",
+		"book.ch001.md",
+  ],
   deps = [":test"],
 )
 

@@ -182,7 +182,6 @@ def _ebook_epub_impl(ctx):
         base=outdir_tar.dirname,
         archive=outdir_tar.basename,
         dir=outdir.basename)
-    print("\n\n\ntar command: {}\n\n\noutdir={}\n\n\n".format(tar_command, outdir_tar.path))
     ctx.actions.run_shell(
         progress_message = "Archiving equations: {}".format(outdir_tar.short_path),
         inputs = [outdir],
@@ -197,7 +196,7 @@ def _ebook_epub_impl(ctx):
     title_yaml = ctx.attr.title_yaml.files.to_list()[0]
     title_yaml = _copy_file_to_workdir_renamed(ctx, epub_metadata)
     ebook_epub = ctx.actions.declare_file("{}.epub".format(name))
-    inputs = [epub_metadata, title_yaml, html_file] + markdowns + figures
+    inputs = [epub_metadata, title_yaml, html_file, outdir, outdir_tar] + markdowns + figures
 
     ctx.actions.run_shell(
         progress_message = "Building EPUB for: {}".format(name),
@@ -328,11 +327,11 @@ def _ebook_kindle_impl(ctx):
         "{}.untar-out".format(ctx.label.name))
 
     # untar the equation dir
+    # Maybe this is not needed.
     tar_command = "(cd {base} ; tar xvf {archive}) > {output}".format(
         base=equation_outdir_tar.dirname,
         archive=equation_outdir_tar.basename,
         output=captured_output.path)
-    print("untar command: %s" % tar_command)
     ctx.actions.run_shell(
         progress_message = "Unarchiving equations: {}".format(equation_outdir_tar.short_path),
         inputs = [equation_outdir_tar],
