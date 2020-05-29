@@ -117,7 +117,6 @@ markdown_lib = rule(
 
 def _ebook_epub_impl(ctx):
     name = ctx.label.name
-
     # This is duplicated in _ebook_pdf_impl.
     # steps
     # run htex on all *md, gives book.htex
@@ -127,9 +126,10 @@ def _ebook_epub_impl(ctx):
         provider = dep[EbookInfo]
         markdowns += provider.markdowns
         figures += provider.figures
+    dir_reference = markdowns[0]
     htex_file = ctx.actions.declare_file("{}.htex".format(name))
 
-    markdowns_paths = [file.path for file in markdowns]
+    markdowns_paths = _strip_reference_dir_from_files(dir_reference, markdowns)
 
     script = ctx.executable._script
     script_cmd = _script_cmd(script.path, markdowns_paths[0])
@@ -142,7 +142,10 @@ def _ebook_epub_impl(ctx):
         command = """\
             {script} \
                 pandoc -s --gladtex -o {target} {sources} \
-        """.format(script=script_cmd, target=htex_file.path, sources=" ".join(markdowns_paths))
+        """.format(
+            script=script_cmd,
+            target=htex_file.path,
+            sources=" ".join(markdowns_paths))
     )
 
     # run gladtex on the resulting htex to obtain html and output directory with figures.
@@ -211,6 +214,9 @@ ebook_epub = rule(
 def _strip_reference_dir(reference_dir, path):
     return path.replace(reference_dir.dirname+"/", "")
 
+def _strip_reference_dir_from_files(reference_dir, files):
+    return [ _strip_reference_dir(reference_dir, file.path) for file in files]
+
 def _ebook_pdf_impl(ctx):
     name = ctx.label.name
     # steps
@@ -223,11 +229,10 @@ def _ebook_pdf_impl(ctx):
         figures += provider.figures
     dir_reference = markdowns[0]
 
-    # Fixed up paths -- relative to the directory dir_reference, not the 
+    # Fixed up paths -- relative to the directory dir_reference, not the
     # directory where the build happens!  This is needed because we can not control
     # figure inclusion.
-    markdowns_paths = [ _strip_reference_dir(dir_reference, file.path) \
-        for file in markdowns]
+    markdowns_paths = _strip_reference_dir_from_files(dir_reference, markdowns)
 
     script = ctx.executable._script
     script_cmd = _script_cmd(script.path, dir_reference.path)
