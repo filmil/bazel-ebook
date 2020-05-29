@@ -6,7 +6,7 @@ env = Environment(ENV=os.environ)
 env.Append(BUILDERS={
     'Asy': Builder(
 	action='asy -render 5 -f png -o $TARGET $SOURCE',
-	suffix='.png', src_suffix='.asy',
+	suffix='.asy.png', src_suffix='.asy',
     ),
     'Gladtex': Builder(
         action='gladtex -r 200  -d outdir $SOURCES'),

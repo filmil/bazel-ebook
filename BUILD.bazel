@@ -1,4 +1,4 @@
-load("//build:rules.bzl", "asymptote")
+load("//build:rules.bzl", "asymptote", "markdown_lib", "ebook_epub", "ebook_pdf")
 
 asymptote(
   name = "test",
@@ -9,4 +9,24 @@ asymptote(
 asymptote(
   name = "test2",
   srcs = ["test2.asy"],
+)
+
+markdown_lib(
+  name = "md",
+  srcs = ["book.ch001.md"],
+  deps = [":test"],
+)
+
+ebook_epub(
+  name = "book",
+  deps = [":md"],
+  metadata_xml = "epub-metadata.xml",
+  title_yaml = "title.yaml",
+)
+
+ebook_pdf(
+  name = "book_pdf",
+  deps = [":md"],
+  metadata_xml = "epub-metadata.xml",
+  title_yaml = "title.yaml",
 )

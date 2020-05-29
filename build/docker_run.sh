@@ -88,6 +88,8 @@ readonly _gid="$(id -g)"
 
 readonly _cmdline="${gotopt2_args__[@]}"
 
+echo docker_run: PWD=${PWD}
+
 docker run --rm --interactive \
   -u "${_uid}:${_gid}" \
   -v "${_build_root}:${_build_root}:rw" \

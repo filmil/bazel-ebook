@@ -86,6 +86,6 @@ $$
 
 Let's try some images.
 
-![Here is an image of a Pythagorean tree.](test.png)
+![Here is an image of a Pythagorean tree.](test.asy.png)
 
 
