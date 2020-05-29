@@ -169,9 +169,13 @@ def _ebook_epub_impl(ctx):
         outputs = [outdir, html_file],
         tools = [script],
         command = """\
-            {script} \
+            {script} --cd-to-dir-reference \
                 gladtex -r 200 -d {outdir} {htex_file} \
-        """.format(script=script_cmd, outdir=outdir.path, htex_file=htex_file.path)
+        """.format(
+            script=script_cmd,
+            outdir=_strip_reference_dir(dir_reference, outdir.path),
+            htex_file=_strip_reference_dir(dir_reference, htex_file.path),
+        )
     )
 
     # run htexepub to obtain book.epub.
@@ -189,14 +193,14 @@ def _ebook_epub_impl(ctx):
         tools = [script],
         outputs = [ebook_epub],
         command = """\
-            {script} \
+            {script} --cd-to-dir-reference \
                 pandoc --epub-metadata={epub_metadata} \
                   -f html -t epub3 -o {ebook_epub} {markdowns} \
         """.format(
             script=script_cmd,
-            epub_metadata=epub_metadata.path,
-            ebook_epub=ebook_epub.path,
-            markdowns=" ".join(markdowns_paths),
+            epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
+            ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
+            markdowns=" ".join(markdowns_paths_stripped),
         ))
     return [DefaultInfo(files=depset([ebook_epub]))]
 
