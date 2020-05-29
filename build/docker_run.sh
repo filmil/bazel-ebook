@@ -47,6 +47,9 @@ flags:
 - name: "dir-reference"
   type: string
   help: "Some file in the current directory, e.g. the first file of inputs, for figuring out directories"
+- name: "cd-to-dir-reference"
+  type: bool
+  help: "If set, the script will CD into the reference directory before executing the command."
 EOF
 )
 if [[ "$?" == "11" ]]; then
@@ -74,6 +77,7 @@ fi
 # done, the directory that we're left with is the directory we need to mount
 # in.
 readonly _real_source_dir="$(dirname $(readlink -m ${gotopt2_dir_reference}))"
+readonly _output_dir="$(realpath $(dirname ${gotopt2_dir_reference}))"
 
 # Figure out the bazel build root: using the knowledge that the build root
 # seems to have the string "/_bazel_" at the beginning of the directory that
@@ -88,13 +92,16 @@ readonly _gid="$(id -g)"
 
 readonly _cmdline="${gotopt2_args__[@]}"
 
-echo docker_run: PWD=${PWD}
+_reference_dir="${PWD}"
+if [[ "${gotopt2_cd_to_dir_reference}" == "true" ]]; then
+  _reference_dir="${_output_dir}"
+fi
 
 docker run --rm --interactive \
   -u "${_uid}:${_gid}" \
   -v "${_build_root}:${_build_root}:rw" \
   -v "${_real_source_dir}:${_real_source_dir}:ro" \
-  -v "${PWD}:/src" \
+  -v "${_reference_dir}:/src" \
   -w "/src" \
   "${gotopt2_container}" \
     bash -c "${_cmdline}"

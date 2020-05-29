@@ -76,37 +76,20 @@ asymptote = rule(implementation = _asymptote_impl,
     doc = "Transform an asymptote file into png",
 )
 
-
-def _extract_equations_impl(ctx):
-    input_files = []
-    for target in ctx.attr.srcs:
-        input_files += target.files.to_list()
-    dir_reference = input_files[0].path
-    in_files = " ".join([x.path for x in input_files])
-    out_file = ctx.outputs.output
-    script = ctx.executable._script
+def _copy_file_to_workdir(ctx, src):
+    src_copy = ctx.actions.declare_file(src.short_path)
     ctx.actions.run_shell(
-      progress_message = "Extracting equations",
-      inputs = input_files,
-      outputs = [out_file],
-      tools = [script],
-      command = """\
-      INPUTS="{in_files}" \
-      DIR_REFERENCE="{dir_reference}" \
-      OUTPUT="{out_file}" \
-      {script}""".format(
-          in_files=in_files,
-          out_file=out_file.path,
-          script=script.path,
-          dir_reference=dir_reference),
+        outputs = [src_copy],
+        inputs = [src],
+        command="cp {} {}".format(src.path, src_copy.path),
     )
-
+    return src_copy
 
 def _markdown_lib_impl(ctx):
     markdowns = []
     for target in ctx.attr.srcs:
         for src in target.files.to_list():
-            markdowns += [src]
+            markdowns += [_copy_file_to_workdir(ctx, src)]
     figures = []
     for target in ctx.attr.deps:
         provider = target[EbookInfo]
@@ -134,6 +117,8 @@ markdown_lib = rule(
 
 def _ebook_epub_impl(ctx):
     name = ctx.label.name
+
+    # This is duplicated in _ebook_pdf_impl.
     # steps
     # run htex on all *md, gives book.htex
     markdowns = []
@@ -177,11 +162,12 @@ def _ebook_epub_impl(ctx):
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
     epub_metadata = ctx.attr.metadata_xml.files.to_list()[0]
+    epub_metadata = _copy_file_to_workdir(ctx, epub_metadata)
     title_yaml = ctx.attr.title_yaml.files.to_list()[0]
+    title_yaml = _copy_file_to_workdir(ctx, epub_metadata)
     ebook_epub = ctx.actions.declare_file("{}.epub".format(name))
     inputs = [epub_metadata, title_yaml, html_file] + markdowns + figures
 
-    print("inputs = %s" % inputs)
     ctx.actions.run_shell(
         progress_message = "Building EPUB for: {}".format(name),
         inputs = inputs,
@@ -222,6 +208,9 @@ ebook_epub = rule(
     doc = "Generate an ebook in EPUB format"
 )
 
+def _strip_reference_dir(reference_dir, path):
+    return path.replace(reference_dir.dirname+"/", "")
+
 def _ebook_pdf_impl(ctx):
     name = ctx.label.name
     # steps
@@ -232,19 +221,29 @@ def _ebook_pdf_impl(ctx):
         provider = dep[EbookInfo]
         markdowns += provider.markdowns
         figures += provider.figures
-    markdowns_paths = [file.path for file in markdowns]
+    dir_reference = markdowns[0]
+
+    # Fixed up paths -- relative to the directory dir_reference, not the 
+    # directory where the build happens!  This is needed because we can not control
+    # figure inclusion.
+    markdowns_paths = [ _strip_reference_dir(dir_reference, file.path) \
+        for file in markdowns]
 
     script = ctx.executable._script
-    script_cmd = _script_cmd(script.path, markdowns_paths[0])
+    script_cmd = _script_cmd(script.path, dir_reference.path)
 
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
     epub_metadata = ctx.attr.metadata_xml.files.to_list()[0]
+    epub_metadata = _copy_file_to_workdir(ctx, epub_metadata)
     title_yaml = ctx.attr.title_yaml.files.to_list()[0]
+    title_yaml = _copy_file_to_workdir(ctx, title_yaml)
+
     ebook_pdf = ctx.actions.declare_file("{}.pdf".format(name))
     inputs = [epub_metadata, title_yaml] + markdowns + figures
 
-    print("\n\n\ninputs: {}\n\n\n".format(inputs))
+    print("\n\n\nmarkdowns_paths=%s\n\n\n" % markdowns_paths)
+    print("\n\n\nmarkdowns_dirnames=%s\n\n\n" % [md.dirname for md in markdowns])
 
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
@@ -252,13 +251,13 @@ def _ebook_pdf_impl(ctx):
         tools = [script],
         outputs = [ebook_pdf],
         command = """\
-            {script} \
+            {script} --cd-to-dir-reference \
                 pandoc --epub-metadata={epub_metadata} \
                   --mathml -o {ebook_pdf} {markdowns} \
         """.format(
             script=script_cmd,
-            epub_metadata=epub_metadata.path,
-            ebook_pdf=ebook_pdf.path,
+            epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
+            ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
             markdowns=" ".join(markdowns_paths),
         ))
     return [DefaultInfo(files=depset([ebook_pdf]))]
