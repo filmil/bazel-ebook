@@ -177,6 +177,18 @@ def _ebook_epub_impl(ctx):
             htex_file=_strip_reference_dir(dir_reference, htex_file.path),
         )
     )
+    outdir_tar = ctx.actions.declare_file("{}.tar".format(outdir.basename))
+    tar_command = "(cd {base} ; tar cf {archive} {dir})".format(
+        base=outdir_tar.dirname,
+        archive=outdir_tar.basename,
+        dir=outdir.basename)
+    print("\n\n\ntar command: {}\n\n\noutdir={}\n\n\n".format(tar_command, outdir_tar.path))
+    ctx.actions.run_shell(
+        progress_message = "Archiving equations: {}".format(outdir_tar.short_path),
+        inputs = [outdir],
+        outputs = [outdir_tar],
+        command = tar_command,
+    )
 
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
@@ -195,14 +207,14 @@ def _ebook_epub_impl(ctx):
         command = """\
             {script} --cd-to-dir-reference \
                 pandoc --epub-metadata={epub_metadata} \
-                  -f html -t epub3 -o {ebook_epub} {markdowns} \
+                  -f html -t epub3 -o {ebook_epub} {html_file} \
         """.format(
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
             ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
-            markdowns=" ".join(markdowns_paths_stripped),
+            html_file=_strip_reference_dir(dir_reference, html_file.path),
         ))
-    return [DefaultInfo(files=depset([ebook_epub]))]
+    return [dep[EbookInfo], DefaultInfo(files=depset([ebook_epub, outdir, outdir_tar]))]
 
 ebook_epub = rule(
     implementation = _ebook_epub_impl,
@@ -263,9 +275,6 @@ def _ebook_pdf_impl(ctx):
     ebook_pdf = ctx.actions.declare_file("{}.pdf".format(name))
     inputs = [epub_metadata, title_yaml] + markdowns + figures
 
-    print("\n\n\nmarkdowns_paths=%s\n\n\n" % markdowns_paths)
-    print("\n\n\nmarkdowns_dirnames=%s\n\n\n" % [md.dirname for md in markdowns])
-
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
         inputs = inputs,
@@ -304,4 +313,72 @@ ebook_pdf = rule(
           cfg="host"),
     },
     doc = "Generate an ebook in PDF format"
+)
+
+def _ebook_kindle_impl(ctx):
+    mobi_file = ctx.actions.declare_file("{}.mobi".format(ctx.label.name))
+    # First provider is EbookInfo, second is DefaultInfo.
+    (ebook_info, default_info) = _ebook_epub_impl(ctx)
+    # There can be only one such file
+    outputs = default_info.files.to_list()
+    epub_file = outputs[0]
+    equation_outdir = outputs[1]
+    equation_outdir_tar = outputs[2]
+    captured_output = ctx.actions.declare_file(
+        "{}.untar-out".format(ctx.label.name))
+
+    # untar the equation dir
+    tar_command = "(cd {base} ; tar xvf {archive}) > {output}".format(
+        base=equation_outdir_tar.dirname,
+        archive=equation_outdir_tar.basename,
+        output=captured_output.path)
+    print("untar command: %s" % tar_command)
+    ctx.actions.run_shell(
+        progress_message = "Unarchiving equations: {}".format(equation_outdir_tar.short_path),
+        inputs = [equation_outdir_tar],
+        outputs = [captured_output],
+        command = tar_command,
+    )
+
+    dir_reference = epub_file
+
+    script = ctx.executable._script
+    name = ctx.label.name
+    script_cmd = _script_cmd(script.path, epub_file.path)
+    ctx.actions.run_shell(
+        progress_message = "Building MOBI for: {}".format(name),
+        inputs = [epub_file, equation_outdir],
+        tools = [script],
+        outputs = [mobi_file],
+        command = """\
+            {script} --cd-to-dir-reference \
+                ebook-convert {epub_file} {mobi_file} \
+        """.format(
+            script=script_cmd,
+            epub_file=_strip_reference_dir(dir_reference, epub_file.path),
+            mobi_file=_strip_reference_dir(dir_reference, mobi_file.path),
+        ))
+    return [DefaultInfo(files=depset([mobi_file, captured_output]))]
+
+ebook_kindle = rule(
+    implementation = _ebook_kindle_impl,
+    attrs = {
+        "deps": attr.label_list(
+            doc = "All the targets you need to make this book work.",
+            providers = [EbookInfo],
+        ),
+        "title_yaml": attr.label(
+            allow_files = True,
+            doc = "The title.yaml file to use for this book",
+        ),
+        "metadata_xml": attr.label(
+            allow_files = True,
+            doc = "The epub-metadata.xml file to use for this book",
+        ),
+        "_script": attr.label(
+          default="//build:docker_run",
+          executable=True,
+          cfg="host"),
+    },
+    doc = "Generate an ebook in the Kindle's MOBI format"
 )

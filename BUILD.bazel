@@ -1,6 +1,7 @@
 load("//build:rules.bzl",
     "asymptote",
     "ebook_epub",
+    "ebook_kindle",
     "ebook_pdf",
     "markdown_lib",
 )
@@ -31,6 +32,13 @@ ebook_epub(
 
 ebook_pdf(
   name = "book_pdf",
+  deps = [":md"],
+  metadata_xml = "epub-metadata.xml",
+  title_yaml = "title.yaml",
+)
+
+ebook_kindle(
+  name = "book_kindle",
   deps = [":md"],
   metadata_xml = "epub-metadata.xml",
   title_yaml = "title.yaml",

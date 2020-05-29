@@ -97,6 +97,7 @@ if [[ "${gotopt2_cd_to_dir_reference}" == "true" ]]; then
   _reference_dir="${_output_dir}"
 fi
 
+echo cmdline: ${_cmdline}
 docker run --rm --interactive \
   -u "${_uid}:${_gid}" \
   -v "${_build_root}:${_build_root}:rw" \
@@ -104,5 +105,5 @@ docker run --rm --interactive \
   -v "${_reference_dir}:/src" \
   -w "/src" \
   "${gotopt2_container}" \
-    bash -c "${_cmdline}"
+    bash -c "echo -e '\n\n\n' && echo pwd: $PWD && ls -lR && ${_cmdline}"
 
