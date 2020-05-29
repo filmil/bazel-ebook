@@ -14,29 +14,25 @@ The book content is generated in several formats:
 
 # Prerequisites
 
-TODO(filmil): The "prerequisites" section is very skimpy and doesn't explain
-setting up in enough details.
+* [bazel](https://bazel.io), for building.
+* [docker](https://docker.io), because part of the bazel build process needs
+  docker
 
-* scons (for `scons`, a nice build system)
-* calibre (for `ebook-convert` that produces mobi format content)
-* pandoc (for, you guessed it, `pandoc` that produces epub format content)
-* texlive (for producing PDF)
-* gladtex (to produce equation images)
-* asymptote (for generating images)
 
 # Building
 
 ```
-scons
+bazel build //:all
 ```
 
 Yes, it's that easy.  This will run the commands needed to produce a PDF file,
-an ePub file and a mobi (Kindle) format file.
+an ePub file and a mobi (Kindle) format file.  Find those files in the
+`bazel-bin` directory once the build process ends.
 
 # Cleanup
 
 ```
-scons -c
+bazel clean
 ```
 
 Yes, it's that easy.
