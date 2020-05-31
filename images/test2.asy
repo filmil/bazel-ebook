@@ -1,3 +1,8 @@
+// Pythagorean tree
+// http://www.piprime.fr/971/official_asymptote_example-PythagoreanTree/
+
+/* This code comes from The Official Asymptote Gallery */
+
 settings.render = 5;
 size(250);
 
