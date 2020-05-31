@@ -1,0 +1,24 @@
+load("//build:rules.bzl",
+    "asymptote",
+    "markdown_lib",
+)
+
+asymptote(
+  name = "test2",
+  srcs = ["test1.asy"],
+  visibility = ["//visibility:public"],
+)
+
+asymptote(
+  name = "test3",
+  srcs = ["test2.asy"],
+  visibility = ["//visibility:public"],
+)
+
+
+markdown_lib(
+  name = "md",
+  srcs = ["book.ch003.md",],
+  deps = [":test3"],
+  visibility = ["//visibility:public"],
+)
