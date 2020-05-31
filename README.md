@@ -1,16 +1,16 @@
 # Introduction
 
-Here is a minimal example of using Markdown to write a sciency book that
-includes source code listings or equations.  "Sciency" because it's assumed
-that the amount of listings or equations is small, and their relationship
-uncomplicated.
+This repository is a set of [bazel][bazel] build rules that allow you to write
+a moderately complex book in the Markdown text format, and produce EPUB and
+Kindle's MOBI formats from them.  You can also produce a PDF format book, which
+allows you to preview the results slightly more convenient than by reading the
+resulting books.
 
-The book content is generated in several formats:
+   [bazel]: https://bazel.io
 
-* PDF (e.g. for printing on paper)
-* ePub (for electronic readers that support it, basically anything *except*
-  Kindle)
-* mobi (for Kindle)
+The build rules currently support pure Markdown formatting, LaTeX-style
+equations (though not cross-referencing, and in general the amount of
+LaTeX supported is somewhat limited).
 
 # Prerequisites
 
@@ -18,44 +18,26 @@ The book content is generated in several formats:
 * [docker](https://docker.io), because part of the bazel build process needs
   docker
 
+# Quick start
 
-# Building
+If you are impatient to see the rules in action, check out an example book in a
+separate [ebook example github repository][example].
 
-```
-bazel build //:all
-```
+  [example]: https://www.github.com/filmil/ebook-example
 
-Yes, it's that easy.  This will run the commands needed to produce a PDF file,
-an ePub file and a mobi (Kindle) format file.  Find those files in the
-`bazel-bin` directory once the build process ends.
+# Defined build rules
 
-# Cleanup
+The build rules are defined in the file [build/rules.bzl](build/rules.bzl).  A
+quick list is here:
 
-```
-bazel clean
-```
+| Rule | Description |
+|------|-------------|
+| `asymptote(name, srcs, deps)` | This build rule converts [Asymptote][asy] source files into images that can be included in the book.\
+\
+This rule can take any `*.asy` file in `srcs` and can depend on any `asymptote` rule in `deps`. |
+| `markdown_lib(name, srcs, deps)` |  This build rule makes a library out of `*/md` files.  `deps` may be any `markdown_lib` or `asymptote` or other such rule, and those will be used correctly. |
+| `ebook_epub(name, deps, metadata_xml, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
+| `ebook_kindle(name, deps, metadata_xmp, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
+| `ebook_pdf(name, deps, metadata_xmp, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
 
-Yes, it's that easy.
-
-# Caveats
-
-* The equations for the mobi format are generated as 300dpi files.  Epub is
-  currently unusable because of this; if epub is needed, then we need a
-  completely separate epub build rule that builds it directly. 
-* The build script generates html with embedded images for equations.  Probably
-  we need something similar to epub production above.
-* The `epub-metadata.xml` file actually *must not* be well-formed XML.  Only
-  bare "Dublin core" markup elements are allowed if you want that markup XML to
-  make it into the actual book contents.   I don't quite understand why, but
-  that is how things are today.
-* Apparently the `epub-metadata.xml` gets ignored if you build your ebook from
-  markdown.  This matters for the directly-generated epub version which is made
-  directly from the Markdown source (in contrast to the `.mobi` version which
-  requires several steps to produce)
-
-# TODO
-
-* Add an example title page.
-* Add an example generated figure e.g. with tikZ or some other involved
-  drawing program.
-
+  [asy]: https://asymptote.sourceforge.io
