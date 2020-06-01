@@ -1,0 +1,19 @@
+name: Build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup bazel
+        uses: abhinavsingh/setup-bazel@v3
+        with:
+          version: 3.2.0
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: "bazel build //..."

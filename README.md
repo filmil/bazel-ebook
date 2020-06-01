@@ -1,3 +1,5 @@
+![Build Status](https://github.com/filmil/gotopt2/workflows/Build/badge.svg)
+
 # Introduction
 
 This repository is a set of [bazel][bazel] build rules that allow you to write
