@@ -1,4 +1,4 @@
-![Build Status](https://github.com/filmil/gotopt2/workflows/Build/badge.svg)
+![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg)
 
 # Introduction
 
