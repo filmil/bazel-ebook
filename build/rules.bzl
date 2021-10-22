@@ -6,7 +6,10 @@
 # Build rules for building ebooks.
 
 # This is the container
-CONTAINER = "filipfilmar/ebook-buildenv:testing"
+CONTAINER = "filipfilmar/ebook-buildenv:1.0"
+
+# Use this for quick local runs.
+#CONTAINER = "ebook-buildenv:local"
 
 EbookInfo = provider(fields=["figures", "markdowns"])
 
@@ -26,6 +29,90 @@ def _script_cmd(script_path, dir_reference):
             container=CONTAINER,
             dir_reference=dir_reference,
        )
+
+def _generalized_graphviz_rule_impl(ctx, cmd):
+    docker_run = ctx.executable._script
+    figures = []
+
+    for target in ctx.attr.srcs:
+        for src in target.files.to_list():
+            in_file = src
+            out_file = ctx.actions.declare_file(in_file.basename + ".png")
+            figures += [out_file]
+
+            script_cmd = _script_cmd(docker_run.path, in_file.path)
+            ctx.actions.run_shell(
+              progress_message = "graphviz to PNG with {1}: {0}".format(in_file.short_path, cmd),
+              inputs = [in_file],
+              outputs = [out_file],
+              tools = [docker_run],
+              command = """\
+                {script} \
+                  {cmd} -Tpng -o "{out_file}" "{in_file}"
+              """.format(
+                  cmd=cmd,
+                  out_file=out_file.path,
+                  in_file=in_file.path,
+                  script=script_cmd),
+            )
+
+    deps = []
+    for target in ctx.attr.deps:
+        ebook_provider = target[EbookInfo]
+        if not ebook_provider:
+            continue
+        deps += ebook_provider.figures
+    return [
+        EbookInfo(figures=figures+deps, markdowns=[]),
+        DefaultInfo(files=depset(figures+deps)),
+    ]
+
+
+
+def _neato_png_impl(ctx):
+    return _generalized_graphviz_rule_impl(ctx, "neato")
+
+
+neato_png = rule(implementation = _neato_png_impl,
+    attrs = {
+      "srcs": attr.label_list(
+          allow_files = [".dot"],
+          doc = "The file to compile",
+        ),
+      "deps": attr.label_list(
+          doc = "The dependencies, any targets should be allowed",
+        ),
+      "output": attr.output(doc="The generated file"),
+      "_script": attr.label(
+        default="//build:docker_run",
+        executable=True,
+        cfg="host"),
+    },
+    doc = "Transform a graphviz dot file into png using neato",
+)
+
+
+def _dot_png_impl(ctx):
+    return _generalized_graphviz_rule_impl(ctx, "dot")
+
+
+dot_png = rule(implementation = _dot_png_impl,
+    attrs = {
+      "srcs": attr.label_list(
+          allow_files = [".dot"],
+          doc = "The file to compile",
+        ),
+      "deps": attr.label_list(
+          doc = "The dependencies, any targets should be allowed",
+        ),
+      "output": attr.output(doc="The generated file"),
+      "_script": attr.label(
+        default="//build:docker_run",
+        executable=True,
+        cfg="host"),
+    },
+    doc = "Transform a graphviz dot file into png using dot",
+)
 
 
 def _asymptote_impl(ctx):
@@ -81,6 +168,7 @@ asymptote = rule(implementation = _asymptote_impl,
     doc = "Transform an asymptote file into png",
 )
 
+
 def _copy_file_to_workdir_renamed(ctx, src):
     src_copy = ctx.actions.declare_file("{}_{}".format(ctx.label.name, src.short_path))
     ctx.actions.run_shell(
@@ -91,6 +179,7 @@ def _copy_file_to_workdir_renamed(ctx, src):
     )
     return src_copy
 
+
 def _copy_file_to_workdir(ctx, src):
     src_copy = ctx.actions.declare_file(src.basename)
     ctx.actions.run_shell(
@@ -100,6 +189,7 @@ def _copy_file_to_workdir(ctx, src):
         command="cp {} {}".format(src.path, src_copy.path),
     )
     return src_copy
+
 
 def _markdown_lib_impl(ctx):
     markdowns = []
@@ -116,6 +206,7 @@ def _markdown_lib_impl(ctx):
       DefaultInfo(files=depset(figures+markdowns)),
     ]
 
+
 markdown_lib = rule(
     implementation = _markdown_lib_impl,
     doc = "Declares a set of markdown files",
@@ -130,6 +221,7 @@ markdown_lib = rule(
         ),
     },
 )
+
 
 def _ebook_epub_impl(ctx):
     name = ctx.label.name
@@ -220,6 +312,7 @@ def _ebook_epub_impl(ctx):
         ))
     return [dep[EbookInfo], DefaultInfo(files=depset([ebook_epub, outdir, outdir_tar]))]
 
+
 ebook_epub = rule(
     implementation = _ebook_epub_impl,
     attrs = {
@@ -243,11 +336,14 @@ ebook_epub = rule(
     doc = "Generate an ebook in EPUB format"
 )
 
+
 def _strip_reference_dir(reference_dir, path):
     return path.replace(reference_dir.dirname+"/", "")
 
+
 def _strip_reference_dir_from_files(reference_dir, files):
     return [ _strip_reference_dir(reference_dir, file.path) for file in files]
+
 
 def _ebook_pdf_impl(ctx):
     name = ctx.label.name
@@ -296,6 +392,7 @@ def _ebook_pdf_impl(ctx):
         ))
     return [DefaultInfo(files=depset([ebook_pdf]))]
 
+
 ebook_pdf = rule(
     implementation = _ebook_pdf_impl,
     attrs = {
@@ -318,6 +415,7 @@ ebook_pdf = rule(
     },
     doc = "Generate an ebook in PDF format"
 )
+
 
 def _ebook_kindle_impl(ctx):
     mobi_file = ctx.actions.declare_file("{}.mobi".format(ctx.label.name))
@@ -364,6 +462,7 @@ def _ebook_kindle_impl(ctx):
         ))
     return [DefaultInfo(files=depset([mobi_file, captured_output]))]
 
+
 ebook_kindle = rule(
     implementation = _ebook_kindle_impl,
     attrs = {
@@ -386,3 +485,4 @@ ebook_kindle = rule(
     },
     doc = "Generate an ebook in the Kindle's MOBI format"
 )
+

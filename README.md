@@ -42,14 +42,18 @@ quick list is here:
 | `ebook_epub(name, deps, metadata_xml, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
 | `ebook_kindle(name, deps, metadata_xmp, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
 | `ebook_pdf(name, deps, metadata_xmp, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
+| dot_png(name, srcs, deps) | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `dot`. |
+| neato_png(name, srcs, deps) | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
 
   [asy]: https://asymptote.sourceforge.io
+  [gvz]: https://graphviz.org
 
 # Underlying software
 
 These build rules, of course, only explain to bazel how the ebook is to be
 built.  The actual workhorses for building are, in order, [Docker][docker],
-[pandoc][pandoc], [calibre][calibre], [LaTeX][latex] and [Asymptote][asy].
+[pandoc][pandoc], [calibre][calibre], [LaTeX][latex], [Graphviz][gvz] and
+[Asymptote][asy].
 
   [docker]: https://www.docker.io
   [pandoc]: https://www.pandoc.org
