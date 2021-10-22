@@ -15,3 +15,4 @@ RUN apt-get update && \
     gladtex \
     pandoc \
     scons \
+    graphviz

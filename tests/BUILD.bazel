@@ -1,0 +1,50 @@
+load("//build:rules.bzl",
+    "asymptote",
+    "dot_png",
+    "markdown_lib",
+    "neato_png",
+)
+
+package(
+    default_visibility = [ "//visibility:public" ],
+)
+
+# Example of a markdown document using PNGs generated from Asymptote
+# files.
+
+asymptote(
+  name = "test2",
+  srcs = ["test1.asy"],
+)
+
+asymptote(
+  name = "test3",
+  srcs = ["test2.asy"],
+)
+
+markdown_lib(
+  name = "md",
+  srcs = ["book.ch003.md",],
+  deps = [":test3"],
+)
+
+# Example of a markdown document using a PNG generated from a graphviz
+# dot graph.
+
+dot_png(
+  name = "dot_png",
+  srcs = [ "simple_graph.dot" ],
+)
+
+neato_png(
+  name = "neato_png",
+  srcs = [ "simple_graph_neato.dot" ],
+)
+
+
+markdown_lib(
+  name = "dot_png_test",
+  srcs = ["dot_png_test.md",],
+  deps = [":dot_png", ":neato_png"],
+)
+
