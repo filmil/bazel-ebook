@@ -93,7 +93,7 @@ There are a few constraints to note however:
    may be OK for you to the extent that you trust me to provide you with the
    software that I tell you I'm providing.
 
-   In case this doesn't fulfill your trust critera, you are of course free to
+   In case this doesn't fulfill your trust criteria, you are of course free to
    fork this repository, and use your own buildenv, since all the recipes are
    there.
 
