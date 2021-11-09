@@ -3,6 +3,7 @@ load("//build:rules.bzl",
     "dot_png",
     "markdown_lib",
     "neato_png",
+    "drawtiming_png",
 )
 
 package(
@@ -41,10 +42,20 @@ neato_png(
   srcs = [ "simple_graph_neato.dot" ],
 )
 
-
 markdown_lib(
   name = "dot_png_test",
   srcs = ["dot_png_test.md",],
   deps = [":dot_png", ":neato_png"],
+)
+
+drawtiming_png(
+  name = "drawtiming_png",
+  srcs = [ "drawtiming.t" ]
+)
+
+markdown_lib(
+  name = "drawtiming_lib_test",
+  srcs = ["drawtiming_lib_test.md",],
+  deps = [ ":drawtiming_png", ],
 )
 

@@ -6,7 +6,7 @@
 # Build rules for building ebooks.
 
 # This is the container
-CONTAINER = "filipfilmar/ebook-buildenv:1.0"
+CONTAINER = "filipfilmar/ebook-buildenv:1.1"
 
 # Use this for quick local runs.
 #CONTAINER = "ebook-buildenv:local"
@@ -29,6 +29,66 @@ def _script_cmd(script_path, dir_reference):
             container=CONTAINER,
             dir_reference=dir_reference,
        )
+
+
+def _drawtiming_png_impl(ctx):
+    cmd = "drawtiming"
+    docker_run = ctx.executable._script
+    figures = []
+
+    for target in ctx.attr.srcs:
+        for src in target.files.to_list():
+            in_file = src
+            out_file = ctx.actions.declare_file(in_file.basename + ".png")
+            figures += [out_file]
+
+            script_cmd = _script_cmd(docker_run.path, in_file.path)
+            ctx.actions.run_shell(
+              progress_message = "timing diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
+              inputs = [in_file],
+              outputs = [out_file],
+              tools = [docker_run],
+              command = """\
+                {script} \
+                  {cmd} --output "{out_file}" "{in_file}"
+              """.format(
+                  cmd=cmd,
+                  out_file=out_file.path,
+                  in_file=in_file.path,
+                  script=script_cmd),
+            )
+
+    deps = []
+    for target in ctx.attr.deps:
+        ebook_provider = target[EbookInfo]
+        if not ebook_provider:
+            continue
+        deps += ebook_provider.figures
+    return [
+        EbookInfo(figures=figures+deps, markdowns=[]),
+        DefaultInfo(files=depset(figures+deps)),
+    ]
+
+
+
+drawtiming_png = rule(implementation = _drawtiming_png_impl,
+    attrs = {
+      "srcs": attr.label_list(
+          allow_files = [".t"],
+          doc = "The file to compile",
+        ),
+      "deps": attr.label_list(
+          doc = "The dependencies, any targets should be allowed",
+        ),
+      "output": attr.output(doc="The generated file"),
+      "_script": attr.label(
+        default="//build:docker_run",
+        executable=True,
+        cfg="host"),
+    },
+    doc = "Transform a timing diagram file into png using drawtiming",
+)
+
 
 def _generalized_graphviz_rule_impl(ctx, cmd):
     docker_run = ctx.executable._script

@@ -16,3 +16,7 @@ RUN apt-get update && \
     pandoc \
     scons \
     graphviz
+
+# Typesetting timing diagrams
+RUN apt-get install -y \
+    drawtiming
