@@ -381,11 +381,14 @@ def _ebook_epub_impl(ctx):
             ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
             html_file=_strip_reference_dir(dir_reference, html_file.path),
         ))
+    runfiles = ctx.runfiles(files=[ebook_epub])
+    for dep in ctx.attr.deps:
+        runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         dep[EbookInfo],
         DefaultInfo(
             files=depset([ebook_epub, outdir, outdir_tar]),
-            runfiles=ctx.runfiles(collect_data=True)
+            runfiles=runfiles,
         )
     ]
 
@@ -467,10 +470,14 @@ def _ebook_pdf_impl(ctx):
             ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
             markdowns=" ".join(markdowns_paths),
         ))
+    runfiles = ctx.runfiles(files=[ebook_pdf])
+    for dep in ctx.attr.deps:
+        runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
             files=depset([ebook_pdf]),
-            runfiles=ctx.runfiles(collect_data=True))
+            runfiles=runfiles,
+        )
     ]
 
 
@@ -541,10 +548,13 @@ def _ebook_kindle_impl(ctx):
             epub_file=_strip_reference_dir(dir_reference, epub_file.path),
             mobi_file=_strip_reference_dir(dir_reference, mobi_file.path),
         ))
+    runfiles = ctx.runfiles(files=[mobi_file])
+    for dep in ctx.attr.deps:
+        runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
             files=depset([mobi_file, captured_output]),
-            runfiles=ctx.runfiles(collect_data=True),
+            runfiles=runfiles,
         )
     ]
 
