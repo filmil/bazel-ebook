@@ -270,11 +270,16 @@ def _markdown_lib_impl(ctx):
         provider = target[EbookInfo]
         figures += (provider.figures or [])
         markdowns += (provider.markdowns or [])
+
+    runfiles = ctx.runfiles(files=figures+markdowns)
+    for dep in ctx.attr.deps:
+        runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
+
     return [
       EbookInfo(figures=figures, markdowns=markdowns),
       DefaultInfo(
         files=depset(figures+markdowns),
-        runfiles=ctx.runfiles(collect_data = True)),
+        runfiles=runfiles,
     ]
 
 
