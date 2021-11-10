@@ -467,7 +467,11 @@ def _ebook_pdf_impl(ctx):
             ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
             markdowns=" ".join(markdowns_paths),
         ))
-    return [DefaultInfo(files=depset([ebook_pdf]))]
+    return [
+        DefaultInfo(
+            files=depset([ebook_pdf]),
+            runfiles=ctx.runfiles(collect_data=True))
+    ]
 
 
 ebook_pdf = rule(
@@ -537,7 +541,12 @@ def _ebook_kindle_impl(ctx):
             epub_file=_strip_reference_dir(dir_reference, epub_file.path),
             mobi_file=_strip_reference_dir(dir_reference, mobi_file.path),
         ))
-    return [DefaultInfo(files=depset([mobi_file, captured_output]))]
+    return [
+        DefaultInfo(
+            files=depset([mobi_file, captured_output]),
+            runfiles=ctx.runfiles(collect_data=True),
+        )
+    ]
 
 
 ebook_kindle = rule(
