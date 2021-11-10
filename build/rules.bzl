@@ -64,9 +64,11 @@ def _drawtiming_png_impl(ctx):
         if not ebook_provider:
             continue
         deps += ebook_provider.figures
+
+    runfiles = ctx.runfiles(files = figures)
     return [
         EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps)),
+        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
     ]
 
 
@@ -122,9 +124,11 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
         if not ebook_provider:
             continue
         deps += ebook_provider.figures
+
+    runfiles = ctx.runfiles(files = figures)
     return [
         EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps)),
+        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
     ]
 
 
@@ -204,9 +208,14 @@ def _asymptote_impl(ctx):
         if not ebook_provider:
             continue
         deps += ebook_provider.figures
+
+    runfiles = ctx.runfiles(files=figures+deps)
+    for dep in ctx.attr.deps:
+        runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
+
     return [
         EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps)),
+        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
     ]
 
 
@@ -263,7 +272,9 @@ def _markdown_lib_impl(ctx):
         markdowns += (provider.markdowns or [])
     return [
       EbookInfo(figures=figures, markdowns=markdowns),
-      DefaultInfo(files=depset(figures+markdowns)),
+      DefaultInfo(
+        files=depset(figures+markdowns),
+        runfiles=ctx.runfiles(collect_data = True)),
     ]
 
 
@@ -370,7 +381,13 @@ def _ebook_epub_impl(ctx):
             ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
             html_file=_strip_reference_dir(dir_reference, html_file.path),
         ))
-    return [dep[EbookInfo], DefaultInfo(files=depset([ebook_epub, outdir, outdir_tar]))]
+    return [
+        dep[EbookInfo],
+        DefaultInfo(
+            files=depset([ebook_epub, outdir, outdir_tar]),
+            runfiles=ctx.runfiles(collect_data=True)
+        )
+    ]
 
 
 ebook_epub = rule(
