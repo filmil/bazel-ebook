@@ -280,6 +280,7 @@ def _markdown_lib_impl(ctx):
       DefaultInfo(
         files=depset(figures+markdowns),
         runfiles=runfiles,
+      ),
     ]
 
 
