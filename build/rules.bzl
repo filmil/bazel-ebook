@@ -3,10 +3,12 @@
 # This file has been licensed under Apache 2.0 license.  Please see the LICENSE
 # file at the root of the repository.
 
+load("@bazel_skylib//lib:paths.bzl", "paths")
+
 # Build rules for building ebooks.
 
-# This is the container
-CONTAINER = "filipfilmar/ebook-buildenv:1.1"
+# This is the container used to run the typesetting programs.
+CONTAINER = "filipfilmar/ebook-buildenv:1.2"
 
 # Use this for quick local runs.
 #CONTAINER = "ebook-buildenv:local"
@@ -31,6 +33,70 @@ def _script_cmd(script_path, dir_reference):
        )
 
 
+def _plantuml_png_impl(ctx):
+    cmd = "plantuml"
+    docker_run = ctx.executable._script
+    figures = []
+
+    for target in ctx.attr.srcs:
+        for src in target.files.to_list():
+            in_file = src
+            out_file = ctx.actions.declare_file(
+                paths.replace_extension(in_file.basename, ".png"))
+            figures += [out_file]
+
+            print(out_file.dirname)
+            print(in_file.path)
+            print(out_file.path)
+            script_cmd = _script_cmd(docker_run.path, in_file.path)
+            ctx.actions.run_shell(
+              progress_message = "plantuml diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
+              inputs = [in_file],
+              outputs = [out_file],
+              tools = [docker_run],
+              command = """\
+                {script} \
+                  {cmd} -Djava.awt.headless=true -o $PWD/"{out_dir}" "{in_file}"
+              """.format(
+                  cmd=cmd,
+                  out_dir=out_file.dirname,
+                  in_file=in_file.path,
+                  script=script_cmd),
+            )
+
+    deps = []
+    for target in ctx.attr.deps:
+        ebook_provider = target[EbookInfo]
+        if not ebook_provider:
+            continue
+        deps += ebook_provider.figures
+
+    runfiles = ctx.runfiles(files = figures)
+    return [
+        EbookInfo(figures=figures+deps, markdowns=[]),
+        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
+    ]
+
+
+plantuml_png = rule(implementation = _plantuml_png_impl,
+    attrs = {
+      "srcs": attr.label_list(
+          allow_files = [".txt"],
+          doc = "The file to compile",
+        ),
+      "deps": attr.label_list(
+          doc = "The dependencies, any targets should be allowed",
+        ),
+      "output": attr.output(doc="The generated file"),
+      "_script": attr.label(
+        default="//build:docker_run",
+        executable=True,
+        cfg="host"),
+    },
+    doc = "Transform a timing diagram file into png using plantuml",
+)
+
+
 def _drawtiming_png_impl(ctx):
     cmd = "drawtiming"
     docker_run = ctx.executable._script
@@ -50,7 +116,7 @@ def _drawtiming_png_impl(ctx):
               tools = [docker_run],
               command = """\
                 {script} \
-                  {cmd} --output "{out_file}" "{in_file}"
+                  {cmd} --output "{out_file}" "{in_file}" && ls -laR
               """.format(
                   cmd=cmd,
                   out_file=out_file.path,

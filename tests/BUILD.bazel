@@ -4,6 +4,7 @@ load("//build:rules.bzl",
     "markdown_lib",
     "neato_png",
     "drawtiming_png",
+    "plantuml_png"
 )
 
 package(
@@ -57,5 +58,16 @@ markdown_lib(
   name = "drawtiming_lib_test",
   srcs = ["drawtiming_lib_test.md",],
   deps = [ ":drawtiming_png", ],
+)
+
+plantuml_png(
+  name = "plantuml_sequence_diagram",
+  srcs = [ "sequence_diagram.txt" ],
+) 
+
+markdown_lib(
+  name = "plantuml_lib_test",
+  srcs = ["plantuml_test.md",],
+  deps = [ ":plantuml_sequence_diagram", ],
 )
 

@@ -1,7 +1,7 @@
 # OK this is a bit embarrassing, but I still don't quite understand how to
 # build Docker containers through Bazel.
 
-REMOTE_CONTAINER=filipfilmar/ebook-buildenv:1.1
+REMOTE_CONTAINER=filipfilmar/ebook-buildenv:1.2
 
 build:
 	docker build -t ebook-buildenv:local .

@@ -7,16 +7,15 @@ FROM ubuntu:16.04
 
 RUN apt-get update && \
     apt-get install -y \
-	python3 \
-	texlive-fonts-recommended \
     asymptote \
     bash \
     calibre \
+    drawtiming \
     gladtex \
+    graphviz \
     pandoc \
+    plantuml \
+    python3 \
     scons \
-    graphviz
+    texlive-fonts-recommended
 
-# Typesetting timing diagrams
-RUN apt-get install -y \
-    drawtiming

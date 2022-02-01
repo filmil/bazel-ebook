@@ -26,3 +26,6 @@ container_pull(
 load("@gotopt2//build:deps.bzl", "gotopt2_dependencies")
 gotopt2_dependencies()
 
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+
+bazel_skylib_workspace()
