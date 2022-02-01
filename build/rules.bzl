@@ -45,9 +45,9 @@ def _plantuml_png_impl(ctx):
                 paths.replace_extension(in_file.basename, ".png"))
             figures += [out_file]
 
-            print(out_file.dirname)
-            print(in_file.path)
-            print(out_file.path)
+            #print("out file dirname: {}".format(out_file.dirname))
+            #print(in_file.path)
+            #print(out_file.path)
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
               progress_message = "plantuml diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
@@ -56,7 +56,7 @@ def _plantuml_png_impl(ctx):
               tools = [docker_run],
               command = """\
                 {script} \
-                  {cmd} -Djava.awt.headless=true -o $PWD/"{out_dir}" "{in_file}"
+                  {cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}"
               """.format(
                   cmd=cmd,
                   out_dir=out_file.dirname,
@@ -116,7 +116,7 @@ def _drawtiming_png_impl(ctx):
               tools = [docker_run],
               command = """\
                 {script} \
-                  {cmd} --output "{out_file}" "{in_file}" && ls -laR
+                  {cmd} --output "{out_file}" "{in_file}"
               """.format(
                   cmd=cmd,
                   out_file=out_file.path,
