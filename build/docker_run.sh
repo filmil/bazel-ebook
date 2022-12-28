@@ -42,7 +42,14 @@ fi
 # This is seriously weird: should I be guessing the OS and architecture to get
 # at a binary that I want to use?
 readonly _gotopt_binary="$(rlocation \
-  gotopt2/cmd/gotopt2/linux_amd64_stripped/gotopt2)"
+  gotopt2/cmd/gotopt2/gotopt2_/gotopt2)"
+
+# Exit quickly if the binary isn't found. This may happen if the binary location
+# moves internally in bazel.
+if [ -x "$(command -v ${_gotopt2_binary})" ]; then
+  echo "gotopt2 binary not found"
+  exit 240
+fi
 
 GOTOPT2_OUTPUT=$($_gotopt_binary "${@}" <<EOF
 flags:
