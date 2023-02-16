@@ -18,12 +18,4 @@ load(
     "@io_bazel_rules_docker//container:container.bzl",
     "container_pull",
 )
-container_pull(
-    name = "ubuntu1804",
-    registry = "index.docker.io",
-    repository = "ubuntu",
-    tag = "18.04",
-)
 
-load("@gotopt2//build:deps.bzl", "gotopt2_dependencies")
-gotopt2_dependencies()

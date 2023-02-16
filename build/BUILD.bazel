@@ -3,12 +3,3 @@
 # This file has been licensed under Apache 2.0 license.  Please see the LICENSE
 # file at the root of the repository.
 
-sh_binary(
-  name = "docker_run",
-  srcs = ["docker_run.sh"],
-  deps = ["@bazel_tools//tools/bash/runfiles"],
-  visibility = ["//visibility:public"],
-  data = [
-    "@gotopt2//cmd/gotopt2:gotopt2",
-  ],
-)
