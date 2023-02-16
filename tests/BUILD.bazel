@@ -63,7 +63,7 @@ markdown_lib(
 plantuml_png(
   name = "plantuml_sequence_diagram",
   srcs = [ "sequence_diagram.txt" ],
-) 
+)
 
 markdown_lib(
   name = "plantuml_lib_test",

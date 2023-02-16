@@ -4,6 +4,7 @@
 # file at the root of the repository.
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@bazel_rules_bid//build:rules.bzl", "run_docker_cmd")
 
 # Build rules for building ebooks.
 
@@ -23,14 +24,7 @@ EbookInfo = provider(fields=["figures", "markdowns"])
 #   dir_reference: (string) The path to a file used for figuring out
 #       the reference directories (build root and repo root).
 def _script_cmd(script_path, dir_reference):
-    return """\
-      {script} \
-        --container={container} \
-        --dir-reference={dir_reference}""".format(
-            script=script_path,
-            container=CONTAINER,
-            dir_reference=dir_reference,
-       )
+    return run_docker_cmd(CONTAINER, script_path, dir_reference)
 
 
 def _plantuml_png_impl(ctx):
@@ -89,7 +83,7 @@ plantuml_png = rule(implementation = _plantuml_png_impl,
         ),
       "output": attr.output(doc="The generated file"),
       "_script": attr.label(
-        default="//build:docker_run",
+        default="@bazel_rules_bid//build:docker_run",
         executable=True,
         cfg="host"),
     },
