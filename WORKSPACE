@@ -27,24 +27,26 @@ http_archive(
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+bazel_skylib_workspace()
+
 
 load("//build:repositories.bzl", "bazel_ebook_repositories")
 bazel_ebook_repositories()
 
-
 load("@gotopt2//build:deps.bzl", "gotopt2_dependencies")
 gotopt2_dependencies()
 
-
-load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
-bazel_skylib_workspace()
+#load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
+#rules_pkg_dependencies()
 
 
 git_repository(
     name = "bazel_rules_bid",
     remote = "https://github.com/filmil/bazel-rules-bid.git",
-    commit = "04b599ec790fe4572dfb851e145c791cb5022c15",
-    shallow_since = "1676537869 -0800"
+    commit = "c856ef432eebd4ef5c86eaca1752d55fe7d9c93d",
+    shallow_since = "1734828303 -0800",
 )
 load("@bazel_rules_bid//build:repositories.bzl", "bazel_bid_repositories")
 bazel_bid_repositories()
+
