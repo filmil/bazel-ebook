@@ -1,0 +1,31 @@
+load("@bazel_ebook//build:rules.bzl",
+    "asymptote",
+    "dot_png",
+    "markdown_lib",
+)
+
+package(
+  default_visibility = ["//visibility:public"],
+)
+
+asymptote(
+  name = "test2",
+  srcs = ["test1.asy"],
+)
+
+asymptote(
+  name = "test3",
+  srcs = ["test2.asy"],
+)
+
+
+markdown_lib(
+  name = "md",
+  srcs = ["book.ch003.md",],
+  deps = [":test3"],
+)
+
+dot_png(
+  name = "dot",
+  srcs = ["simple_graph.dot"],
+)

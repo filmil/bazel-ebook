@@ -25,10 +25,9 @@ LaTeX supported is somewhat limited).
 
 # Quick start
 
-If you are impatient to see the rules in action, check out an example book in a
-separate [ebook example github repository][example].
+If you are impatient to see the rules in action, check out an example book in [the example repository][example].
 
-  [example]: https://www.github.com/filmil/ebook-example
+  [example]: ebook-example/README.md
 
 # Defined build rules
 

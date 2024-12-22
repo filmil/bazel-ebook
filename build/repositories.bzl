@@ -21,7 +21,6 @@ def bazel_ebook_repositories():
         git_repository(
             name = "gotopt2",
             remote = "https://github.com/filmil/gotopt2",
-            commit = "97d6b1b0663a976eba231cac93aefbfdca52f9d6",
-            shallow_since = "1593765180 -0700",
+            commit = "50751ce0722cc2ccc4066ccb287675d8875d685e",
         )
 

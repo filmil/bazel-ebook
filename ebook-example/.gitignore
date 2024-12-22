@@ -1,0 +1,10 @@
+.sconsign.dblite
+*.pdf
+*.mobi
+*.epub
+*.log
+*.html
+*.xhtml
+*.opf
+outdir
+bazel-*

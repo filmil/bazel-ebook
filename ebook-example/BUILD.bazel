@@ -1,0 +1,48 @@
+load("@bazel_ebook//build:rules.bzl",
+    "asymptote",
+    "ebook_epub",
+    "ebook_kindle",
+    "ebook_pdf",
+    "markdown_lib",
+)
+
+asymptote(
+  name = "test",
+  srcs = ["test.asy"],
+  deps = ["//images:test2"],
+)
+
+markdown_lib(
+  name = "md",
+  srcs = [
+		"book.ch001.md",
+		"book.ch002.md",
+        "book.ch004.md",
+  ],
+  deps = [
+    "//images:dot",
+    "//images:md",
+    ":test",
+  ],
+)
+
+ebook_epub(
+  name = "book_epub",
+  deps = [":md"],
+  metadata_xml = "epub-metadata.xml",
+  title_yaml = "title.yaml",
+)
+
+ebook_pdf(
+  name = "book_pdf",
+  deps = [":md"],
+  metadata_xml = "epub-metadata.xml",
+  title_yaml = "title.yaml",
+)
+
+ebook_kindle(
+  name = "book_kindle",
+  deps = [":md"],
+  metadata_xml = "epub-metadata.xml",
+  title_yaml = "title.yaml",
+)
