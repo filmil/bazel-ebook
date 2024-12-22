@@ -38,7 +38,8 @@ local_repository(
 git_repository(
     name = "bazel_rules_bid",
     remote = "https://github.com/filmil/bazel-rules-bid.git",
-    commit = "794d3c63d8d4a36888b873f307f20ef285b79f0d",
+    commit = "c856ef432eebd4ef5c86eaca1752d55fe7d9c93d",
+    shallow_since = "1734828303 -0800",
 )
 load("@bazel_rules_bid//build:repositories.bzl", "bazel_bid_repositories")
 bazel_bid_repositories()
