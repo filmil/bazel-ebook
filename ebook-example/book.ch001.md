@@ -69,14 +69,6 @@ $$
 
 Here's some multi-line math stuff:
 
-$$
- u(x) =
-  \begin{cases}
-   \exp{x} & \text{if } x \geq 0 \\
-   1       & \text{if } x < 0
-  \end{cases}
-$$
-
 \begin{align*}
  f(x) &= (x+a)(x+b) \\
  &= x^2 + (a+b)x + ab

@@ -392,7 +392,7 @@ def _ebook_epub_impl(ctx):
         tools = [script],
         command = """\
             {script} --cd-to-dir-reference \
-                gladtex -r 200 -d {outdir} {htex_file} \
+                env LC_ALL=en_US gladtex -f 12 -d {outdir} {htex_file} \
         """.format(
             script=script_cmd,
             outdir=_strip_reference_dir(dir_reference, outdir.path),
