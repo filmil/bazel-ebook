@@ -4,27 +4,15 @@
 # file at the root of the repository.
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
-load("@bazel_rules_bid//build:rules.bzl", "run_docker_cmd")
+load(":script.bzl", _script_cmd = "script_cmd")
+load(":pandoc.bzl",
+    _pandoc_standalone_html = "pandoc_standalone_html",
+    _pandoc_chunked_html = "pandoc_chunked_html",
+)
+load(":providers.bzl", "EbookInfo")
 
-# Build rules for building ebooks.
-
-# This is the container used to run the typesetting programs.
-CONTAINER = "filipfilmar/ebook-buildenv:1.2"
-
-# Use this for quick local runs.
-#CONTAINER = "ebook-buildenv:local"
-
-EbookInfo = provider(fields=["figures", "markdowns"])
-
-# Returns the docker_run script invocation command based on the
-# script path and its reference directory.
-#
-# Params:
-#   script_path: (string) The full path to the script to invoke
-#   dir_reference: (string) The path to a file used for figuring out
-#       the reference directories (build root and repo root).
-def _script_cmd(script_path, dir_reference):
-    return run_docker_cmd(CONTAINER, script_path, dir_reference)
+pandoc_standalone_html = _pandoc_standalone_html
+pandoc_chunked_html = _pandoc_chunked_html
 
 
 def _plantuml_png_impl(ctx):
@@ -259,7 +247,7 @@ def _asymptote_impl(ctx):
                 {script} \
                   asy -render 5 -f png -o "{out_file}" "{in_file}"
               """.format(
-                  out_file=out_file.path, in_file=in_file.path, script=script_cmd),
+              out_file=out_file.path[:-4], in_file=in_file.path, script=script_cmd),
             )
 
     deps = []

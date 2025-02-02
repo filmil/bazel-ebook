@@ -1,9 +1,12 @@
+load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("@bazel_ebook//build:rules.bzl",
     "asymptote",
     "ebook_epub",
     "ebook_kindle",
     "ebook_pdf",
     "markdown_lib",
+    "pandoc_standalone_html",
+    "pandoc_chunked_html",
 )
 
 asymptote(
@@ -46,3 +49,44 @@ ebook_kindle(
   metadata_xml = "epub-metadata.xml",
   title_yaml = "title.yaml",
 )
+
+pandoc_standalone_html(
+    name = "html",
+    deps = [
+        ":md",
+    ],
+    args = [
+        "--katex=https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/",
+    ],
+    title = "This is a test title",
+)
+
+# This packages the files, but ignores the dir paths, which are important.
+pkg_zip(
+    name = "zip",
+    srcs = [
+        ":html",
+    ],
+)
+
+pandoc_chunked_html(
+    name = "html_chunked",
+    deps = [
+        ":md",
+    ],
+    args = [
+        "--katex=https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/",
+    ],
+    title = "This is a test title",
+    toc = True,
+)
+
+# This packages the files, but ignores the dir paths, which are important.
+pkg_zip(
+    name = "ebook_zip",
+    srcs = [
+        ":html_chunked",
+    ],
+    strip_prefix = "html_chunked.d",
+)
+
