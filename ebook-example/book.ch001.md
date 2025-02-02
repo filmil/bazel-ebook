@@ -1,8 +1,48 @@
+---
+codeBlockCaptions: True
+figureTitle: |
+  Figure #
+lofTitle: |
+  ## List of Figures
+lotTitle: |
+  ## List of Tables
+lolTitle: |
+  ## List of Listings
+tableTemplate: |
+  *$$tableTitle$$ $$i$$*$$titleDelim$$ $$t$$
+autoSectionLabels: True
+title: pandoc-crossref demo document
+---
 # Hello world!
+
+# Chapter 1. Figures {#sec:sec1}
+
+> This part is lifted from the [pandoc crossref demo][pcr]
+
+[pcr]: https://raw.githubusercontent.com/lierdakil/pandoc-crossref/master/docs/demo/demo.md
 
 I'm a test Markdown document.
 
 **Here's some bold text** and *here's some italic text*. `This is inline code`.
+
+# Chapter 2. Equations {#sec:sec2}
+
+Display equations are labelled and numbered
+
+$$ P_i(x) = \sum_i a_i x^i $$ {#eq:eqn1}
+
+# Code blocks
+
+There are a couple options for code block labels. Those work only if code block id starts with `lst:`, e.g. `{#lst:label}`
+
+## `caption` attribute {#sec:caption-attr}
+
+`caption` attribute will be treated as code block caption. If code block has both id and `caption` attributes, it will be treated as numbered code block.
+
+```{#lst:captionAttr .haskell caption="Listing caption"}
+main :: IO ()
+main = putStrLn "Hello World!"
+```
 
 # Markdown Tables
 
