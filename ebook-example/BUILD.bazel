@@ -18,13 +18,13 @@ asymptote(
 markdown_lib(
   name = "md",
   srcs = [
-		"book.ch001.md",
-		"book.ch002.md",
-        "book.ch004.md",
+    "book.ch001.md",
+    "book.ch002.md",
+    "//images:md",
+    "book.ch004.md",
   ],
   deps = [
     "//images:dot",
-    "//images:md",
     ":test",
   ],
 )
@@ -77,7 +77,7 @@ pandoc_chunked_html(
     args = [
         "--katex=https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/",
     ],
-    title = "This is a test title",
+    #title = "This is a test title",
     toc = True,
     filters = [
         "@pandoc_crossref//:pandoc_crossref",

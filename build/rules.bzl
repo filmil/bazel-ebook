@@ -310,10 +310,15 @@ def _copy_file_to_workdir(ctx, src):
 
 def _markdown_lib_impl(ctx):
     markdowns = []
-    for target in ctx.attr.srcs:
-        for src in target.files.to_list():
-            markdowns += [_copy_file_to_workdir(ctx, src)]
     figures = []
+    for target in ctx.attr.srcs:
+        if EbookInfo in target:
+            provider = target[EbookInfo]
+            figures += (provider.figures or [])
+            markdowns += (provider.markdowns or [])
+        else:
+            for src in target.files.to_list():
+                markdowns += [_copy_file_to_workdir(ctx, src)]
     for target in ctx.attr.deps:
         provider = target[EbookInfo]
         figures += (provider.figures or [])
@@ -338,6 +343,7 @@ markdown_lib = rule(
     attrs = {
         "srcs": attr.label_list(
             allow_files = [".md"],
+            providers = [EbookInfo],
             doc = "The markdown source files",
         ),
         "deps": attr.label_list(
