@@ -28,6 +28,14 @@ def _pandoc_html(ctx, format,
         markdowns += provider.markdowns
         figures += provider.figures
 
+    filters = []
+    filters_paths = []
+    for filter in ctx.attr.filters:
+        filter_files = filter.files.to_list()
+        for file in filter_files:
+            filters += [file]
+            filter_paths += [file.path]
+
     resource_paths = [file.dirname for file in markdowns + figures]
     dir_reference = markdowns[0]
     output_file = output_artifact
@@ -48,12 +56,15 @@ def _pandoc_html(ctx, format,
         args += ['--resource-path', ":".join(resource_paths)]
     args += ctx.attr.args
 
+    for filter in filters_paths:
+        args += ['--filter', filter]
+
     args += markdowns_paths
     ctx.actions.run_shell(
         progress_message = 'Building equation environments for: {}'.format(name),
         inputs = markdowns + figures,
         outputs = [output_file],
-        tools = [script],
+        tools = [script] + filters,
         command = ' '.join(args),
     )
     runfiles_files = []
@@ -90,6 +101,10 @@ _ATTRS = {
     "_script": attr.label(
         default="@bazel_rules_bid//build:docker_run",
         executable=True,
+        cfg="host",
+    ),
+    "filters": attr.label_list(
+        doc = 'Targets representing filters binaries to use',
         cfg="host",
     ),
 }
