@@ -34,7 +34,7 @@ def _pandoc_html(ctx, format,
         filter_files = filter.files.to_list()
         for file in filter_files:
             filters += [file]
-            filter_paths += [file.path]
+            filters_paths += [file.path]
 
     resource_paths = [file.dirname for file in markdowns + figures]
     dir_reference = markdowns[0]

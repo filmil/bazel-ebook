@@ -25,3 +25,21 @@ def bazel_ebook_repositories():
         shallow_since = "1734826764 -0800",
     )
 
+    maybe(
+        http_archive,
+        name = "pandoc_crossref",
+        urls = [
+            "https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.18.1a/pandoc-crossref-Linux-X64.tar.xz",
+        ],
+        sha256 = "ef74b6682f447e8705105963624076e0410b964b2ae16c8072b2a3e241a044f2",
+        build_file_content = """
+package(default_visibility = ["//visibility:public"])
+filegroup(
+    name = "pandoc_crossref",
+    srcs = [
+        "pandoc-crossref",
+    ],
+)
+        """,
+    )
+
