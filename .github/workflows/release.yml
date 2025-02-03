@@ -3,10 +3,6 @@ on:
   push:
     branches: [ main ]
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -18,12 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: "Build book"
-        run: "cd ebook-example && bazel build //:html_chunked"
+        run: "cd ebook-example && bazel build //:html_chunked && ls -lR"
       - name: "Deploy"
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: filmil/hdlfactory.com.template
-          publish_dir: ./ebook-example/bazel-bin/html_chunked.d/html_chunked
+          publish_dir: ./bazel-bin/html_chunked.d/html_chunked
           destination_dir: static/html_chunked
           publish_branch: main
           deploy_key: "${{ secrets.DEPLOY_KEY }}"
