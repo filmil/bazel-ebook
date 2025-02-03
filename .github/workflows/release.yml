@@ -22,8 +22,8 @@ jobs:
       - name: "Deploy"
         uses: peaceiris/actions-gh-pages@v3
         with:
-          external_repository: filmil/hdlfactory.com
+          external_repository: filmil/hdlfactory.com.template
           publish_dir: ./ebook-example/bazel-bin/html_chunked.d/html_chunked
           destination_dir: static/html_chunked
-          publish_branch: master
+          publish_branch: main
           deploy_key: "${{ secrets.DEPLOY_KEY }}"
