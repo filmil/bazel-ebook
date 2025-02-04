@@ -381,10 +381,11 @@ def _ebook_epub_impl(ctx):
         tools = [script],
         command = """\
             {script} \
-                pandoc -s --gladtex -o {target} {sources} \
+                pandoc -s --gladtex {args} -o {target} {sources} \
         """.format(
             script=script_cmd,
             target=htex_file.path,
+            args=" ".join(ctx.attr.args),
             sources=" ".join(markdowns_paths))
     )
 
@@ -433,12 +434,13 @@ def _ebook_epub_impl(ctx):
         outputs = [ebook_epub],
         command = """\
             {script} --cd-to-dir-reference \
-                pandoc --epub-metadata={epub_metadata} \
+                pandoc --epub-metadata={epub_metadata} {args} \
                   -f html -t epub3 -o {ebook_epub} {html_file} \
         """.format(
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
             ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
+            args=" ".join(ctx.attr.args),
             html_file=_strip_reference_dir(dir_reference, html_file.path),
         ))
     runfiles = ctx.runfiles(files=[ebook_epub])
@@ -467,6 +469,10 @@ ebook_epub = rule(
         "metadata_xml": attr.label(
             allow_files = True,
             doc = "The epub-metadata.xml file to use for this book",
+        ),
+        'args': attr.string_list(
+            doc = 'Any additional args to insert',
+            allow_empty = True,
         ),
         "_script": attr.label(
           default="@bazel_rules_bid//build:docker_run",
@@ -523,11 +529,12 @@ def _ebook_pdf_impl(ctx):
         command = """\
             {script} --cd-to-dir-reference \
                 pandoc --epub-metadata={epub_metadata} \
-                  --mathml -o {ebook_pdf} {markdowns} \
+                  --mathml -o {ebook_pdf} {args} {markdowns} \
         """.format(
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
             ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
+            args=" ".join(ctx.attr.args),
             markdowns=" ".join(markdowns_paths),
         ))
     runfiles = ctx.runfiles(files=[ebook_pdf])
@@ -555,6 +562,10 @@ ebook_pdf = rule(
         "metadata_xml": attr.label(
             allow_files = True,
             doc = "The epub-metadata.xml file to use for this book",
+        ),
+        'args': attr.string_list(
+            doc = 'Any additional args to insert',
+            allow_empty = True,
         ),
         "_script": attr.label(
           default="@bazel_rules_bid//build:docker_run",
