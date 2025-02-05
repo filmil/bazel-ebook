@@ -19,15 +19,36 @@ LaTeX supported is somewhat limited).
 
 # Prerequisites
 
-* [bazel](https://bazel.io), for building.
 * [docker](https://docker.io), because part of the bazel build process needs
-  docker
+  docker for the [build-in-docker][bid] method.
+* [bazel](https://bazel.io), for building. I recommend an installation using
+  the [bazelisk method][ba].
+
+[ba]: https://hdlfactory.com/note/2024/08/24/bazel-installation-via-the-bazelisk-method/
+[bid]: https://github.com/filmil/bazel-rules-bid
 
 # Quick start
 
-If you are impatient to see the rules in action, check out an example book in [the example repository][example].
+## Build
+
+If you are impatient to see the rules in action, check out an example book in
+[the example repository][example].
 
   [example]: ebook-example/README.md
+
+The easiest way to dig in is to run the following one-liner:
+
+```
+cd ebook-example && bazel build //...
+```
+
+This will build *all the examples* for you to appreciate.
+
+## Examine results
+
+Check out a [built example here][xmp].
+
+[xmp]: https://www.hdlfactory.com/html_chunked
 
 # Defined build rules
 
@@ -37,24 +58,26 @@ quick list is here:
 | Rule | Description |
 |------|-------------|
 | `asymptote(name, srcs, deps)` | This build rule converts [Asymptote][asy] source files into images that can be included in the book. This rule can take any `*.asy` file in `srcs` and can depend on any `asymptote` rule in `deps`. |
+| `dot_png(name, srcs, deps)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `dot`. |
+| `drawtiming_png(name, srcs, deps, output)` | Typeset a timing diagram using [drawtiming][dtg]. |
 | `markdown_lib(name, srcs, deps)` |  This build rule makes a library out of `*/md` files.  `deps` may be any `markdown_lib` or `asymptote` or other such rule, and those will be used correctly. |
-| `ebook_epub(name, deps, metadata_xml, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
-| `ebook_kindle(name, deps, metadata_xmp, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
-| `ebook_pdf(name, deps, metadata_xmp, title_yaml)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
-| dot_png(name, srcs, deps) | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `dot`. |
-| neato_png(name, srcs, deps) | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
-| plantuml_png(name, srcs, deps) | This build rule converts a [PlantUML][plantuml] source files into PNG images that can be included in the book.  This rule can take any PlantUML-formatted `*.txt` file in `srcs` and can depend on any rule in `deps`. |
+| `ebook_epub(name, deps, metadata_xml, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
+| `ebook_kindle(name, deps, metadata_xmp, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
+| `ebook_pdf(name, deps, metadata_xmp, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
+| `neato_png(name, srcs, deps)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
+| `plantuml_png(name, srcs, deps)` | This build rule converts a [PlantUML][plantuml] source files into PNG images that can be included in the book.  This rule can take any PlantUML-formatted `*.txt` file in `srcs` and can depend on any rule in `deps`. |
 
   [asy]: https://asymptote.sourceforge.io
   [gvz]: https://graphviz.org
   [plantuml]: https://plantuml.com
+  [dtg]: https://drawtiming.sourceforge.net/
 
 # Underlying software
 
 These build rules, of course, only explain to bazel how the ebook is to be
-built.  The actual workhorses for building are, in order, [Docker][docker],
+built.  The actual workhorses for building are [Docker][docker],
 [pandoc][pandoc], [calibre][calibre], [LaTeX][latex], [Graphviz][gvz],
-[Asymptote][asy], and [PlantUML][plantuml].
+[Asymptote][asy], [drawtiming][dtg] and [PlantUML][plantuml].
 
   [docker]: https://www.docker.io
   [pandoc]: https://www.pandoc.org

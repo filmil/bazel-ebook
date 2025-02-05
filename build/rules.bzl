@@ -613,11 +613,12 @@ def _ebook_kindle_impl(ctx):
         outputs = [mobi_file],
         command = """\
             {script} --cd-to-dir-reference \
-                ebook-convert {epub_file} {mobi_file} \
+                ebook-convert {args} {epub_file} {mobi_file} \
         """.format(
             script=script_cmd,
             epub_file=_strip_reference_dir(dir_reference, epub_file.path),
             mobi_file=_strip_reference_dir(dir_reference, mobi_file.path),
+            args=" ".join(ctx.attr.args),
         ))
     runfiles = ctx.runfiles(files=[mobi_file])
     for dep in ctx.attr.deps:
@@ -644,6 +645,10 @@ ebook_kindle = rule(
         "metadata_xml": attr.label(
             allow_files = True,
             doc = "The epub-metadata.xml file to use for this book",
+        ),
+        'args': attr.string_list(
+            doc = 'Any additional args to insert',
+            allow_empty = True,
         ),
         "_script": attr.label(
           default="@bazel_rules_bid//build:docker_run",
