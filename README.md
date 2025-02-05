@@ -1,6 +1,5 @@
-![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg)
 
-# Introduction
+## Introduction ![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg)
 
 This repository is a set of [bazel][bazel] build rules that allow you to write
 a moderately complex book in the Markdown text format, and produce EPUB and
@@ -8,7 +7,13 @@ Kindle's MOBI formats from them.  You can also produce a PDF format book, which
 allows you to preview the results slightly more convenient than by reading the
 resulting books.
 
-   [bazel]: https://bazel.io
+The documentation is available in the following formats:
+* [HTML][xht]
+* [PDF][xpd]
+
+[xht]: https://hdlfactory.com/ebook_example_html
+[xpd]: https://hdlfactory.com/ebook_example_pdf/ebook_example_pdf.pdf
+[bazel]: https://bazel.io
 
 The build rules currently support pure Markdown formatting, LaTeX-style
 equations (though not cross-referencing, and in general the amount of
@@ -17,7 +22,7 @@ LaTeX supported is somewhat limited).
 > This is not an officially supported Google product.  Even though Google owns
 > the copyright. I just happened to work there while I worked on this tool.
 
-# Prerequisites
+## Prerequisites
 
 * [docker](https://docker.io), because part of the bazel build process needs
   docker for the [build-in-docker][bid] method.
@@ -27,9 +32,9 @@ LaTeX supported is somewhat limited).
 [ba]: https://hdlfactory.com/note/2024/08/24/bazel-installation-via-the-bazelisk-method/
 [bid]: https://github.com/filmil/bazel-rules-bid
 
-# Quick start
+## Quick start
 
-## Build
+### Build
 
 If you are impatient to see the rules in action, check out an example book in
 [the example repository][example].
@@ -44,13 +49,13 @@ cd ebook-example && bazel build //...
 
 This will build *all the examples* for you to appreciate.
 
-## Examine results
+### Examine results
 
 Check out a [built example here][xmp].
 
 [xmp]: https://www.hdlfactory.com/html_chunked
 
-# Defined build rules
+## Defined build rules
 
 The build rules are defined in the file [build/rules.bzl](build/rules.bzl).  A
 quick list is here:
@@ -74,7 +79,7 @@ quick list is here:
   [plantuml]: https://plantuml.com
   [dtg]: https://drawtiming.sourceforge.net/
 
-## Common parameters
+### Common parameters
 
 * `args`: (`list[string]`): verbatim arguments to be passed to the underlying
   program.
@@ -86,7 +91,7 @@ quick list is here:
   quite a few of these may be specified as preamble to regular `pandoc`
   markdown.
 
-# Underlying software
+## Underlying software
 
 These build rules, of course, only explain to bazel how the ebook is to be
 built.  The actual workhorses for building are [Docker][docker],
@@ -114,7 +119,7 @@ I am kind of proud of the way this was done, and you can see some more detail
 in the script [docker_run.sh](build/docker_run.sh).
 
 
-# Limitations
+## Limitations
 
 There are a few constraints to note however:
 
