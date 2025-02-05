@@ -3,5 +3,35 @@
 # This file has been licensed under Apache 2.0 license.  Please see the LICENSE
 # file at the root of the repository.
 
-# Top level directory must have a BUILD.bazel file, even if empty.
+load("//build:rules.bzl",
+    "markdown_lib",
+    "pandoc_chunked_html",
+     "ebook_pdf",
+)
 
+markdown_lib(
+    name = "manual_src",
+    srcs = [
+        "README.md",
+    ],
+)
+
+pandoc_chunked_html(
+    name = "bazel_ebook_html",
+    deps = [
+        ":manual_src",
+    ],
+    toc = True,
+    title = "Bazel Ebook Tools",
+    filters = [
+        "@pandoc_crossref//:pandoc_crossref",
+    ],
+)
+
+# Missing rsvg-convert (for now).
+#ebook_pdf(
+  #name = "bazel_ebook_pdf",
+  #deps = [":manual_src"],
+  #metadata_xml = "empty.xml",
+  #title_yaml = "empty.yaml",
+#)
