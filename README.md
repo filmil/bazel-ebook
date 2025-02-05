@@ -66,11 +66,25 @@ quick list is here:
 | `ebook_pdf(name, deps, metadata_xmp, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
 | `neato_png(name, srcs, deps)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
 | `plantuml_png(name, srcs, deps)` | This build rule converts a [PlantUML][plantuml] source files into PNG images that can be included in the book.  This rule can take any PlantUML-formatted `*.txt` file in `srcs` and can depend on any rule in `deps`. |
+| `pandoc_standalone_html(name, deps, metadata, toc, title, args, filters)` | Use [pandoc][pandoc] to convert the `markdown_lib` deps listed into a standalone HTML file.|
+| `pandoc_chunked_html(name, deps, metadata, toc, title, args, filters)` | Use [pandoc][pandoc] to convert the `markdown_lib` deps listed into a set of chaptered HTML resources. This is probably the best way to generate a set of self-contained files.|
 
   [asy]: https://asymptote.sourceforge.io
   [gvz]: https://graphviz.org
   [plantuml]: https://plantuml.com
   [dtg]: https://drawtiming.sourceforge.net/
+
+## Common parameters
+
+* `args`: (`list[string]`): verbatim arguments to be passed to the underlying
+  program.
+* `deps`: (`list[Label]`): dependency labels, can be any generated targets.
+* `filters`: (`list[Label]`): a list of [pandoc][pandoc] filters to apply, in
+  the order that they need to appear in the `pandoc` command line.
+* `toc`: (`bool`): whether to generate a table of contents.
+* `metadata`: (`Label`): A label representing a YAML metadata file. Note that
+  quite a few of these may be specified as preamble to regular `pandoc`
+  markdown.
 
 # Underlying software
 
