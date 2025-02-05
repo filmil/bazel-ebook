@@ -28,10 +28,9 @@ pandoc_chunked_html(
     ],
 )
 
-# Missing rsvg-convert (for now).
-#ebook_pdf(
-  #name = "bazel_ebook_pdf",
-  #deps = [":manual_src"],
-  #metadata_xml = "empty.xml",
-  #title_yaml = "empty.yaml",
-#)
+ebook_pdf(
+  name = "bazel_ebook_pdf",
+  deps = [":manual_src"],
+  metadata_xml = "empty.xml",
+  title_yaml = "empty.yaml",
+)

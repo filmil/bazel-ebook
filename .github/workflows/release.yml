@@ -16,7 +16,7 @@ jobs:
       - name: "Build ebook-example"
         run: "cd ebook-example && bazel build //:html_chunked"
       - name: "Build bazel-ebook manual"
-        run: "bazel build //:bazel_ebook_html"
+        run: "bazel build //:bazel_ebook_html //:bazel_ebook_pdf"
       - name: "Examine the environment"
         run: "ls -lR && ls -lR ./ebook-example/bazel-bin && ls -lR ./ebook-example/bazel-bin/html_chunked.d"
       - name: "Deploy ebook-example"
@@ -34,6 +34,18 @@ jobs:
         with:
           external_repository: filmil/hdlfactory.com.template
           publish_dir: ./bazel-bin/bazel_ebook_html.d/bazel_ebook_html
-          destination_dir: static/html_chunked
+          destination_dir: static/bazel_ebook_html
           publish_branch: main
           deploy_key: "${{ secrets.DEPLOY_KEY }}"
+      - name: "Kill ssh-agent (2)"
+        run: "killall ssh-agent"
+      - name: "Deploy bazel_ebook_pdf"
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: filmil/hdlfactory.com.template
+          publish_dir: ./bazel-bin
+          destination_dir: static/bazel_ebook_pdf
+          exclude_assets: '*.d'
+          publish_branch: main
+          deploy_key: "${{ secrets.DEPLOY_KEY }}"
+
