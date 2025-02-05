@@ -11,8 +11,8 @@ The documentation is available in the following formats:
 * [HTML][xht]
 * [PDF][xpd]
 
-[xht]: https://hdlfactory.com/ebook_example_html
-[xpd]: https://hdlfactory.com/ebook_example_pdf/ebook_example_pdf.pdf
+[xht]: https://hdlfactory.com/bazel_ebook_html
+[xpd]: https://hdlfactory.com/bazel_ebook_pdf/bazel_ebook_pdf.pdf
 [bazel]: https://bazel.io
 
 The build rules currently support pure Markdown formatting, LaTeX-style
