@@ -5,7 +5,7 @@ The scripts for invoking docker containers.
 """
 
 # This is the container used to run the typesetting programs.
-CONTAINER = "filipfilmar/ebook-buildenv:2.0"
+CONTAINER = "filipfilmar/ebook-buildenv:2.1"
 
 # Use this for quick local runs.
 #CONTAINER = "ebook-buildenv:local"

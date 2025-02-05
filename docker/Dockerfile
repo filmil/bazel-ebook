@@ -19,3 +19,7 @@ RUN apt-get update && \
     scons \
     texlive-fonts-recommended
 
+# For rendering SVG images into PDF.
+RUN apt-get install -y \
+    librsvg2-bin \
+    texlive-latex-extra
