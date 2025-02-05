@@ -103,6 +103,7 @@ def _drawtiming_png_impl(ctx):
                   cmd=cmd,
                   out_file=out_file.path,
                   in_file=in_file.path,
+                  args=" ".join(ctx.attr.args),
                   script=script_cmd),
             )
 
@@ -131,6 +132,9 @@ drawtiming_png = rule(implementation = _drawtiming_png_impl,
           doc = "The dependencies, any targets should be allowed",
         ),
       "output": attr.output(doc="The generated file"),
+      "args": attr.string_list(
+            doc = "A list of arguments prepended verbatim to the invocation of drawtiming",
+      ),
       "_script": attr.label(
         default="@bazel_rules_bid//build:docker_run",
         executable=True,
