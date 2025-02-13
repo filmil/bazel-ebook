@@ -1,5 +1,6 @@
 load(":script.bzl", _script_cmd = "script_cmd")
-load(":providers.bzl", "EbookInfo", "PandocMetadata")
+load(":providers.bzl", "EbookInfo", "PandocMetadata", "merge_EbookInfo")
+load(":attrs.bzl", "ADDITIONAL_INPUTS")
 
 """
 Pandoc metadata rules.
@@ -25,16 +26,22 @@ def _pandoc_html(ctx, format,
     figures = []
     for dep in ctx.attr.deps:
         provider = dep[EbookInfo]
-        markdowns += provider.markdowns
-        figures += provider.figures
+        markdowns += provider.markdowns or []
+        figures += provider.figures or []
+    data_p = merge_EbookInfo([p[EbookInfo] for p in ctx.attr.deps])
 
     filters = []
     filters_paths = []
+    lua_filters = []
+    lua_filters_paths = []
     for filter in ctx.attr.filters:
         filter_files = filter.files.to_list()
         for file in filter_files:
             filters += [file]
-            filters_paths += [file.path]
+            if file.extension == 'lua':
+                lua_filters_paths += [file.path]
+            else:
+                filters_paths += [file.path]
 
     resource_paths = [file.dirname for file in markdowns + figures]
     dir_reference = markdowns[0]
@@ -58,11 +65,13 @@ def _pandoc_html(ctx, format,
 
     for filter in filters_paths:
         args += ['--filter', filter]
+    for filter in lua_filters_paths:
+        args += ['--lua-filter', filter]
 
     args += markdowns_paths
     ctx.actions.run_shell(
         progress_message = 'Building equation environments for: {}'.format(name),
-        inputs = markdowns + figures,
+        inputs = markdowns + figures + data_p.additional_inputs,
         outputs = [output_file],
         tools = [script] + filters,
         command = ' '.join(args),
@@ -78,7 +87,7 @@ def _pandoc_html(ctx, format,
         runfiles=runfiles),
     ]
 
-_ATTRS = {
+_ATTRS = ADDITIONAL_INPUTS | {
     'deps': attr.label_list(
         doc = 'The markdown libraries, used in the order provided.',
         providers = [EbookInfo],

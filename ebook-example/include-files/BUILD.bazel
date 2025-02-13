@@ -1,0 +1,34 @@
+load("@bazel_ebook//build:rules.bzl",
+    "markdown_lib",
+    "pandoc_standalone_html",
+)
+
+markdown_lib(
+  name = "md",
+  srcs = [
+    "file1.md",
+  ],
+  additional_inputs = [
+      ":md2",
+  ],
+)
+
+filegroup(
+  name = "md2",
+  srcs = [
+    "file2.md",
+  ],
+)
+
+
+pandoc_standalone_html(
+    name = "html",
+    deps = [
+        ":md",
+    ],
+    title = "Bazel Ebook Tools",
+    filters = [
+        "@pandoc_include_code//:filter",
+        "@pandoc_crossref//:pandoc_crossref",
+    ],
+)

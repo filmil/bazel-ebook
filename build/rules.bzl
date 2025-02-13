@@ -10,6 +10,7 @@ load(":pandoc.bzl",
     _pandoc_chunked_html = "pandoc_chunked_html",
 )
 load(":providers.bzl", "EbookInfo")
+load(":attrs.bzl", _ADDITIONAL_INPUTS = "ADDITIONAL_INPUTS")
 
 pandoc_standalone_html = _pandoc_standalone_html
 pandoc_chunked_html = _pandoc_chunked_html
@@ -259,7 +260,7 @@ def _asymptote_impl(ctx):
         ebook_provider = target[EbookInfo]
         if not ebook_provider:
             continue
-        deps += ebook_provider.figures
+        deps += ebook_provider.figures or []
 
     runfiles = ctx.runfiles(files=figures+deps)
     for dep in ctx.attr.deps:
@@ -274,8 +275,8 @@ def _asymptote_impl(ctx):
 asymptote = rule(implementation = _asymptote_impl,
     attrs = {
       "srcs": attr.label_list(
-          allow_files = [".asy"],
           doc = "The file to compile",
+          allow_files = True,
         ),
       "deps": attr.label_list(
           doc = "The dependencies, any targets should be allowed",
@@ -315,6 +316,10 @@ def _copy_file_to_workdir(ctx, src):
 def _markdown_lib_impl(ctx):
     markdowns = []
     figures = []
+    additional_inputs = []
+    for target in ctx.attr.additional_inputs:
+        for src in target.files.to_list():
+            additional_inputs += [src]
     for target in ctx.attr.srcs:
         if EbookInfo in target:
             provider = target[EbookInfo]
@@ -333,7 +338,10 @@ def _markdown_lib_impl(ctx):
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
 
     return [
-      EbookInfo(figures=figures, markdowns=markdowns),
+      EbookInfo(
+        figures=figures,
+        markdowns=markdowns,
+        additional_inputs=additional_inputs),
       DefaultInfo(
         files=depset(figures+markdowns),
         runfiles=runfiles,
@@ -354,7 +362,7 @@ markdown_lib = rule(
               doc = "The file to compile",
               providers = [EbookInfo],
         ),
-    },
+    } | _ADDITIONAL_INPUTS,
 )
 
 
@@ -365,10 +373,13 @@ def _ebook_epub_impl(ctx):
     # run htex on all *md, gives book.htex
     markdowns = []
     figures = []
+    additional_inputs = []
+
     for dep in ctx.attr.deps:
         provider = dep[EbookInfo]
-        markdowns += provider.markdowns
-        figures += provider.figures
+        markdowns += provider.markdowns or []
+        figures += provider.figures or []
+        additional_inputs += provider.additional_inputs or []
     dir_reference = markdowns[0]
     htex_file = ctx.actions.declare_file("{}.htex".format(name))
 
@@ -380,7 +391,7 @@ def _ebook_epub_impl(ctx):
 
     ctx.actions.run_shell(
         progress_message = "Building equation environments for: {}".format(name),
-        inputs = markdowns,
+        inputs = markdowns + additional_inputs,
         outputs = [htex_file],
         tools = [script],
         command = """\
@@ -398,7 +409,7 @@ def _ebook_epub_impl(ctx):
     html_file = ctx.actions.declare_file("{}.html".format(name))
     ctx.actions.run_shell(
         progress_message = "Extracting equations for: {}".format(name),
-        inputs = [htex_file],
+        inputs = [htex_file] + additional_inputs,
         outputs = [outdir, html_file],
         tools = [script],
         command = """\
@@ -433,7 +444,7 @@ def _ebook_epub_impl(ctx):
 
     ctx.actions.run_shell(
         progress_message = "Building EPUB for: {}".format(name),
-        inputs = inputs,
+        inputs = inputs + additional_inputs,
         tools = [script],
         outputs = [ebook_epub],
         command = """\
@@ -482,7 +493,7 @@ ebook_epub = rule(
           default="@bazel_rules_bid//build:docker_run",
           executable=True,
           cfg="host"),
-    },
+    } | _ADDITIONAL_INPUTS,
     doc = "Generate an ebook in EPUB format"
 )
 
@@ -501,10 +512,12 @@ def _ebook_pdf_impl(ctx):
     # run htex on all *md, gives book.htex
     markdowns = []
     figures = []
+    additional_inputs = []
     for dep in ctx.attr.deps:
         provider = dep[EbookInfo]
         markdowns += provider.markdowns
         figures += provider.figures
+        additional_inputs += provider.additional_inputs
     dir_reference = markdowns[0]
 
     # Fixed up paths -- relative to the directory dir_reference, not the
@@ -527,7 +540,7 @@ def _ebook_pdf_impl(ctx):
 
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
-        inputs = inputs,
+        inputs = inputs + additional_inputs,
         tools = [script],
         outputs = [ebook_pdf],
         command = """\
@@ -575,7 +588,7 @@ ebook_pdf = rule(
           default="@bazel_rules_bid//build:docker_run",
           executable=True,
           cfg="host"),
-    },
+    } | _ADDITIONAL_INPUTS,
     doc = "Generate an ebook in PDF format"
 )
 

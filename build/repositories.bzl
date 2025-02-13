@@ -4,7 +4,7 @@
 # file at the root of the repository.
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def bazel_ebook_repositories():
@@ -43,3 +43,37 @@ filegroup(
         """,
     )
 
+    maybe(
+        new_git_repository,
+        name = "pandoc_ext_include_files",
+        remote = "https://github.com/pandoc-ext/include-files.git",
+        commit = "364394eaa71bcc8539090e3f31746135d55f674d",
+        build_file_content = """package(
+    default_visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "filter",
+    srcs = [ ":include-files.lua"],
+)
+"""
+    )
+
+    # This does not really work. :/
+    maybe(
+        http_archive,
+        name = "pandoc_include_code",
+        urls = [
+            "https://github.com/owickstrom/pandoc-include-code/releases/download/v1.2.0.2/pandoc-include-code-linux-ghc8-pandoc-1-19.tar.gz",
+        ],
+        sha256 = "",
+        build_file_content = """
+package(default_visibility = ["//visibility:public"])
+filegroup(
+    name = "filter",
+    srcs = [
+        "pandoc-include-code",
+    ],
+)
+        """,
+    )
