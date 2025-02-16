@@ -28,7 +28,8 @@ pandoc_standalone_html(
     ],
     title = "Bazel Ebook Tools",
     filters = [
-        "@pandoc_include_code//:filter",
+        #Needs a freshly-compiled filter.
+        #"@pandoc_include_code//:filter",
         "@pandoc_crossref//:pandoc_crossref",
     ],
 )
