@@ -22,4 +22,5 @@ RUN apt-get update && \
 # For rendering SVG images into PDF.
 RUN apt-get install -y \
     librsvg2-bin \
-    texlive-latex-extra
+    texlive-latex-extra \
+    libgmp-dev
