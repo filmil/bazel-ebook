@@ -9,6 +9,7 @@ allows you to preview the results slightly more convenient than by reading the
 resulting books.
 
 The documentation is available in the following formats:
+
 * [HTML][xht]
 * [PDF][xpd]
 
