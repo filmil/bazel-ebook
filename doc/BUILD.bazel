@@ -1,0 +1,20 @@
+# Copyright (C) 2020 Google Inc.
+#
+# This file has been licensed under Apache 2.0 license.  Please see the LICENSE
+# file at the root of the repository.
+
+package(default_visibility = [ "//visibility:public" ])
+
+load("//build:rules.bzl",
+    "markdown_lib",
+    "pandoc_chunked_html",
+     "ebook_pdf",
+)
+
+markdown_lib(
+    name = "md",
+    srcs = [
+        "01-introduction.md",
+    ],
+)
+

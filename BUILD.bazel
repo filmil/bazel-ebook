@@ -12,6 +12,8 @@ load("//build:rules.bzl",
 markdown_lib(
     name = "manual_src",
     srcs = [
+        "empty.md", # This shouldn't be happening.
+        "//doc:md",
         "README.md",
     ],
 )
@@ -22,7 +24,7 @@ pandoc_chunked_html(
         ":manual_src",
     ],
     toc = True,
-    title = "Bazel Ebook Tools",
+    title = "Bazel Ebook Ebook",
     filters = [
         "@pandoc_crossref//:pandoc_crossref",
     ],
