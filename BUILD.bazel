@@ -15,6 +15,14 @@ markdown_lib(
         "empty.md", # This shouldn't be happening.
         "//doc:md",
         "README.md",
+        "//tests:plantuml_lib_test",
+        "//tests:md",
+        "//tests:dot_png_test",
+        "//tests:drawtiming_lib_test",
+        "//tests/include-files:md",
+    ],
+    additional_inputs = [
+        "//tests/include-files:md2",
     ],
 )
 

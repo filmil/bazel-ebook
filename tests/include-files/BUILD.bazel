@@ -1,7 +1,9 @@
-load("@bazel_ebook//build:rules.bzl",
+load("//build:rules.bzl",
     "markdown_lib",
     "pandoc_standalone_html",
 )
+
+package(default_visibility = [ "//visibility:public" ])
 
 markdown_lib(
   name = "md",
@@ -28,7 +30,7 @@ pandoc_standalone_html(
     ],
     title = "Bazel Ebook Tools",
     filters = [
-        "@bazel_ebook//third_party/pandoc-include-code:filter",
+        "//third_party/pandoc-include-code:filter",
         "@pandoc_crossref//:pandoc_crossref",
     ],
 )
