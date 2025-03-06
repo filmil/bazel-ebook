@@ -28,12 +28,10 @@ def _plantuml_png_impl(ctx):
                 paths.replace_extension(in_file.basename, ".png"))
             figures += [out_file]
 
-            #print("out file dirname: {}".format(out_file.dirname))
-            #print(in_file.path)
-            #print(out_file.path)
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
-              progress_message = "plantuml diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
+              progress_message = "plantuml diagram to PNG with {1}: {0}".format(
+                in_file.short_path, cmd),
               inputs = [in_file],
               outputs = [out_file],
               tools = [docker_run],
@@ -332,8 +330,9 @@ def _markdown_lib_impl(ctx):
         provider = target[EbookInfo]
         figures += (provider.figures or [])
         markdowns += (provider.markdowns or [])
+        additional_inputs += (provider.additional_inputs or [])
 
-    runfiles = ctx.runfiles(files=figures+markdowns)
+    runfiles = ctx.runfiles(files=figures+markdowns+additional_inputs)
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
 
@@ -343,7 +342,7 @@ def _markdown_lib_impl(ctx):
         markdowns=markdowns,
         additional_inputs=additional_inputs),
       DefaultInfo(
-        files=depset(figures+markdowns),
+        files=depset(figures+markdowns+additional_inputs),
         runfiles=runfiles,
       ),
     ]
