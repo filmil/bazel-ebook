@@ -5,17 +5,12 @@ module(
 
 bazel_dep(name = "rules_pkg", version = "1.1.0")
 bazel_dep(name = "bazel_rules_bid", version = "0.2.5")
-bazel_dep(name = "bazel_ebook", version = "0.0.1")
+bazel_dep(name = "bazel_ebook", version = "0.0.2")
+
 
 local_path_override(
     module_name = "bazel_ebook",
     path = "../",
-)
-
-# XXX: remove this
-local_path_override(
-    module_name = "bazel_rules_bid",
-    path = "/home/filmil/code/bazel-rules-bid",
 )
 
 
