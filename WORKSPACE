@@ -37,9 +37,6 @@ bazel_ebook_repositories()
 load("@gotopt2//build:deps.bzl", "gotopt2_dependencies")
 gotopt2_dependencies()
 
-#load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
-#rules_pkg_dependencies()
-
 
 git_repository(
     name = "bazel_rules_bid",

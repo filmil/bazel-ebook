@@ -1,0 +1,48 @@
+module(
+    name = "bazel_ebook_example",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+bazel_dep(name = "bazel_ebook", version = "0.0.1")
+
+local_path_override(
+    module_name = "bazel_ebook",
+    path = "../",
+)
+
+# pandoc_crossref
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+        name = "pandoc_crossref",
+        urls = [
+            "https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.18.1a/pandoc-crossref-Linux-X64.tar.xz",
+        ],
+        sha256 = "ef74b6682f447e8705105963624076e0410b964b2ae16c8072b2a3e241a044f2",
+        build_file_content = """
+package(default_visibility = ["//visibility:public"])
+filegroup(
+    name = "pandoc_crossref",
+    srcs = [
+        "pandoc-crossref",
+    ],
+)
+        """,
+)
+
+http_archive(
+    name = "gotopt2",
+    integrity = "sha256-qFQjgqh4fnHet1UkV38bExd64Yk582iBUi9OrClJGJo=",
+    urls = [
+        "https://github.com/filmil/gotopt2/releases/download/v1.3.1/gotopt2-linux-amd64.zip",
+    ],
+    strip_prefix = "gotopt2",
+    build_file_content = """package(default_visibility = ["//visibility:public"])
+filegroup(
+    name = "bin",
+    srcs = [ "gotopt2", ],
+)
+"""
+)
+
