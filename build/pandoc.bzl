@@ -78,7 +78,6 @@ def _pandoc_html(ctx, format,
     )
     runfiles_files = []
     runfiles = None
-    print("ai: ", data_p.additional_inputs)
     if not self_contained:
         runfiles_files = figures + data_p.additional_inputs
         runfiles = ctx.runfiles(files=runfiles_files)

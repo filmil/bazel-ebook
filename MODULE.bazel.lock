@@ -23,6 +23,8 @@
     "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_features/1.21.0/source.json": "3e8379efaaef53ce35b7b8ba419df829315a880cb0a030e5bb45c96d6d5ecb5f",
     "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_features/1.4.1/MODULE.bazel": "e45b6bb2350aff3e442ae1111c555e27eac1d915e77775f6fdc4b351b758b5d7",
     "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_features/1.9.1/MODULE.bazel": "8f679097876a9b609ad1f60249c49d68bfab783dd9be012faf9d82547b14815a",
+    "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_rules_bid/0.2.5/MODULE.bazel": "4c5761b51ffb7c0febb79e8dafd681b431e936c4932cc5ecb1f20efef2b5e49a",
+    "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_rules_bid/0.2.5/source.json": "a3908092280bac5cf0bee383b48b1d156ef8952e0a9d4a960ebde7a384544bf9",
     "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_skylib/1.0.3/MODULE.bazel": "bcb0fd896384802d1ad283b4e4eb4d718eebd8cb820b0a2c3a347fb971afd9d8",
     "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_skylib/1.1.1/MODULE.bazel": "1add3e7d93ff2e6998f9e118022c84d163917d912f5afafb3058e3d2f1545b5e",
     "https://raw.githubusercontent.com/filmil/bazel-central-registry/dev/modules/bazel_skylib/1.2.0/MODULE.bazel": "44fe84260e454ed94ad326352a698422dbe372b21a1ac9f3eab76eb531223686",
@@ -161,6 +163,71 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
+    "//:extensions.bzl%bazel_ebook_extension": {
+      "general": {
+        "bzlTransitiveDigest": "1X1OhEDzLf9XQIpn6bzQ5bUzbL9+BYCSwsoco+puGEA=",
+        "usagesDigest": "p3UwcUjnTkY+y6HO5OQRdKasm90O/e6/rGAlLBE5Q5o=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "pandoc_crossref": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.18.1a/pandoc-crossref-Linux-X64.tar.xz"
+              ],
+              "sha256": "ef74b6682f447e8705105963624076e0410b964b2ae16c8072b2a3e241a044f2",
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\nfilegroup(\n    name = \"pandoc_crossref\",\n    srcs = [\n        \"pandoc-crossref\",\n    ],\n)\n        "
+            }
+          },
+          "pandoc_ext_include_files": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:git.bzl%git_repository",
+            "attributes": {
+              "remote": "https://github.com/pandoc-ext/include-files.git",
+              "commit": "364394eaa71bcc8539090e3f31746135d55f674d",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"filter\",\n    srcs = [ \":include-files.lua\"],\n)\n"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
+    "@@bazel_rules_bid+//:extensions.bzl%bazel_rules_bid_extension": {
+      "general": {
+        "bzlTransitiveDigest": "W7dIuR2bGW3g3h5XqSv2vEX+4rPcgLeYSpBb4N4r0go=",
+        "usagesDigest": "Jf/EoX5L93XBOcRBgEjhLchmjuSbuKPLPHGl3zxhEvA=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "gotopt2": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "integrity": "sha256-qFQjgqh4fnHet1UkV38bExd64Yk582iBUi9OrClJGJo=",
+              "urls": [
+                "https://github.com/filmil/gotopt2/releases/download/v1.3.1/gotopt2-linux-amd64.zip"
+              ],
+              "strip_prefix": "gotopt2",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"])\nfilegroup(\n    name = \"bin\",\n    srcs = [ \"gotopt2\", ],\n)\n"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "bazel_rules_bid+",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
     "@@buildifier_prebuilt+//:defs.bzl%buildifier_prebuilt_deps_extension": {
       "general": {
         "bzlTransitiveDigest": "77wpjIiy5v7dmpUSToH3MqQClBXIkE2DrGCwATf08g4=",
