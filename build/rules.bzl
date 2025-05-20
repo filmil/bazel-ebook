@@ -97,7 +97,7 @@ def _drawtiming_png_impl(ctx):
               tools = [docker_run],
               command = """\
                 {script} \
-                  {cmd} --output "{out_file}" "{in_file}"
+                  {cmd} {args} --output "{out_file}" "{in_file}"
               """.format(
                   cmd=cmd,
                   out_file=out_file.path,
