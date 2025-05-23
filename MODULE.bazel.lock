@@ -166,7 +166,7 @@
     "//:extensions.bzl%bazel_ebook_extension": {
       "general": {
         "bzlTransitiveDigest": "1X1OhEDzLf9XQIpn6bzQ5bUzbL9+BYCSwsoco+puGEA=",
-        "usagesDigest": "p3UwcUjnTkY+y6HO5OQRdKasm90O/e6/rGAlLBE5Q5o=",
+        "usagesDigest": "WiSIv4BpKP2MqHOyG57w4cvNt7cXMxFskYzCG28TqEQ=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -202,7 +202,7 @@
     "@@bazel_rules_bid+//:extensions.bzl%bazel_rules_bid_extension": {
       "general": {
         "bzlTransitiveDigest": "W7dIuR2bGW3g3h5XqSv2vEX+4rPcgLeYSpBb4N4r0go=",
-        "usagesDigest": "Jf/EoX5L93XBOcRBgEjhLchmjuSbuKPLPHGl3zxhEvA=",
+        "usagesDigest": "yV33VD9ChySuuaQwg41zoA/AJSnqGQ+vUTrB6MHYITY=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
