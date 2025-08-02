@@ -3,10 +3,10 @@ name: Publish on Bazel Central Registry
 
 on:
   workflow_call:
-  inputs:
-    tag_name:
-      required: true
-      type: string
+    inputs:
+      tag_name:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       tag_name:
