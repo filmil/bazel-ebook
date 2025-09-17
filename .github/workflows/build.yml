@@ -18,6 +18,13 @@ jobs:
           version: 8.1.1
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Cache Bazel dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/bazel
+          key: ${{ runner.os }}-bazel-${{ hashFiles('**/MODULE.bazel.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bazel-
       - name: Build
         run: "bazel build //..."
       - name: Test
