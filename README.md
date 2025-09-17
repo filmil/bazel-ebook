@@ -66,17 +66,17 @@ quick list is here:
 
 | Rule | Description |
 |------|-------------|
-| `asymptote(name, srcs, deps)` | This build rule converts [Asymptote][asy] source files into images that can be included in the book. This rule can take any `*.asy` file in `srcs` and can depend on any `asymptote` rule in `deps`. |
-| `dot_png(name, srcs, deps)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `dot`. |
+| `asymptote(name, srcs, deps, output)` | This build rule converts [Asymptote][asy] source files into images that can be included in the book. This rule can take any `*.asy` file in `srcs` and can depend on any `asymptote` rule in `deps`. |
+| `dot_png(name, srcs, deps, output)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `dot`. |
 | `drawtiming_png(name, srcs, deps, output, args)` | Typeset a timing diagram using [drawtiming][dtg]. |
-| `markdown_lib(name, srcs, deps)` |  This build rule makes a library out of `*/md` files.  `deps` may be any `markdown_lib` or `asymptote` or other such rule, and those will be used correctly. |
-| `ebook_epub(name, deps, metadata_xml, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
-| `ebook_kindle(name, deps, metadata_xmp, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
-| `ebook_pdf(name, deps, metadata_xmp, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
-| `neato_png(name, srcs, deps)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
-| `plantuml_png(name, srcs, deps)` | This build rule converts a [PlantUML][plantuml] source files into PNG images that can be included in the book.  This rule can take any PlantUML-formatted `*.txt` file in `srcs` and can depend on any rule in `deps`. |
-| `pandoc_standalone_html(name, deps, metadata, toc, title, args, filters)` | Use [pandoc][pandoc] to convert the `markdown_lib` deps listed into a standalone HTML file.|
-| `pandoc_chunked_html(name, deps, metadata, toc, title, args, filters)` | Use [pandoc][pandoc] to convert the `markdown_lib` deps listed into a set of chaptered HTML resources. This is probably the best way to generate a set of self-contained files.|
+| `ebook_epub(name, deps, metadata_xml, title_yaml, args, additional_inputs)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
+| `ebook_kindle(name, deps, metadata_xml, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
+| `ebook_pdf(name, deps, metadata_xml, title_yaml, args, additional_inputs)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
+| `markdown_lib(name, srcs, deps, additional_inputs)` |  This build rule makes a library out of `*/md` files.  `deps` may be any `markdown_lib` or `asymptote` or other such rule, and those will be used correctly. |
+| `neato_png(name, srcs, deps, output)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
+| `pandoc_chunked_html(name, deps, metadata, toc, title, args, filters, additional_inputs)` | Use [pandoc][pandoc] to convert the `markdown_lib` deps listed into a set of chaptered HTML resources. This is probably the best way to generate a set of self-contained files.|
+| `pandoc_standalone_html(name, deps, metadata, toc, title, args, filters, additional_inputs)` | Use [pandoc][pandoc] to convert the `markdown_lib` deps listed into a standalone HTML file.|
+| `plantuml_png(name, srcs, deps, output)` | This build rule converts a [PlantUML][plantuml] source files into PNG images that can be included in the book.  This rule can take any PlantUML-formatted `*.txt` file in `srcs` and can depend on any rule in `deps`. |
 
   [asy]: https://asymptote.sourceforge.io
   [gvz]: https://graphviz.org
