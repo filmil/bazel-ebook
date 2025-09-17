@@ -1,6 +1,8 @@
 # README.md
 
-## Introduction ![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg)
+![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg) [![Publish to my Bazel registry](https://github.com/filmil/bazel-ebook/actions/workflows/publish.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/publish.yml) [![Release](https://github.com/filmil/bazel-ebook/actions/workflows/release.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/release.yml)
+
+## Introduction
 
 This repository is a set of [bazel][bazel] build rules that allow you to write
 a moderately complex book in the Markdown text format, and produce EPUB and
