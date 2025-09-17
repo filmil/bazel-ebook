@@ -1,6 +1,6 @@
 # README.md
 
-![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg) [![Publish to my Bazel registry](https://github.com/filmil/bazel-ebook/actions/workflows/publish.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/publish.yml) [![Release](https://github.com/filmil/bazel-ebook/actions/workflows/release.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/release.yml)
+![Build Status](https://github.com/filmil/bazel-ebook/workflows/Build/badge.svg) [![Publish to my Bazel registry](https://github.com/filmil/bazel-ebook/actions/workflows/publish.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/publish.yml) [![Release](https://github.com/filmil/bazel-ebook/actions/workflows/release-1.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/release-1.yml) [![Release Sources](https://github.com/filmil/bazel-ebook/actions/workflows/release-sources.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/release-sources.yml)
 
 ## Introduction
 
