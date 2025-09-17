@@ -1,0 +1,31 @@
+name: Release Sources
+on:
+  release:
+    types: [created]
+
+jobs:
+  source-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get release tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Get repo name
+        id: get_repo_name
+        run: echo "REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: 'zip'
+          filename: "${{ env.REPO_NAME }}-${{ env.VERSION }}.zip"
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+      - name: "Publish source archive"
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          allowUpdates: true
+          artifacts: "${{ env.REPO_NAME }}-${{ env.VERSION }}.zip"
+
