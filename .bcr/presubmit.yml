@@ -1,5 +1,5 @@
 bcr_test_module:
-  module_path: "integration"
+  module_path: "bazel-ebook"
   matrix:
     platform: ["ubuntu2204"]
     bazel: [8.x]
