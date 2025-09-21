@@ -1,4 +1,4 @@
-name: Release Sources
+name: Release to GitHub
 on:
   release:
     types: [created]

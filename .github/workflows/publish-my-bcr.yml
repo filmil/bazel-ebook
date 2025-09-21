@@ -1,5 +1,5 @@
 # Based on the instructions at https://github.com/bazel-contrib/publish-to-bcr
-name: Publish to my Bazel registry
+name: Publish to my custom Bazel registry
 
 on:
   workflow_call:
