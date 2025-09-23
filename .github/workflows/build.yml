@@ -13,13 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
+        uses: abhinavsingh/setup-bazel@v3
         with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.workflow }}
-          repository-cache: true
+          version: 8.3.1
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Test container
+        run: "docker run filipfilmar/ebook-buildenv:2.1 ls -l /usr/bin/dot"
+      - name: Test container 2
+        run: "docker run filipfilmar/ebook-buildenv:2.1 ls -l /usr/bin/neato"
+      - name: Test container 3
+        run: "docker run filipfilmar/ebook-buildenv:2.1 ls -l /usr/sbin/libgvc6-config-update"
       - name: Build
         run: "bazel build //..."
       - name: Test

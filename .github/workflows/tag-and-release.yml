@@ -2,9 +2,20 @@
 # * runs tests to ensure that released version works.
 # * tags a new release based on main top of tree.
 # * builds a source bundle and uploads it into the release
+# * builds binaries and uploads them into the release
 #
 # The workflow can be run manually, otherwise it runs once a week.
 name: Tag and Release
+
+env:
+  # The env here is tailored to releasing *one* binary.
+  # ZIP_PACKAGE is the package where the zip target is. For //test in this
+  # example, the label of the bazel target that zips up a built and released
+  # binary is `//test:zip`.
+  ZIP_PACKAGE: "//test"
+  # The name of the binary to package. This workflow packages a single binary
+  # into a zip file.
+  BINARY_NAME: "bazel-bin/test/test"
 
 on:
   schedule:
@@ -15,14 +26,21 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
+    runs-on: ubuntu-latest
+    steps:
       - name: Setup bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
+        uses: abhinavsingh/setup-bazel@v3
         with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.workflow }}
-          repository-cache: true
+          version: 8.4.1
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Cache Bazel dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/bazel
+          key: ${{ runner.os }}-bazel-${{ hashFiles('**/MODULE.bazel.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bazel-
       - name: "Build"
         run: "bazel build --test_output=errors //..."
       - name: Bump version and push tag

@@ -160,7 +160,11 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
               outputs = [out_file],
               tools = [docker_run],
               command = """\
-                {script} \
+                {script} echo PWD: $(pwd) && \
+                  echo PATH: $PATH && \
+                  ls -l /usr/sbin/libgvc6-config-update && \
+                  ls -l /usr/bin/neato && \
+                  ls -l /usr/bin/dot && \
                   {cmd} -Tpng -o "{out_file}" "{in_file}"
               """.format(
                   cmd=cmd,
