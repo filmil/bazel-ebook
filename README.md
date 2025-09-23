@@ -6,7 +6,7 @@
 | Publish to my custom Bazel registry | [![Publish to my custom Bazel registry](https://github.com/filmil/bazel-ebook/actions/workflows/publish-my-bcr.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/publish-my-bcr.yml) |
 | Publish to official Bazel Central Registry | [![Publish to official Bazel Central Registry](https://github.com/filmil/bazel-ebook/actions/workflows/publish-official-bcr.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/publish-official-bcr.yml) |
 | Release to GitHub Pages | [![Release to GitHub Pages](https://github.com/filmil/bazel-ebook/actions/workflows/release-gh-pages.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/release-gh-pages.yml) |
-| Release to GitHub | [![Release to GitHub](https://github.com/filmil/bazel-ebook/actions/workflows/release-gh-sources.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/release-gh-sources.yml) |
+| Release to GitHub | [![Tag and release](https://github.com/filmil/bazel-ebook/actions/workflows/tag-and-release.yml/badge.svg)](https://github.com/filmil/bazel-ebook/actions/workflows/tag-and-release.yml) |
 
 ## Introduction
 
