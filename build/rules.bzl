@@ -159,7 +159,10 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
               inputs = [in_file],
               outputs = [out_file],
               tools = [docker_run],
-              command = """{script} {cmd} -Tpng -o "{out_file}" "{in_file}" """.format(
+              command = """{script} \
+                      echo PATH: $PATH && \
+                      dpkg -L graphviz && \
+                      {cmd} -Tpng -o "{out_file}" "{in_file}" """.format(
                   cmd=cmd,
                   out_file=out_file.path,
                   in_file=in_file.path,
@@ -182,7 +185,7 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
 
 
 def _neato_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(ctx, "neato")
+    return _generalized_graphviz_rule_impl(ctx, "/usr/bin/neato")
 
 
 neato_png = rule(implementation = _neato_png_impl,
@@ -205,7 +208,7 @@ neato_png = rule(implementation = _neato_png_impl,
 
 
 def _dot_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(ctx, "dot")
+    return _generalized_graphviz_rule_impl(ctx, "/usr/bin/dot")
 
 
 dot_png = rule(implementation = _dot_png_impl,
