@@ -178,8 +178,8 @@
     "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_features/1.30.0/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_features/1.4.1/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_features/1.9.1/MODULE.bazel": "not found",
-    "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_rules_bid/0.2.5/MODULE.bazel": "4c5761b51ffb7c0febb79e8dafd681b431e936c4932cc5ecb1f20efef2b5e49a",
-    "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_rules_bid/0.2.5/source.json": "a3908092280bac5cf0bee383b48b1d156ef8952e0a9d4a960ebde7a384544bf9",
+    "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_rules_bid/0.3.0/MODULE.bazel": "704ec69c7f74bee38d3adc28960d8c566ecf4fa586ec40fa08c113d3de0fa358",
+    "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_rules_bid/0.3.0/source.json": "20d7b7f8b23dbed62b36fdfda843edb5a879735c681d5884b8dd7cfc8e993362",
     "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_skylib/1.0.3/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_skylib/1.1.1/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/filmil/bazel-registry/main/modules/bazel_skylib/1.2.0/MODULE.bazel": "not found",
@@ -333,7 +333,7 @@
     "@@bazel_rules_bid+//:extensions.bzl%bazel_rules_bid_extension": {
       "general": {
         "bzlTransitiveDigest": "KShGThipPZ7TMvVWk6U0kVsIQ1ya9XUKbslrrJC54Bs=",
-        "usagesDigest": "X45hqH2zBTBT2Wh/wqK6TiVSsQYUwq2S5xYJz7/8uFg=",
+        "usagesDigest": "2N7jDo5HWvkKjCcKmhwurFdF2FTXOLZ0bH6OSQi4MTk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
