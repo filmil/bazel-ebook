@@ -160,8 +160,9 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
               outputs = [out_file],
               tools = [docker_run],
               command = """{script} \
-                      echo PATH: $PATH && \
-                      dpkg -L graphviz && \
+                      echo PATH: $$PATH && \
+                      sudo apt-get install graphviz && \
+                      ls -l /usr/bin && ls -l /usr/sbin && \
                       {cmd} -Tpng -o "{out_file}" "{in_file}" """.format(
                   cmd=cmd,
                   out_file=out_file.path,
