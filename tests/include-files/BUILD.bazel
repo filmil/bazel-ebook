@@ -30,7 +30,7 @@ pandoc_standalone_html(
     ],
     title = "Bazel Ebook Tools",
     filters = [
-        "//third_party/pandoc-include-code:filter",
-        "@pandoc_crossref//:pandoc_crossref",
+        #"//third_party/pandoc-include-code:filter",
+        #"@pandoc_crossref//:pandoc_crossref",
     ],
 )

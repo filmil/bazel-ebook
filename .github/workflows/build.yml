@@ -20,9 +20,9 @@ jobs:
           repository-cache: true
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build
+      - name: Build one target
         run: "bazel build --spawn_strategy=local //tests:neato_png"
-      - name: Build
+      - name: Build everything
         run: "bazel build //..."
-      - name: Test
+      - name: Run integration test
         run: "cd ebook-example && bazel build //..."

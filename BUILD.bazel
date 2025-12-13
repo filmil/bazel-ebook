@@ -34,7 +34,7 @@ pandoc_chunked_html(
     toc = True,
     title = "Bazel Ebook Ebook",
     filters = [
-        "@pandoc_crossref//:pandoc_crossref",
+        #"@pandoc_crossref//:pandoc_crossref",
     ],
 )
 
