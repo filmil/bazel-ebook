@@ -25,4 +25,4 @@ jobs:
       - name: Build everything
         run: "bazel build //..."
       - name: Run integration test
-        run: "cd ebook-example && bazel build //..."
+        run: "cd ebook-example && bazel build //... --subcommands"
