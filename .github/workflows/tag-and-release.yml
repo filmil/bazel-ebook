@@ -7,16 +7,6 @@
 # The workflow can be run manually, otherwise it runs once a week.
 name: Tag and Release
 
-env:
-  # The env here is tailored to releasing *one* binary.
-  # ZIP_PACKAGE is the package where the zip target is. For //test in this
-  # example, the label of the bazel target that zips up a built and released
-  # binary is `//test:zip`.
-  ZIP_PACKAGE: "//test"
-  # The name of the binary to package. This workflow packages a single binary
-  # into a zip file.
-  BINARY_NAME: "bazel-bin/test/test"
-
 on:
   schedule:
     - cron: '0 0 * * 0'
@@ -24,7 +14,7 @@ on:
 
 jobs:
   tag:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Setup bazel
         uses: bazel-contrib/setup-bazel@0.15.0
