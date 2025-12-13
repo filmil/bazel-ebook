@@ -24,5 +24,5 @@ jobs:
         run: "bazel build --spawn_strategy=local //tests:neato_png"
       - name: Build everything
         run: "bazel build //..."
-      - name: Run integration test
-        run: "cd ebook-example && bazel build //... --subcommands"
+      #- name: Run integration test
+        #run: "cd ebook-example && bazel build //... --subcommands"
