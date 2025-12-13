@@ -1,7 +1,5 @@
-try-import %workspace%/user.bazelrc
+common --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main
+common --registry=https://bcr.bazel.build
 
-build --registry=https://raw.githubusercontent.com/filmil/bazel-central-registry/dev \
-      --registry=https://bcr.bazel.build
-mod --registry=https://raw.githubusercontent.com/filmil/bazel-central-registry/dev \
-      --registry=https://bcr.bazel.build
+try-import %workspace%/user.bazelrc
 

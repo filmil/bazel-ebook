@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Setup bazel
         uses: bazel-contrib/setup-bazel@0.15.0
