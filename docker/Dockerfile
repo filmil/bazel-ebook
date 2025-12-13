@@ -17,10 +17,7 @@ RUN apt-get update && \
     plantuml \
     python3 \
     scons \
-    texlive-fonts-recommended
-
-# For rendering SVG images into PDF.
-RUN apt-get install -y \
+    texlive-fonts-recommended \
     librsvg2-bin \
     texlive-latex-extra \
     libgmp-dev

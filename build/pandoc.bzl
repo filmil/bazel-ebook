@@ -52,7 +52,7 @@ def _pandoc_html(ctx, format,
     script_cmd = _script_cmd(script.path, markdowns_paths[0])
 
     # I think that run_shell does not support ctx.actions.args().
-    args = [script_cmd, 'pandoc']
+    args = [script_cmd, '--', 'pandoc']
     args += ['--write', format] # This is unchunked, standalone
     args += ['-o', '{}{}'.format(output_file.path, output_suffix)]
     if title:
@@ -71,7 +71,7 @@ def _pandoc_html(ctx, format,
     args += markdowns_paths
     ctx.actions.run_shell(
         progress_message = 'Building equation environments for: {}'.format(name),
-        inputs = markdowns + figures + data_p.additional_inputs,
+        inputs = markdowns + figures + data_p.additional_inputs + filters,
         outputs = [output_file],
         tools = [script] + filters,
         command = ' '.join(args),

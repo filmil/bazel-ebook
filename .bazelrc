@@ -9,3 +9,6 @@ mod \
     --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main \
     --registry=https://bcr.bazel.build
 
+
+# Test?
+build --spawn_strategy=local

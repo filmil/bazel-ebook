@@ -36,7 +36,7 @@ def _plantuml_png_impl(ctx):
               outputs = [out_file],
               tools = [docker_run],
               command = """\
-                {script} \
+                {script} -- \
                   {cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}"
               """.format(
                   cmd=cmd,
@@ -96,7 +96,7 @@ def _drawtiming_png_impl(ctx):
               outputs = [out_file],
               tools = [docker_run],
               command = """\
-                {script} \
+                {script} -- \
                   {cmd} {args} --output "{out_file}" "{in_file}"
               """.format(
                   cmd=cmd,
@@ -159,14 +159,14 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
               inputs = [in_file],
               outputs = [out_file],
               tools = [docker_run],
-              command = """{script} \
-                      echo XXX /usr/bin && ls -l /usr/bin && \
-                      echo XXX /usr/sbin && ls -l /usr/sbin && \
-                      {cmd} -Tpng -o "{out_file}" "{in_file}" """.format(
+              command = """{script} -- \
+                      {cmd} -Tpng -o "{out_file}" "{in_file}"
+                """.format(
                   cmd=cmd,
                   out_file=out_file.path,
                   in_file=in_file.path,
-                  script=script_cmd),
+                  script=script_cmd,
+              ),
             )
 
     deps = []

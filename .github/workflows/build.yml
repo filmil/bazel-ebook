@@ -20,11 +20,9 @@ jobs:
           repository-cache: true
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Test graphviz
-        run: "docker run filipfilmar/ebook-buildenv:2.3 dpkg -L graphviz"
       - name: Build
-        run: "bazel build //tests:neato_png --subcommands"
+        run: "bazel build --spawn_strategy=local //tests:neato_png"
       - name: Build
-        run: "bazel build //... --subcommands"
+        run: "bazel build //..."
       - name: Test
         run: "cd ebook-example && bazel build //..."
