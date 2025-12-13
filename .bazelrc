@@ -1,7 +1,4 @@
 common --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main
 common --registry=https://bcr.bazel.build
 
-# It seems that we may not be completing the sandbox properly.
-build --spawn_strategy=local
-
 try-import %workspace%/user.bazelrc
