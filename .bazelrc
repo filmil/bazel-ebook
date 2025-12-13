@@ -10,5 +10,3 @@ mod \
     --registry=https://bcr.bazel.build
 
 
-# Test?
-build --spawn_strategy=local

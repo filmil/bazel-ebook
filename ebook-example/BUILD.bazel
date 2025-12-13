@@ -80,7 +80,7 @@ pandoc_chunked_html(
     #title = "This is a test title",
     toc = True,
     filters = [
-        "@pandoc_crossref//:pandoc_crossref",
+        #"@pandoc_crossref//:pandoc_crossref",
     ],
 )
 
