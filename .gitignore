@@ -8,3 +8,5 @@
 *.opf
 outdir
 bazel-*
+user.bazelrc
+
