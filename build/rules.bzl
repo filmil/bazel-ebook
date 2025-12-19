@@ -431,12 +431,12 @@ def _ebook_epub_impl(ctx):
         outputs = [outdir, html_file],
         tools = [script],
         command = """\
-            {script} --cd-to-dir-reference \
+            {script} -- \
                 env LC_ALL=en_US gladtex -f 12 -d {outdir} {htex_file} \
         """.format(
             script=script_cmd,
             outdir=_strip_reference_dir(dir_reference, outdir.path),
-            htex_file=_strip_reference_dir(dir_reference, htex_file.path),
+            htex_file=htex_file.path
         )
     )
     outdir_tar = ctx.actions.declare_file("{}.tar".format(outdir.basename))
@@ -466,7 +466,7 @@ def _ebook_epub_impl(ctx):
         tools = [script],
         outputs = [ebook_epub],
         command = """\
-            {script} --cd-to-dir-reference \
+            {script} -- \
                 pandoc --epub-metadata={epub_metadata} {args} \
                   -f html -t epub3 -o {ebook_epub} {html_file} \
         """.format(
@@ -517,7 +517,7 @@ ebook_epub = rule(
 
 
 def _strip_reference_dir(reference_dir, path):
-    return path.replace(reference_dir.dirname+"/", "")
+    return path
 
 
 def _strip_reference_dir_from_files(reference_dir, files):
@@ -549,7 +549,7 @@ def _ebook_pdf_impl(ctx):
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
     epub_metadata = ctx.attr.metadata_xml.files.to_list()[0]
-    epub_metadata = _copy_file_to_workdir(ctx, epub_metadata)
+    #epub_metadata = _copy_file_to_workdir(ctx, epub_metadata)
     title_yaml = ctx.attr.title_yaml.files.to_list()[0]
     title_yaml = _copy_file_to_workdir(ctx, title_yaml)
 
@@ -563,7 +563,7 @@ def _ebook_pdf_impl(ctx):
         tools = [script],
         outputs = [ebook_pdf, log_file],
         command = """\
-            {script} --cd-to-dir-reference \
+            {script} -- \
                 pandoc --epub-metadata={epub_metadata} \
                   --mathml -o {ebook_pdf} {args} {markdowns} \
                   2>&1 1>{log} || ( cat {log} && exit 1)
@@ -651,7 +651,7 @@ def _ebook_kindle_impl(ctx):
         tools = [script],
         outputs = [mobi_file, log_file],
         command = """\
-            {script} --cd-to-dir-reference \
+            {script} -- \
                 ebook-convert {args} {epub_file} {mobi_file} \
                 2>&1 >{log} || ( cat {log} && exit 1)
         """.format(
