@@ -23,6 +23,6 @@ jobs:
       - name: Build one target
         run: "bazel build --spawn_strategy=local //tests:neato_png"
       - name: Build everything
-        run: "bazel build --spawn_strategy=local //..."
+        run: "bazel build --spawn_strategy=local //... --subcommands"
       - name: Run integration test
         run: "cd integration && bazel build //... --subcommands"

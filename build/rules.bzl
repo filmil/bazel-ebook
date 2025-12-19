@@ -20,6 +20,7 @@ def _plantuml_png_impl(ctx):
     cmd = "plantuml"
     docker_run = ctx.executable._script
     figures = []
+    log_files = []
 
     for target in ctx.attr.srcs:
         for src in target.files.to_list():
@@ -28,21 +29,27 @@ def _plantuml_png_impl(ctx):
                 paths.replace_extension(in_file.basename, ".png"))
             figures += [out_file]
 
+            log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
+            log_files += [log_file]
+
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
               progress_message = "plantuml diagram to PNG with {1}: {0}".format(
                 in_file.short_path, cmd),
               inputs = [in_file],
-              outputs = [out_file],
+              outputs = [out_file, log_file],
               tools = [docker_run],
               command = """\
                 {script} -- \
-                  {cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}"
+                  {cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}" \
+                  2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
                   cmd=cmd,
                   out_dir=out_file.dirname,
                   in_file=in_file.path,
-                  script=script_cmd),
+                  script=script_cmd,
+                  log=log_file.path,
+              ),
             )
 
     deps = []
@@ -55,7 +62,7 @@ def _plantuml_png_impl(ctx):
     runfiles = ctx.runfiles(files = figures)
     return [
         EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
+        DefaultInfo(files=depset(figures+deps+log_files), runfiles=runfiles),
     ]
 
 
@@ -82,28 +89,33 @@ def _drawtiming_png_impl(ctx):
     cmd = "drawtiming"
     docker_run = ctx.executable._script
     figures = []
+    log_files = []
 
     for target in ctx.attr.srcs:
         for src in target.files.to_list():
             in_file = src
             out_file = ctx.actions.declare_file(in_file.basename + ".png")
             figures += [out_file]
+            log_file = ctx.actions.declare_file("{}.{}..log".format(ctx.attr.name, in_file.basename))
 
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
               progress_message = "timing diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
               inputs = [in_file],
-              outputs = [out_file],
+              outputs = [out_file, log_file],
               tools = [docker_run],
               command = """\
                 {script} -- \
-                  {cmd} {args} --output "{out_file}" "{in_file}"
+                  {cmd} {args} --output "{out_file}" "{in_file}" \
+                  2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
                   cmd=cmd,
                   out_file=out_file.path,
                   in_file=in_file.path,
                   args=" ".join(ctx.attr.args),
-                  script=script_cmd),
+                  script=script_cmd,
+                  log=log_file.path,
+              ),
             )
 
     deps = []
@@ -116,7 +128,7 @@ def _drawtiming_png_impl(ctx):
     runfiles = ctx.runfiles(files = figures)
     return [
         EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
+        DefaultInfo(files=depset(figures+deps+log_files), runfiles=runfiles),
     ]
 
 
@@ -146,26 +158,30 @@ drawtiming_png = rule(implementation = _drawtiming_png_impl,
 def _generalized_graphviz_rule_impl(ctx, cmd):
     docker_run = ctx.executable._script
     figures = []
+    log_files = []
 
     for target in ctx.attr.srcs:
         for src in target.files.to_list():
             in_file = src
             out_file = ctx.actions.declare_file(in_file.basename + ".png")
             figures += [out_file]
+            log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
 
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
               progress_message = "graphviz to PNG with {1}: {0}".format(in_file.short_path, cmd),
               inputs = [in_file],
-              outputs = [out_file],
+              outputs = [out_file, log_file],
               tools = [docker_run],
               command = """{script} -- \
-                      {cmd} -Tpng -o "{out_file}" "{in_file}"
+                      {cmd} -Tpng -o "{out_file}" "{in_file}" \
+                      2>&1 >{log} || ( cat {log} && exit 1)
                 """.format(
                   cmd=cmd,
                   out_file=out_file.path,
                   in_file=in_file.path,
                   script=script_cmd,
+                  log=log_file.path,
               ),
             )
 
@@ -179,7 +195,7 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
     runfiles = ctx.runfiles(files = figures)
     return [
         EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
+        DefaultInfo(files=depset(figures+deps+log_files), runfiles=runfiles),
     ]
 
 
@@ -208,7 +224,7 @@ neato_png = rule(implementation = _neato_png_impl,
 
 
 def _dot_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(ctx, "/usr/bin/dot")
+    return _generalized_graphviz_rule_impl(ctx, "dot")
 
 
 dot_png = rule(implementation = _dot_png_impl,
@@ -239,18 +255,21 @@ def _asymptote_impl(ctx):
             in_file = src
             out_file = ctx.actions.declare_file(in_file.basename + ".png")
             figures += [out_file]
+            log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
 
             script_cmd = _script_cmd(asycc.path, in_file.path)
             ctx.actions.run_shell(
               progress_message = "ASY to PNG: {0}".format(in_file.short_path),
               inputs = [in_file],
-              outputs = [out_file],
+              outputs = [out_file, log_file],
               tools = [asycc],
               command = """\
-                {script} \
-                  asy -render 5 -f png -o "{out_file}" "{in_file}"
+                {script} -- \
+                  asy -render 5 -f png -o "{out_file}" "{in_file}" \
+                  2>&1 >{log} || (cat {log} && exit 1)
               """.format(
-              out_file=out_file.path[:-4], in_file=in_file.path, script=script_cmd),
+              out_file=out_file.path[:-4], in_file=in_file.path, script=script_cmd,
+              log=log_file.path),
             )
 
     deps = []
@@ -536,29 +555,32 @@ def _ebook_pdf_impl(ctx):
 
     ebook_pdf = ctx.actions.declare_file("{}.pdf".format(name))
     inputs = [epub_metadata, title_yaml] + markdowns + figures
+    log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
 
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
         inputs = inputs + additional_inputs,
         tools = [script],
-        outputs = [ebook_pdf],
+        outputs = [ebook_pdf, log_file],
         command = """\
             {script} --cd-to-dir-reference \
                 pandoc --epub-metadata={epub_metadata} \
                   --mathml -o {ebook_pdf} {args} {markdowns} \
+                  2>&1 1>{log} || ( cat {log} && exit 1)
         """.format(
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
             ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
             args=" ".join(ctx.attr.args),
             markdowns=" ".join(markdowns_paths),
+            log=log_file.path,
         ))
     runfiles = ctx.runfiles(files=[ebook_pdf])
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
-            files=depset([ebook_pdf]),
+            files=depset([ebook_pdf, log_file]),
             runfiles=runfiles,
         )
     ]
@@ -622,26 +644,29 @@ def _ebook_kindle_impl(ctx):
     script = ctx.executable._script
     name = ctx.label.name
     script_cmd = _script_cmd(script.path, epub_file.path)
+    log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
     ctx.actions.run_shell(
         progress_message = "Building MOBI for: {}".format(name),
         inputs = [epub_file, equation_outdir],
         tools = [script],
-        outputs = [mobi_file],
+        outputs = [mobi_file, log_file],
         command = """\
             {script} --cd-to-dir-reference \
                 ebook-convert {args} {epub_file} {mobi_file} \
+                2>&1 >{log} || ( cat {log} && exit 1)
         """.format(
             script=script_cmd,
             epub_file=_strip_reference_dir(dir_reference, epub_file.path),
             mobi_file=_strip_reference_dir(dir_reference, mobi_file.path),
             args=" ".join(ctx.attr.args),
+            log=log_file.path,
         ))
     runfiles = ctx.runfiles(files=[mobi_file])
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
-            files=depset([mobi_file, captured_output]),
+            files=depset([mobi_file, captured_output, log_file]),
             runfiles=runfiles,
         )
     ]
