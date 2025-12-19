@@ -12,17 +12,23 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - name: Setup bazel
-        uses: bazel-contrib/setup-bazel@0.15.0
+      - name: Setup Bazel
+        uses: abhinavsingh/setup-bazel@v3
         with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.workflow }}
-          repository-cache: true
+          version: 8.4.1
+      #- name: Setup bazel
+        #uses: bazel-contrib/setup-bazel@0.15.0
+        #with:
+          #bazelisk-cache: true
+          #disk-cache: ${{ github.workflow }}
+          #repository-cache: true
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Build error sentinel
+        run: "bazel build //tests/include-files:html --subcommands"
       - name: Build one target
-        run: "bazel build --spawn_strategy=local //tests:neato_png"
+        run: "bazel build //tests:neato_png"
       - name: Build everything
-        run: "bazel build --spawn_strategy=local //... --subcommands"
+        run: "bazel build //... --subcommands"
       - name: Run integration test
         run: "cd integration && bazel build //... --subcommands"

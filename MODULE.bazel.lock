@@ -319,6 +319,42 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
+    "//:extensions.bzl%bazel_ebook_extension": {
+      "general": {
+        "bzlTransitiveDigest": "gJIwl8xJd7txHmoCg5X7MtgHAJvF5Al8rVZKs2oG0Hk=",
+        "usagesDigest": "XWZd1oKAhDTI2Wvl3DK5fKB6WKz9ZtYC2K4CEpYbqCo=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "pandoc_crossref": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.18.1a/pandoc-crossref-Linux-X64.tar.xz"
+              ],
+              "sha256": "ef74b6682f447e8705105963624076e0410b964b2ae16c8072b2a3e241a044f2",
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\nfilegroup(\n    name = \"pandoc_crossref\",\n    srcs = [\n        \"pandoc-crossref\",\n    ],\n)\n        "
+            }
+          },
+          "pandoc_ext_include_files": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:git.bzl%git_repository",
+            "attributes": {
+              "remote": "https://github.com/pandoc-ext/include-files.git",
+              "commit": "364394eaa71bcc8539090e3f31746135d55f674d",
+              "build_file_content": "package(default_visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"filter\",\n    srcs = [ \":include-files.lua\"],\n)\n"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "",
+            "bazel_tools",
+            "bazel_tools"
+          ]
+        ]
+      }
+    },
     "@@buildifier_prebuilt+//:defs.bzl%buildifier_prebuilt_deps_extension": {
       "general": {
         "bzlTransitiveDigest": "izaEjT7NE6vV9H5axiYiPrvmFtCLNkfjhj+bpMolt1A=",
