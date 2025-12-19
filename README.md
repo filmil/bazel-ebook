@@ -47,14 +47,14 @@ LaTeX supported is somewhat limited).
 ### Build
 
 If you are impatient to see the rules in action, check out an example book in
-[the example repository][example].
+[the integration repository][example].
 
-  [example]: ebook-example/README.md
+  [example]: integration/README.md
 
 The easiest way to dig in is to run the following one-liner:
 
 ```
-cd ebook-example && bazel build //...
+cd integration && bazel build //...
 ```
 
 This will build *all the examples* for you to appreciate.
