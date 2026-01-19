@@ -8,6 +8,7 @@ load("//build:rules.bzl",
     "pandoc_chunked_html",
      "ebook_pdf",
 )
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
 markdown_lib(
     name = "manual_src",
@@ -34,7 +35,7 @@ pandoc_chunked_html(
     toc = True,
     title = "Bazel Ebook Ebook",
     filters = [
-        #"@pandoc_crossref//:pandoc_crossref",
+        "@pandoc_crossref//:pandoc_crossref",
     ],
 )
 
@@ -43,4 +44,10 @@ ebook_pdf(
   deps = [":manual_src"],
   metadata_xml = "empty.xml",
   title_yaml = "empty.yaml",
+)
+
+sh_test(
+    name = "test",
+    srcs = [ "test.bash" ],
+    size = "small",
 )
