@@ -1,4 +1,5 @@
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("@bazel_ebook//build:rules.bzl",
     "asymptote",
     "ebook_epub",
@@ -81,7 +82,8 @@ pandoc_chunked_html(
     toc = True,
     filters = [
         "@pandoc_crossref//:pandoc_crossref",
-        "@pandoc_ext_include_files//:filter",
+        #"@bazel_ebook//third_party/pandoc-include:filter",
+        #"@pandoc_ext_include_files//:filter",
     ],
 )
 
@@ -92,5 +94,11 @@ pkg_zip(
         ":html_chunked",
     ],
     strip_prefix = "html_chunked.d",
+)
+
+sh_test(
+    name = "test_bash",
+    size = "small",
+    srcs = ["test.bash"],
 )
 

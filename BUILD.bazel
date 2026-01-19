@@ -1,25 +1,43 @@
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+load("@pypi//:requirements.bzl", "all_whl_requirements")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
+load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+
 # Copyright (C) 2020 Google Inc.
 #
 # This file has been licensed under Apache 2.0 license.  Please see the LICENSE
 # file at the root of the repository.
+load("//build:rules.bzl", "ebook_pdf", "markdown_lib", "pandoc_chunked_html")
 
-load("//build:rules.bzl",
-    "markdown_lib",
-    "pandoc_chunked_html",
-     "ebook_pdf",
+gazelle_binary(
+    name = "gazelle_multilang",
+    languages = [
+        # List of language plugins.
+        # If you want to generate py_proto_library targets (PR #3057), then
+        # the proto language plugin _must_ come before the rules_python plugin.
+        #"@bazel_gazelle//language/proto",
+        "@rules_python_gazelle_plugin//python",
+    ],
 )
-load("@rules_shell//shell:sh_test.bzl", "sh_test")
+
+gazelle(
+    name = "gazelle",
+    gazelle = ":gazelle_multilang",
+)
 
 markdown_lib(
     name = "manual_src",
     srcs = [
-        "empty.md", # This shouldn't be happening.
-        "//doc:md",
         "README.md",
-        "//tests:plantuml_lib_test",
-        "//tests:md",
+        "empty.md",  # This shouldn't be happening.
+        "//doc:md",
         "//tests:dot_png_test",
         "//tests:drawtiming_lib_test",
+        "//tests:md",
+        "//tests:plantuml_lib_test",
         "//tests/include-files:md",
     ],
     additional_inputs = [
@@ -29,25 +47,42 @@ markdown_lib(
 
 pandoc_chunked_html(
     name = "bazel_ebook_html",
-    deps = [
-        ":manual_src",
-    ],
-    toc = True,
-    title = "Bazel Ebook Ebook",
     filters = [
         "@pandoc_crossref//:pandoc_crossref",
+    ],
+    title = "Bazel Ebook Ebook",
+    toc = True,
+    deps = [
+        ":manual_src",
     ],
 )
 
 ebook_pdf(
-  name = "bazel_ebook_pdf",
-  deps = [":manual_src"],
-  metadata_xml = "empty.xml",
-  title_yaml = "empty.yaml",
+    name = "bazel_ebook_pdf",
+    metadata_xml = "empty.xml",
+    title_yaml = "empty.yaml",
+    deps = [":manual_src"],
 )
 
 sh_test(
     name = "test",
-    srcs = [ "test.bash" ],
     size = "small",
+    srcs = ["test.bash"],
+)
+
+modules_mapping(
+    name = "modules_map",
+    include_stub_packages = True,
+    wheels = all_whl_requirements,
+)
+gazelle_python_manifest(
+    name = "gazelle_python_manifest",
+    modules_mapping = ":modules_map",
+    pip_repository_name = "pip",
+    requirements = "//:requirements_lock.txt",
+)
+compile_pip_requirements(
+    name = "requirements",
+    src = "requirements.in",
+    requirements_txt = "requirements_lock.txt",
 )
