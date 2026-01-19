@@ -64,9 +64,9 @@ def _pandoc_html(ctx, format,
     args += ctx.attr.args
 
     for filter in filters_paths:
-        args += ['--filter', filter]
+        args += ['--filter', "$PWD/{}".format(filter)]
     for filter in lua_filters_paths:
-        args += ['--lua-filter', filter]
+        args += ['--lua-filter', "$PWD/{}".format(filter)]
 
 
     args += markdowns_paths

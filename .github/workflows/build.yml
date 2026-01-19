@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build error sentinel
-        run: "bazel build //tests/include-files:html"
+        run: "bazel build //tests/include-files:html --subcommands"
       - name: Build one target
         run: "bazel build //tests:neato_png"
       - name: Build everything
