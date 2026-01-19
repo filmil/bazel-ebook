@@ -34,14 +34,16 @@ def _pandoc_html(ctx, format,
     filters_paths = []
     lua_filters = []
     lua_filters_paths = []
+    filters_tools = []
     for filter in ctx.attr.filters:
-        filter_files = filter.files.to_list()
-        for file in filter_files:
-            filters += [file]
-            if file.extension == 'lua':
-                lua_filters_paths += [file.path]
-            else:
-                filters_paths += [file.path]
+        maybe_exec = filter[DefaultInfo].files_to_run.executable
+        if maybe_exec:
+            filters_tools += [maybe_exec]
+        else:
+            filter_files = filter.files.to_list()
+            for file in filter_files:
+                if file.extension == 'lua':
+                    lua_filters_paths += [file.path]
 
     resource_paths = [file.dirname for file in markdowns + figures]
     dir_reference = markdowns[0]
@@ -78,7 +80,7 @@ def _pandoc_html(ctx, format,
         progress_message = 'Building equation environments for: {}'.format(name),
         inputs = markdowns + figures + data_p.additional_inputs + filters,
         outputs = [output_file, log_file],
-        tools = [script] + filters,
+        tools = [script] + filters_tools,
         command = ' '.join(args),
     )
     runfiles_files = []

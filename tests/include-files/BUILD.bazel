@@ -1,36 +1,37 @@
-load("//build:rules.bzl",
+load(
+    "//build:rules.bzl",
     "markdown_lib",
     "pandoc_standalone_html",
 )
 
-package(default_visibility = [ "//visibility:public" ])
+package(default_visibility = ["//visibility:public"])
 
 markdown_lib(
-  name = "md",
-  srcs = [
-    "file1.md",
-  ],
-  additional_inputs = [
-      ":md2",
-  ],
+    name = "md",
+    srcs = [
+        "file1.md",
+    ],
+    additional_inputs = [
+        ":md2",
+    ],
 )
 
 filegroup(
-  name = "md2",
-  srcs = [
-    "file2.md",
-  ],
+    name = "md2",
+    srcs = [
+        "file2.md",
+    ],
 )
-
 
 pandoc_standalone_html(
     name = "html",
-    deps = [
-        ":md",
+    filters = [
+        #"//third_party/pandoc-include-code:filter",
+        "@multitool//tools/pandoc-crossref",
+        "//third_party/pandoc-include:filter",
     ],
     title = "Bazel Ebook Tools",
-    filters = [
-        "//third_party/pandoc-include-code:filter",
-        "@pandoc_crossref//:pandoc_crossref",
+    deps = [
+        ":md",
     ],
 )

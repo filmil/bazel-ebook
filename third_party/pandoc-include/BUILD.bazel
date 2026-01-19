@@ -1,0 +1,16 @@
+load("@rules_python//python:py_library.bzl", "py_library")
+load("@rules_python//python:py_binary.bzl", "py_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+py_binary(
+    name = "filter",
+    srcs = ["@pandoc_include//:srcs"],
+    main = "@pandoc_include//:pandoc_include/main.py",
+    deps = [
+        "@pypi//panflute",
+        "@pypi//natsort",
+        "@pypi//lxml",
+    ],
+)
+

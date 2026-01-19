@@ -1,73 +1,76 @@
-load("//build:rules.bzl",
+load(
+    "//build:rules.bzl",
     "asymptote",
     "dot_png",
+    "drawtiming_png",
     "markdown_lib",
     "neato_png",
-    "drawtiming_png",
-    "plantuml_png"
+    "plantuml_png",
 )
 
 package(
-    default_visibility = [ "//visibility:public" ],
+    default_visibility = ["//visibility:public"],
 )
 
 # Example of a markdown document using PNGs generated from Asymptote
 # files.
 
 asymptote(
-  name = "test2",
-  srcs = ["test1.asy"],
+    name = "test2",
+    srcs = ["test1.asy"],
 )
 
 asymptote(
-  name = "test3",
-  srcs = ["test2.asy"],
+    name = "test3",
+    srcs = ["test2.asy"],
 )
 
 markdown_lib(
-  name = "md",
-  srcs = ["book.ch003.md",],
-  deps = [":test3"],
+    name = "md",
+    srcs = ["book.ch003.md"],
+    deps = [":test3"],
 )
 
 # Example of a markdown document using a PNG generated from a graphviz
 # dot graph.
 
 dot_png(
-  name = "dot_png",
-  srcs = [ "simple_graph.dot" ],
+    name = "dot_png",
+    srcs = ["simple_graph.dot"],
 )
 
 neato_png(
-  name = "neato_png",
-  srcs = [ "simple_graph_neato.dot" ],
+    name = "neato_png",
+    srcs = ["simple_graph_neato.dot"],
 )
 
 markdown_lib(
-  name = "dot_png_test",
-  srcs = ["dot_png_test.md",],
-  deps = [":dot_png", ":neato_png"],
+    name = "dot_png_test",
+    srcs = ["dot_png_test.md"],
+    deps = [
+        ":dot_png",
+        ":neato_png",
+    ],
 )
 
 drawtiming_png(
-  name = "drawtiming_png",
-  srcs = [ "drawtiming.t" ]
+    name = "drawtiming_png",
+    srcs = ["drawtiming.t"],
 )
 
 markdown_lib(
-  name = "drawtiming_lib_test",
-  srcs = ["drawtiming_lib_test.md",],
-  deps = [ ":drawtiming_png", ],
+    name = "drawtiming_lib_test",
+    srcs = ["drawtiming_lib_test.md"],
+    deps = [":drawtiming_png"],
 )
 
 plantuml_png(
-  name = "plantuml_sequence_diagram",
-  srcs = [ "sequence_diagram.txt" ],
+    name = "plantuml_sequence_diagram",
+    srcs = ["sequence_diagram.txt"],
 )
 
 markdown_lib(
-  name = "plantuml_lib_test",
-  srcs = ["plantuml_test.md",],
-  deps = [ ":plantuml_sequence_diagram", ],
+    name = "plantuml_lib_test",
+    srcs = ["plantuml_test.md"],
+    deps = [":plantuml_sequence_diagram"],
 )
-
