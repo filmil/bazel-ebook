@@ -407,43 +407,54 @@ def _ebook_epub_impl(ctx):
     script = ctx.executable._script
     script_cmd = _script_cmd(script.path, markdowns_paths[0])
 
+    log_file = ctx.actions.declare_file("{}.pandoc.log".format(ctx.attr.name))
+
     ctx.actions.run_shell(
         progress_message = "Building equation environments for: {}".format(name),
         inputs = markdowns + additional_inputs,
-        outputs = [htex_file],
+        outputs = [htex_file, log_file],
         tools = [script],
         command = """\
             {script} \
                 pandoc -s --gladtex {args} -o {target} {sources} \
+                2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
             script=script_cmd,
             target=htex_file.path,
             args=" ".join(ctx.attr.args),
-            sources=" ".join(markdowns_paths))
+            sources=" ".join(markdowns_paths),
+            log=log_file.path,
+        )
     )
 
     # run gladtex on the resulting htex to obtain html and output directory with figures.
     outdir = ctx.actions.declare_directory("{}.eqn".format(name))
     html_file = ctx.actions.declare_file("{}.html".format(name))
+
+    log_file2 = ctx.actions.declare_file("{}.gladtex.log".format(ctx.attr.name))
     ctx.actions.run_shell(
         progress_message = "Extracting equations for: {}".format(name),
         inputs = [htex_file] + additional_inputs,
-        outputs = [outdir, html_file],
+        outputs = [outdir, html_file, log_file2],
         tools = [script],
         command = """\
-            {script} -- \
+            (
+                {script} -- \
                 env LC_ALL=en_US gladtex -f 12 -d {outdir} {htex_file} \
+                2>&1 >& {log} || (cat {log} && exit 1) )
         """.format(
             script=script_cmd,
             outdir=_strip_reference_dir(dir_reference, outdir.path),
-            htex_file=htex_file.path
+            htex_file=htex_file.path,
+            log=log_file2.path,
         )
     )
     outdir_tar = ctx.actions.declare_file("{}.tar".format(outdir.basename))
-    tar_command = "(cd {base} ; tar cf {archive} {dir})".format(
+    tar_command = "cd {base} && tar cf {archive} {dir}".format(
         base=outdir_tar.dirname,
         archive=outdir_tar.basename,
-        dir=outdir.basename)
+        dir=outdir.basename,
+    )
     ctx.actions.run_shell(
         progress_message = "Archiving equations: {}".format(outdir_tar.short_path),
         inputs = [outdir],
@@ -460,21 +471,24 @@ def _ebook_epub_impl(ctx):
     ebook_epub = ctx.actions.declare_file("{}.epub".format(name))
     inputs = [epub_metadata, title_yaml, html_file, outdir, outdir_tar] + markdowns + figures
 
+    log_epub = ctx.actions.declare_file("{}.epub.log".format(ctx.attr.name))
     ctx.actions.run_shell(
         progress_message = "Building EPUB for: {}".format(name),
         inputs = inputs + additional_inputs,
         tools = [script],
-        outputs = [ebook_epub],
+        outputs = [ebook_epub, log_epub],
         command = """\
             {script} -- \
                 pandoc --epub-metadata={epub_metadata} {args} \
                   -f html -t epub3 -o {ebook_epub} {html_file} \
+                  2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
             ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
             args=" ".join(ctx.attr.args),
             html_file=_strip_reference_dir(dir_reference, html_file.path),
+            log=log_epub.path,
         ))
     runfiles = ctx.runfiles(files=[ebook_epub])
     for dep in ctx.attr.deps:
@@ -482,7 +496,9 @@ def _ebook_epub_impl(ctx):
     return [
         dep[EbookInfo],
         DefaultInfo(
-            files=depset([ebook_epub, outdir, outdir_tar]),
+            files=depset([ebook_epub, outdir, outdir_tar, log_file,
+                log_file2, log_epub,
+            ]),
             runfiles=runfiles,
         )
     ]
@@ -566,7 +582,7 @@ def _ebook_pdf_impl(ctx):
             {script} -- \
                 pandoc --epub-metadata={epub_metadata} \
                   --mathml -o {ebook_pdf} {args} {markdowns} \
-                  2>&1 1>{log} || ( cat {log} && exit 1)
+                  2>&1 &> {log} || ( cat {log} && exit 1)
         """.format(
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
@@ -653,7 +669,7 @@ def _ebook_kindle_impl(ctx):
         command = """\
             {script} -- \
                 ebook-convert {args} {epub_file} {mobi_file} \
-                2>&1 >{log} || ( cat {log} && exit 1)
+                2>&1 >& {log} || ( cat {log} && exit 1)
         """.format(
             script=script_cmd,
             epub_file=_strip_reference_dir(dir_reference, epub_file.path),

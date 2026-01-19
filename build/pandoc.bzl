@@ -68,11 +68,16 @@ def _pandoc_html(ctx, format,
     for filter in lua_filters_paths:
         args += ['--lua-filter', filter]
 
+
     args += markdowns_paths
+
+    log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
+    args += [" 2>&1 > {log} || ( cat {log} && exit 1 )".format(log=log_file.path)]
+
     ctx.actions.run_shell(
         progress_message = 'Building equation environments for: {}'.format(name),
         inputs = markdowns + figures + data_p.additional_inputs + filters,
-        outputs = [output_file],
+        outputs = [output_file, log_file],
         tools = [script] + filters,
         command = ' '.join(args),
     )
@@ -83,7 +88,7 @@ def _pandoc_html(ctx, format,
         runfiles = ctx.runfiles(files=runfiles_files)
     return [
         DefaultInfo(
-            files=depset([output_file] + runfiles_files),
+            files=depset([output_file, log_file] + runfiles_files),
         runfiles=runfiles),
     ]
 
