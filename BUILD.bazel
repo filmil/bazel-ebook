@@ -1,16 +1,15 @@
+# Copyright (C) 2020 Google Inc.
+#
+# This file has been licensed under Apache 2.0 license.  Please see the LICENSE
+# file at the root of the repository.
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
 load("@pypi//:requirements.bzl", "all_whl_requirements")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest")
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
-
-
-# Copyright (C) 2020 Google Inc.
-#
-# This file has been licensed under Apache 2.0 license.  Please see the LICENSE
-# file at the root of the repository.
 load("//build:rules.bzl", "ebook_pdf", "markdown_lib", "pandoc_chunked_html")
+
 
 gazelle_binary(
     name = "gazelle_multilang",
