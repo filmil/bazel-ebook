@@ -1,4 +1,4 @@
-load("@bazel_rules_bid//build:rules.bzl", "run_docker_cmd")
+load("@rules_bid//build:rules.bzl", "run_docker_cmd")
 
 """
 The scripts for invoking docker containers.
