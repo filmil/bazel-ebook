@@ -4,24 +4,21 @@ module(
 )
 
 bazel_dep(name = "bazel_ebook", version = "0.0.5")
-bazel_dep(name = "bazel_rules_bid", version = "1.2.4")
+bazel_dep(name = "rules_bid", version = "2.2.1")
 bazel_dep(name = "rules_pkg", version = "1.2.0")
-bazel_dep(name = "rules_shell", version = "0.6.1")
-
+bazel_dep(name = "rules_shell", version = "0.8.0")
 
 local_path_override(
     module_name = "bazel_ebook",
     path = "../",
 )
 
-
-bazel_rules_bid_extension = use_extension(
-    "@bazel_rules_bid//:extensions.bzl", "bazel_rules_bid_extension")
-use_repo(bazel_rules_bid_extension, "gotopt2")
-
 bazel_ebook_extension = use_extension(
-    "@bazel_ebook//:extensions.bzl", "bazel_ebook_extension")
+    "@bazel_ebook//:extensions.bzl",
+    "bazel_ebook_extension",
+)
 use_repo(
     bazel_ebook_extension,
-    "pandoc_crossref", "pandoc_ext_include_files")
-
+    "pandoc_crossref",
+    "pandoc_ext_include_files",
+)

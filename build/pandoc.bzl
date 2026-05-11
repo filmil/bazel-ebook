@@ -115,7 +115,7 @@ _ATTRS = ADDITIONAL_INPUTS | {
         doc = 'If set, this will be used as the title of the HTML',
     ),
     "_script": attr.label(
-        default="@bazel_rules_bid//build:docker_run",
+        default="@rules_bid//build:docker_run",
         executable=True,
         cfg="host",
     ),
