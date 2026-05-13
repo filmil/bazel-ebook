@@ -20,16 +20,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: "Build ebook-example"
-        run: "cd ebook-example && bazel build //:html_chunked"
+        run: "cd integration && bazel build //:html_chunked"
       - name: "Build bazel-ebook manual"
         run: "bazel build //:bazel_ebook_html //:bazel_ebook_pdf"
       - name: "Examine the environment"
-        run: "ls -lR && ls -lR ./ebook-example/bazel-bin && ls -lR ./ebook-example/bazel-bin/html_chunked.d"
+        run: "ls -lR && ls -lR ./integration/bazel-bin && ls -lR ./integration/bazel-bin/html_chunked.d"
       - name: "Deploy ebook-example"
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: filmil/hdlfactory.com.template
-          publish_dir: ./ebook-example/bazel-bin/html_chunked.d/html_chunked
+          publish_dir: ./integration/bazel-bin/html_chunked.d/html_chunked
           destination_dir: static/html_chunked
           publish_branch: main
           deploy_key: "${{ secrets.DEPLOY_KEY }}"
