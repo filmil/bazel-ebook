@@ -373,7 +373,6 @@ markdown_lib = rule(
     attrs = {
         "srcs": attr.label_list(
             allow_files = [".md"],
-            providers = [EbookInfo],
             doc = "The markdown source files",
         ),
         "deps": attr.label_list(
