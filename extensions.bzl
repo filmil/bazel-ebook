@@ -3,7 +3,6 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def _bazel_ebook_extension_impl(_ctx):
-
     maybe(
         http_archive,
         name = "pandoc_crossref",
@@ -34,7 +33,7 @@ filegroup(
     name = "filter",
     srcs = [ ":include-files.lua"],
 )
-"""
+""",
     )
 
     maybe(
@@ -50,9 +49,8 @@ filegroup(
     srcs = glob(["pandoc_include/*.py"]),
 )
 
-"""
+""",
     )
-
 
 bazel_ebook_extension = module_extension(
     implementation = _bazel_ebook_extension_impl,

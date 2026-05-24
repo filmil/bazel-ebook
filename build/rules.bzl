@@ -4,17 +4,17 @@
 # file at the root of the repository.
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
-load(":script.bzl", _script_cmd = "script_cmd")
-load(":pandoc.bzl",
-    _pandoc_standalone_html = "pandoc_standalone_html",
+load(":attrs.bzl", _ADDITIONAL_INPUTS = "ADDITIONAL_INPUTS")
+load(
+    ":pandoc.bzl",
     _pandoc_chunked_html = "pandoc_chunked_html",
+    _pandoc_standalone_html = "pandoc_standalone_html",
 )
 load(":providers.bzl", "EbookInfo")
-load(":attrs.bzl", _ADDITIONAL_INPUTS = "ADDITIONAL_INPUTS")
+load(":script.bzl", _script_cmd = "script_cmd")
 
 pandoc_standalone_html = _pandoc_standalone_html
 pandoc_chunked_html = _pandoc_chunked_html
-
 
 def _plantuml_png_impl(ctx):
     cmd = "plantuml"
@@ -26,7 +26,8 @@ def _plantuml_png_impl(ctx):
         for src in target.files.to_list():
             in_file = src
             out_file = ctx.actions.declare_file(
-                paths.replace_extension(in_file.basename, ".png"))
+                paths.replace_extension(in_file.basename, ".png"),
+            )
             figures += [out_file]
 
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
@@ -34,22 +35,24 @@ def _plantuml_png_impl(ctx):
 
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
-              progress_message = "plantuml diagram to PNG with {1}: {0}".format(
-                in_file.short_path, cmd),
-              inputs = [in_file],
-              outputs = [out_file, log_file],
-              tools = [docker_run],
-              command = """\
+                progress_message = "plantuml diagram to PNG with {1}: {0}".format(
+                    in_file.short_path,
+                    cmd,
+                ),
+                inputs = [in_file],
+                outputs = [out_file, log_file],
+                tools = [docker_run],
+                command = """\
                 {script} -- \
                   {cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}" \
                   2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
-                  cmd=cmd,
-                  out_dir=out_file.dirname,
-                  in_file=in_file.path,
-                  script=script_cmd,
-                  log=log_file.path,
-              ),
+                    cmd = cmd,
+                    out_dir = out_file.dirname,
+                    in_file = in_file.path,
+                    script = script_cmd,
+                    log = log_file.path,
+                ),
             )
 
     deps = []
@@ -61,29 +64,29 @@ def _plantuml_png_impl(ctx):
 
     runfiles = ctx.runfiles(files = figures)
     return [
-        EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps+log_files), runfiles=runfiles),
+        EbookInfo(figures = figures + deps, markdowns = []),
+        DefaultInfo(files = depset(figures + deps + log_files), runfiles = runfiles),
     ]
 
-
-plantuml_png = rule(implementation = _plantuml_png_impl,
+plantuml_png = rule(
+    implementation = _plantuml_png_impl,
     attrs = {
-      "srcs": attr.label_list(
-          allow_files = [".txt"],
-          doc = "The file to compile",
+        "srcs": attr.label_list(
+            allow_files = [".txt"],
+            doc = "The file to compile",
         ),
-      "deps": attr.label_list(
-          doc = "The dependencies, any targets should be allowed",
+        "deps": attr.label_list(
+            doc = "The dependencies, any targets should be allowed",
         ),
-      "output": attr.output(doc="The generated file"),
-      "_script": attr.label(
-        default="@rules_bid//build:docker_run",
-        executable=True,
-        cfg="host"),
+        "output": attr.output(doc = "The generated file"),
+        "_script": attr.label(
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     },
     doc = "Transform a timing diagram file into png using plantuml",
 )
-
 
 def _drawtiming_png_impl(ctx):
     cmd = "drawtiming"
@@ -100,22 +103,22 @@ def _drawtiming_png_impl(ctx):
 
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
-              progress_message = "timing diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
-              inputs = [in_file],
-              outputs = [out_file, log_file],
-              tools = [docker_run],
-              command = """\
+                progress_message = "timing diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
+                inputs = [in_file],
+                outputs = [out_file, log_file],
+                tools = [docker_run],
+                command = """\
                 {script} -- \
                   {cmd} {args} --output "{out_file}" "{in_file}" \
                   2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
-                  cmd=cmd,
-                  out_file=out_file.path,
-                  in_file=in_file.path,
-                  args=" ".join(ctx.attr.args),
-                  script=script_cmd,
-                  log=log_file.path,
-              ),
+                    cmd = cmd,
+                    out_file = out_file.path,
+                    in_file = in_file.path,
+                    args = " ".join(ctx.attr.args),
+                    script = script_cmd,
+                    log = log_file.path,
+                ),
             )
 
     deps = []
@@ -127,33 +130,32 @@ def _drawtiming_png_impl(ctx):
 
     runfiles = ctx.runfiles(files = figures)
     return [
-        EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps+log_files), runfiles=runfiles),
+        EbookInfo(figures = figures + deps, markdowns = []),
+        DefaultInfo(files = depset(figures + deps + log_files), runfiles = runfiles),
     ]
 
-
-
-drawtiming_png = rule(implementation = _drawtiming_png_impl,
+drawtiming_png = rule(
+    implementation = _drawtiming_png_impl,
     attrs = {
-      "srcs": attr.label_list(
-          allow_files = [".t"],
-          doc = "The file to compile",
+        "srcs": attr.label_list(
+            allow_files = [".t"],
+            doc = "The file to compile",
         ),
-      "deps": attr.label_list(
-          doc = "The dependencies, any targets should be allowed",
+        "deps": attr.label_list(
+            doc = "The dependencies, any targets should be allowed",
         ),
-      "output": attr.output(doc="The generated file"),
-      "args": attr.string_list(
+        "output": attr.output(doc = "The generated file"),
+        "args": attr.string_list(
             doc = "A list of arguments prepended verbatim to the invocation of drawtiming",
-      ),
-      "_script": attr.label(
-        default="@rules_bid//build:docker_run",
-        executable=True,
-        cfg="host"),
+        ),
+        "_script": attr.label(
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     },
     doc = "Transform a timing diagram file into png using drawtiming",
 )
-
 
 def _generalized_graphviz_rule_impl(ctx, cmd):
     docker_run = ctx.executable._script
@@ -169,20 +171,20 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
 
             script_cmd = _script_cmd(docker_run.path, in_file.path)
             ctx.actions.run_shell(
-              progress_message = "graphviz to PNG with {1}: {0}".format(in_file.short_path, cmd),
-              inputs = [in_file],
-              outputs = [out_file, log_file],
-              tools = [docker_run],
-              command = """{script} -- \
+                progress_message = "graphviz to PNG with {1}: {0}".format(in_file.short_path, cmd),
+                inputs = [in_file],
+                outputs = [out_file, log_file],
+                tools = [docker_run],
+                command = """{script} -- \
                       {cmd} -Tpng -o "{out_file}" "{in_file}" \
                       2>&1 >{log} || ( cat {log} && exit 1)
                 """.format(
-                  cmd=cmd,
-                  out_file=out_file.path,
-                  in_file=in_file.path,
-                  script=script_cmd,
-                  log=log_file.path,
-              ),
+                    cmd = cmd,
+                    out_file = out_file.path,
+                    in_file = in_file.path,
+                    script = script_cmd,
+                    log = log_file.path,
+                ),
             )
 
     deps = []
@@ -194,57 +196,55 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
 
     runfiles = ctx.runfiles(files = figures)
     return [
-        EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps+log_files), runfiles=runfiles),
+        EbookInfo(figures = figures + deps, markdowns = []),
+        DefaultInfo(files = depset(figures + deps + log_files), runfiles = runfiles),
     ]
-
-
 
 def _neato_png_impl(ctx):
     return _generalized_graphviz_rule_impl(ctx, "/usr/bin/neato")
 
-
-neato_png = rule(implementation = _neato_png_impl,
+neato_png = rule(
+    implementation = _neato_png_impl,
     attrs = {
-      "srcs": attr.label_list(
-          allow_files = [".dot"],
-          doc = "The file to compile",
+        "srcs": attr.label_list(
+            allow_files = [".dot"],
+            doc = "The file to compile",
         ),
-      "deps": attr.label_list(
-          doc = "The dependencies, any targets should be allowed",
+        "deps": attr.label_list(
+            doc = "The dependencies, any targets should be allowed",
         ),
-      "output": attr.output(doc="The generated file"),
-      "_script": attr.label(
-        default="@rules_bid//build:docker_run",
-        executable=True,
-        cfg="host"),
+        "output": attr.output(doc = "The generated file"),
+        "_script": attr.label(
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     },
     doc = "Transform a graphviz dot file into png using neato",
 )
 
-
 def _dot_png_impl(ctx):
     return _generalized_graphviz_rule_impl(ctx, "dot")
 
-
-dot_png = rule(implementation = _dot_png_impl,
+dot_png = rule(
+    implementation = _dot_png_impl,
     attrs = {
-      "srcs": attr.label_list(
-          allow_files = [".dot"],
-          doc = "The file to compile",
+        "srcs": attr.label_list(
+            allow_files = [".dot"],
+            doc = "The file to compile",
         ),
-      "deps": attr.label_list(
-          doc = "The dependencies, any targets should be allowed",
+        "deps": attr.label_list(
+            doc = "The dependencies, any targets should be allowed",
         ),
-      "output": attr.output(doc="The generated file"),
-      "_script": attr.label(
-        default="@rules_bid//build:docker_run",
-        executable=True,
-        cfg="host"),
+        "output": attr.output(doc = "The generated file"),
+        "_script": attr.label(
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     },
     doc = "Transform a graphviz dot file into png using dot",
 )
-
 
 def _asymptote_impl(ctx):
     asycc = ctx.executable._script
@@ -259,17 +259,20 @@ def _asymptote_impl(ctx):
 
             script_cmd = _script_cmd(asycc.path, in_file.path)
             ctx.actions.run_shell(
-              progress_message = "ASY to PNG: {0}".format(in_file.short_path),
-              inputs = [in_file],
-              outputs = [out_file, log_file],
-              tools = [asycc],
-              command = """\
+                progress_message = "ASY to PNG: {0}".format(in_file.short_path),
+                inputs = [in_file],
+                outputs = [out_file, log_file],
+                tools = [asycc],
+                command = """\
                 {script} -- \
                   asy -render 5 -f png -o "{out_file}" "{in_file}" \
                   2>&1 >{log} || (cat {log} && exit 1)
               """.format(
-              out_file=out_file.path[:-4], in_file=in_file.path, script=script_cmd,
-              log=log_file.path),
+                    out_file = out_file.path[:-4],
+                    in_file = in_file.path,
+                    script = script_cmd,
+                    log = log_file.path,
+                ),
             )
 
     deps = []
@@ -279,34 +282,34 @@ def _asymptote_impl(ctx):
             continue
         deps += ebook_provider.figures or []
 
-    runfiles = ctx.runfiles(files=figures+deps)
+    runfiles = ctx.runfiles(files = figures + deps)
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
 
     return [
-        EbookInfo(figures=figures+deps, markdowns=[]),
-        DefaultInfo(files=depset(figures+deps), runfiles=runfiles),
+        EbookInfo(figures = figures + deps, markdowns = []),
+        DefaultInfo(files = depset(figures + deps), runfiles = runfiles),
     ]
 
-
-asymptote = rule(implementation = _asymptote_impl,
+asymptote = rule(
+    implementation = _asymptote_impl,
     attrs = {
-      "srcs": attr.label_list(
-          doc = "The file to compile",
-          allow_files = True,
+        "srcs": attr.label_list(
+            doc = "The file to compile",
+            allow_files = True,
         ),
-      "deps": attr.label_list(
-          doc = "The dependencies, any targets should be allowed",
+        "deps": attr.label_list(
+            doc = "The dependencies, any targets should be allowed",
         ),
-      "output": attr.output(doc="The generated file"),
-      "_script": attr.label(
-        default="@rules_bid//build:docker_run",
-        executable=True,
-        cfg="host"),
+        "output": attr.output(doc = "The generated file"),
+        "_script": attr.label(
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     },
     doc = "Transform an asymptote file into png",
 )
-
 
 def _copy_file_to_workdir_renamed(ctx, src):
     src_copy = ctx.actions.declare_file("{}_{}".format(ctx.label.name, src.short_path))
@@ -314,10 +317,9 @@ def _copy_file_to_workdir_renamed(ctx, src):
         progress_message = "Copying {} to {}".format(src.short_path, src_copy.short_path),
         outputs = [src_copy],
         inputs = [src],
-        command="cp {} {}".format(src.path, src_copy.path),
+        command = "cp {} {}".format(src.path, src_copy.path),
     )
     return src_copy
-
 
 def _copy_file_to_workdir(ctx, src):
     src_copy = ctx.actions.declare_file(src.basename)
@@ -325,10 +327,9 @@ def _copy_file_to_workdir(ctx, src):
         progress_message = "Copying {}".format(src.short_path),
         outputs = [src_copy],
         inputs = [src],
-        command="cp {} {}".format(src.path, src_copy.path),
+        command = "cp {} {}".format(src.path, src_copy.path),
     )
     return src_copy
-
 
 def _markdown_lib_impl(ctx):
     markdowns = []
@@ -351,21 +352,21 @@ def _markdown_lib_impl(ctx):
         markdowns += (provider.markdowns or [])
         additional_inputs += (provider.additional_inputs or [])
 
-    runfiles = ctx.runfiles(files=figures+markdowns+additional_inputs)
+    runfiles = ctx.runfiles(files = figures + markdowns + additional_inputs)
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
 
     return [
-      EbookInfo(
-        figures=figures,
-        markdowns=markdowns,
-        additional_inputs=additional_inputs),
-      DefaultInfo(
-        files=depset(figures+markdowns+additional_inputs),
-        runfiles=runfiles,
-      ),
+        EbookInfo(
+            figures = figures,
+            markdowns = markdowns,
+            additional_inputs = additional_inputs,
+        ),
+        DefaultInfo(
+            files = depset(figures + markdowns + additional_inputs),
+            runfiles = runfiles,
+        ),
     ]
-
 
 markdown_lib = rule(
     implementation = _markdown_lib_impl,
@@ -376,15 +377,15 @@ markdown_lib = rule(
             doc = "The markdown source files",
         ),
         "deps": attr.label_list(
-              doc = "The file to compile",
-              providers = [EbookInfo],
+            doc = "The file to compile",
+            providers = [EbookInfo],
         ),
     } | _ADDITIONAL_INPUTS,
 )
 
-
 def _ebook_epub_impl(ctx):
     name = ctx.label.name
+
     # This is duplicated in _ebook_pdf_impl.
     # steps
     # run htex on all *md, gives book.htex
@@ -401,7 +402,7 @@ def _ebook_epub_impl(ctx):
     htex_file = ctx.actions.declare_file("{}.htex".format(name))
 
     markdowns_paths = [file.path for file in markdowns]
-    markdowns_paths_stripped =  _strip_reference_dir_from_files(dir_reference, markdowns)
+    markdowns_paths_stripped = _strip_reference_dir_from_files(dir_reference, markdowns)
 
     script = ctx.executable._script
     script_cmd = _script_cmd(script.path, markdowns_paths[0])
@@ -418,12 +419,12 @@ def _ebook_epub_impl(ctx):
                 pandoc -s --gladtex {args} -o {target} {sources} \
                 2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
-            script=script_cmd,
-            target=htex_file.path,
-            args=" ".join(ctx.attr.args),
-            sources=" ".join(markdowns_paths),
-            log=log_file.path,
-        )
+            script = script_cmd,
+            target = htex_file.path,
+            args = " ".join(ctx.attr.args),
+            sources = " ".join(markdowns_paths),
+            log = log_file.path,
+        ),
     )
 
     # run gladtex on the resulting htex to obtain html and output directory with figures.
@@ -442,17 +443,17 @@ def _ebook_epub_impl(ctx):
                 env LC_ALL=en_US gladtex -f 12 -d {outdir} {htex_file} \
                 2>&1 >& {log} || (cat {log} && exit 1) )
         """.format(
-            script=script_cmd,
-            outdir=_strip_reference_dir(dir_reference, outdir.path),
-            htex_file=htex_file.path,
-            log=log_file2.path,
-        )
+            script = script_cmd,
+            outdir = _strip_reference_dir(dir_reference, outdir.path),
+            htex_file = htex_file.path,
+            log = log_file2.path,
+        ),
     )
     outdir_tar = ctx.actions.declare_file("{}.tar".format(outdir.basename))
     tar_command = "cd {base} && tar cf {archive} {dir}".format(
-        base=outdir_tar.dirname,
-        archive=outdir_tar.basename,
-        dir=outdir.basename,
+        base = outdir_tar.dirname,
+        archive = outdir_tar.basename,
+        dir = outdir.basename,
     )
     ctx.actions.run_shell(
         progress_message = "Archiving equations: {}".format(outdir_tar.short_path),
@@ -482,26 +483,31 @@ def _ebook_epub_impl(ctx):
                   -f html -t epub3 -o {ebook_epub} {html_file} \
                   2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
-            script=script_cmd,
-            epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
-            ebook_epub=_strip_reference_dir(dir_reference, ebook_epub.path),
-            args=" ".join(ctx.attr.args),
-            html_file=_strip_reference_dir(dir_reference, html_file.path),
-            log=log_epub.path,
-        ))
-    runfiles = ctx.runfiles(files=[ebook_epub])
+            script = script_cmd,
+            epub_metadata = _strip_reference_dir(dir_reference, epub_metadata.path),
+            ebook_epub = _strip_reference_dir(dir_reference, ebook_epub.path),
+            args = " ".join(ctx.attr.args),
+            html_file = _strip_reference_dir(dir_reference, html_file.path),
+            log = log_epub.path,
+        ),
+    )
+    runfiles = ctx.runfiles(files = [ebook_epub])
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         dep[EbookInfo],
         DefaultInfo(
-            files=depset([ebook_epub, outdir, outdir_tar, log_file,
-                log_file2, log_epub,
+            files = depset([
+                ebook_epub,
+                outdir,
+                outdir_tar,
+                log_file,
+                log_file2,
+                log_epub,
             ]),
-            runfiles=runfiles,
-        )
+            runfiles = runfiles,
+        ),
     ]
-
 
 ebook_epub = rule(
     implementation = _ebook_epub_impl,
@@ -518,29 +524,28 @@ ebook_epub = rule(
             allow_files = True,
             doc = "The epub-metadata.xml file to use for this book",
         ),
-        'args': attr.string_list(
-            doc = 'Any additional args to insert',
+        "args": attr.string_list(
+            doc = "Any additional args to insert",
             allow_empty = True,
         ),
         "_script": attr.label(
-          default="@rules_bid//build:docker_run",
-          executable=True,
-          cfg="host"),
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     } | _ADDITIONAL_INPUTS,
-    doc = "Generate an ebook in EPUB format"
+    doc = "Generate an ebook in EPUB format",
 )
-
 
 def _strip_reference_dir(reference_dir, path):
     return path
 
-
 def _strip_reference_dir_from_files(reference_dir, files):
-    return [ _strip_reference_dir(reference_dir, file.path) for file in files]
-
+    return [_strip_reference_dir(reference_dir, file.path) for file in files]
 
 def _ebook_pdf_impl(ctx):
     name = ctx.label.name
+
     # steps
     # run htex on all *md, gives book.htex
     markdowns = []
@@ -564,6 +569,7 @@ def _ebook_pdf_impl(ctx):
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
     epub_metadata = ctx.attr.metadata_xml.files.to_list()[0]
+
     #epub_metadata = _copy_file_to_workdir(ctx, epub_metadata)
     title_yaml = ctx.attr.title_yaml.files.to_list()[0]
     title_yaml = _copy_file_to_workdir(ctx, title_yaml)
@@ -587,23 +593,23 @@ def _ebook_pdf_impl(ctx):
                   --mathml -o {ebook_pdf} {args} {markdowns} \
                   2>&1 &> {log} || ( cat {log} && exit 1)
         """.format(
-            script=script_cmd,
-            epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
-            ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
-            args=" ".join(args),
-            markdowns=" ".join(markdowns_paths),
-            log=log_file.path,
-        ))
-    runfiles = ctx.runfiles(files=[ebook_pdf])
+            script = script_cmd,
+            epub_metadata = _strip_reference_dir(dir_reference, epub_metadata.path),
+            ebook_pdf = _strip_reference_dir(dir_reference, ebook_pdf.path),
+            args = " ".join(args),
+            markdowns = " ".join(markdowns_paths),
+            log = log_file.path,
+        ),
+    )
+    runfiles = ctx.runfiles(files = [ebook_pdf])
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
-            files=depset([ebook_pdf, log_file]),
-            runfiles=runfiles,
-        )
+            files = depset([ebook_pdf, log_file]),
+            runfiles = runfiles,
+        ),
     ]
-
 
 ebook_pdf = rule(
     implementation = _ebook_pdf_impl,
@@ -620,8 +626,8 @@ ebook_pdf = rule(
             allow_files = True,
             doc = "The epub-metadata.xml file to use for this book",
         ),
-        'args': attr.string_list(
-            doc = 'Any additional args to insert',
+        "args": attr.string_list(
+            doc = "Any additional args to insert",
             allow_empty = True,
         ),
         "toc": attr.bool(
@@ -629,32 +635,36 @@ ebook_pdf = rule(
             default = False,
         ),
         "_script": attr.label(
-          default="@rules_bid//build:docker_run",
-          executable=True,
-          cfg="host"),
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     } | _ADDITIONAL_INPUTS,
-    doc = "Generate an ebook in PDF format"
+    doc = "Generate an ebook in PDF format",
 )
-
 
 def _ebook_kindle_impl(ctx):
     mobi_file = ctx.actions.declare_file("{}.mobi".format(ctx.label.name))
+
     # First provider is EbookInfo, second is DefaultInfo.
     (ebook_info, default_info) = _ebook_epub_impl(ctx)
+
     # There can be only one such file
     outputs = default_info.files.to_list()
     epub_file = outputs[0]
     equation_outdir = outputs[1]
     equation_outdir_tar = outputs[2]
     captured_output = ctx.actions.declare_file(
-        "{}.untar-out".format(ctx.label.name))
+        "{}.untar-out".format(ctx.label.name),
+    )
 
     # untar the equation dir
     # Maybe this is not needed.
     tar_command = "(cd {base} ; tar xvf {archive}) > {output}".format(
-        base=equation_outdir_tar.dirname,
-        archive=equation_outdir_tar.basename,
-        output=captured_output.path)
+        base = equation_outdir_tar.dirname,
+        archive = equation_outdir_tar.basename,
+        output = captured_output.path,
+    )
     ctx.actions.run_shell(
         progress_message = "Unarchiving equations: {}".format(equation_outdir_tar.short_path),
         inputs = [equation_outdir_tar],
@@ -678,22 +688,22 @@ def _ebook_kindle_impl(ctx):
                 ebook-convert {args} {epub_file} {mobi_file} \
                 2>&1 >& {log} || ( cat {log} && exit 1)
         """.format(
-            script=script_cmd,
-            epub_file=_strip_reference_dir(dir_reference, epub_file.path),
-            mobi_file=_strip_reference_dir(dir_reference, mobi_file.path),
-            args=" ".join(ctx.attr.args),
-            log=log_file.path,
-        ))
-    runfiles = ctx.runfiles(files=[mobi_file])
+            script = script_cmd,
+            epub_file = _strip_reference_dir(dir_reference, epub_file.path),
+            mobi_file = _strip_reference_dir(dir_reference, mobi_file.path),
+            args = " ".join(ctx.attr.args),
+            log = log_file.path,
+        ),
+    )
+    runfiles = ctx.runfiles(files = [mobi_file])
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
-            files=depset([mobi_file, captured_output, log_file]),
-            runfiles=runfiles,
-        )
+            files = depset([mobi_file, captured_output, log_file]),
+            runfiles = runfiles,
+        ),
     ]
-
 
 ebook_kindle = rule(
     implementation = _ebook_kindle_impl,
@@ -710,15 +720,15 @@ ebook_kindle = rule(
             allow_files = True,
             doc = "The epub-metadata.xml file to use for this book",
         ),
-        'args': attr.string_list(
-            doc = 'Any additional args to insert',
+        "args": attr.string_list(
+            doc = "Any additional args to insert",
             allow_empty = True,
         ),
         "_script": attr.label(
-          default="@rules_bid//build:docker_run",
-          executable=True,
-          cfg="host"),
+            default = "@rules_bid//build:docker_run",
+            executable = True,
+            cfg = "host",
+        ),
     },
-    doc = "Generate an ebook in the Kindle's MOBI format"
+    doc = "Generate an ebook in the Kindle's MOBI format",
 )
-

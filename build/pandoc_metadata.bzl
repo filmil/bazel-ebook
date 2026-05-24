@@ -8,7 +8,6 @@ Use to add metadata that would otherwise become additional parameters.
 
 PandocMetadata = provider(
     fields = {
-        'title': 'String. Used as title where this is needed',
+        "title": "String. Used as title where this is needed",
     },
 )
-
