@@ -573,6 +573,10 @@ def _ebook_pdf_impl(ctx):
     inputs = [epub_metadata, title_yaml] + markdowns + figures
     log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
 
+    args = list(ctx.attr.args)
+    if ctx.attr.toc:
+        args += ["--toc"]
+
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
         inputs = inputs + additional_inputs,
@@ -587,7 +591,7 @@ def _ebook_pdf_impl(ctx):
             script=script_cmd,
             epub_metadata=_strip_reference_dir(dir_reference, epub_metadata.path),
             ebook_pdf=_strip_reference_dir(dir_reference, ebook_pdf.path),
-            args=" ".join(ctx.attr.args),
+            args=" ".join(args),
             markdowns=" ".join(markdowns_paths),
             log=log_file.path,
         ))
@@ -620,6 +624,10 @@ ebook_pdf = rule(
         'args': attr.string_list(
             doc = 'Any additional args to insert',
             allow_empty = True,
+        ),
+        "toc": attr.bool(
+            doc = "Set to true to generate a Table of Contents",
+            default = False,
         ),
         "_script": attr.label(
           default="@rules_bid//build:docker_run",
