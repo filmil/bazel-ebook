@@ -48,6 +48,7 @@ ebook_pdf(
   deps = [":md"],
   metadata_xml = "epub-metadata.xml",
   title_yaml = "title.yaml",
+  toc = True,
 )
 
 ebook_kindle(
@@ -66,6 +67,7 @@ pandoc_standalone_html(
         "--katex=https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/",
     ],
     title = "This is a test title",
+    toc = True,
 )
 
 # This packages the files, but ignores the dir paths, which are important.
