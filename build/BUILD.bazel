@@ -2,3 +2,63 @@
 #
 # This file has been licensed under Apache 2.0 license.  Please see the LICENSE
 # file at the root of the repository.
+
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@stardoc//stardoc:stardoc.bzl", "stardoc")
+
+bzl_library(
+    name = "bazel_tools_bzl",
+    srcs = [
+        "@bazel_tools//tools/build_defs/repo:git.bzl",
+        "@bazel_tools//tools/build_defs/repo:http.bzl",
+        "@bazel_tools//tools/build_defs/repo:utils.bzl",
+        "@bazel_tools//tools/build_defs/repo:cache.bzl",
+        "@bazel_tools//tools/build_defs/repo:git_worker.bzl",
+    ],
+)
+
+bzl_library(name = "attrs_bzl", srcs = ["attrs.bzl"], visibility = ["//visibility:public"])
+
+bzl_library(name = "deps_bzl", srcs = ["deps.bzl"], deps = [":bazel_tools_bzl"], visibility = ["//visibility:public"])
+
+bzl_library(name = "script_bzl", srcs = ["script.bzl"], deps = ["@rules_bid//build:rules"], visibility = ["//visibility:public"])
+
+bzl_library(name = "providers_bzl", srcs = ["providers.bzl"], visibility = ["//visibility:public"])
+
+bzl_library(name = "pandoc_metadata_bzl", srcs = ["pandoc_metadata.bzl"], deps = [":script_bzl"], visibility = ["//visibility:public"])
+
+bzl_library(name = "pandoc_bzl", srcs = ["pandoc.bzl"], deps = [":attrs_bzl", ":providers_bzl", ":script_bzl"], visibility = ["//visibility:public"])
+
+bzl_library(name = "repositories_bzl", srcs = ["repositories.bzl"], deps = [":bazel_tools_bzl"], visibility = ["//visibility:public"])
+
+bzl_library(name = "rules_bzl", srcs = ["rules.bzl"], deps = [":attrs_bzl", ":pandoc_bzl", ":providers_bzl", ":script_bzl", "@bazel_skylib//lib:paths"], visibility = ["//visibility:public"])
+
+BZL_FILES = [
+    "attrs",
+    "deps",
+    "pandoc",
+    "pandoc_metadata",
+    "providers",
+    "repositories",
+    "rules",
+    "script",
+]
+
+[
+    stardoc(
+        name = "{}_md".format(f),
+        out = "gen.{}.md".format(f),
+        input = "{}.bzl".format(f),
+        deps = [":{}_bzl".format(f)],
+    )
+    for f in BZL_FILES
+]
+
+write_source_files(
+    name = "update_docs",
+    files = {
+        "{}.md".format(f): ":{}_md".format(f)
+        for f in BZL_FILES
+    },
+)
