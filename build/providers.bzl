@@ -1,22 +1,20 @@
 # Build rules for building ebooks.
 
-def _new_ebookinfo(figures=[], markdowns=[], additional_inputs=[]):
+def _new_ebookinfo(figures = [], markdowns = [], additional_inputs = []):
     return {
-        'figures': figures,
-        'markdowns': markdowns,
-        'additional_inputs': additional_inputs,
+        "figures": figures,
+        "markdowns": markdowns,
+        "additional_inputs": additional_inputs,
     }
 
-
 EbookInfo, _ebookinfo_init = provider(
-    fields={
+    fields = {
         "figures": "The figurs targets to use.",
         "markdowns": "The markdown files, in order",
         "additional_inputs": "Additional inputs do not appear in any command lines, but are present in sandboxes at compile time.",
     },
     init = _new_ebookinfo,
 )
-
 
 def merge_EbookInfo(infos):
     """Merges a list of EbookInfo providers.
@@ -35,29 +33,27 @@ def merge_EbookInfo(infos):
         markdowns += m.markdowns
         additional_inputs += m.additional_inputs
 
-    result =  _ebookinfo_init(
-        figures=figures,
-        markdowns=markdowns,
-        additional_inputs=additional_inputs)
+    result = _ebookinfo_init(
+        figures = figures,
+        markdowns = markdowns,
+        additional_inputs = additional_inputs,
+    )
 
     return result
 
-
-def _new_pandoc_metadata(name, title=None):
+def _new_pandoc_metadata(name, title = None):
     return {
-        'title': title,
+        "title": title,
     }
 
-
-PandocMetadata ,_pandoc_metadata_init = provider(
+PandocMetadata, _pandoc_metadata_init = provider(
     fields = {
-        'title': 'String. Used as title where this is needed',
+        "title": "String. Used as title where this is needed",
     },
     init = _new_pandoc_metadata,
 )
 
-
-def pandoc_metadata(title=None):
+def pandoc_metadata(title = None):
     """Creates a pandoc metadata struct.
 
     Args:
@@ -66,4 +62,3 @@ def pandoc_metadata(title=None):
         A struct with pandoc metadata.
     """
     return _new_pandoc_metadata(title)
-

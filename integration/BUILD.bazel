@@ -1,19 +1,20 @@
-load("@rules_pkg//:pkg.bzl", "pkg_zip")
-load("@rules_shell//shell:sh_test.bzl", "sh_test")
-load("@bazel_ebook//build:rules.bzl",
+load(
+    "@bazel_ebook//build:rules.bzl",
     "asymptote",
     "ebook_epub",
     "ebook_kindle",
     "ebook_pdf",
     "markdown_lib",
-    "pandoc_standalone_html",
     "pandoc_chunked_html",
+    "pandoc_standalone_html",
 )
+load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
 asymptote(
-  name = "test",
-  srcs = ["test.asy"],
-  deps = ["//images:test2"],
+    name = "test",
+    srcs = ["test.asy"],
+    deps = ["//images:test2"],
 )
 
 filegroup(
@@ -22,52 +23,52 @@ filegroup(
 )
 
 markdown_lib(
-  name = "md",
-  srcs = [
-    "book.ch001.md",
-    "book.ch002.md",
-    "//images:md",
-    "book.ch004.md",
-    ":test_filegroup",
-  ],
-  deps = [
-    "//images:dot",
-    ":test",
-  ],
+    name = "md",
+    srcs = [
+        "book.ch001.md",
+        "book.ch002.md",
+        "book.ch004.md",
+        ":test_filegroup",
+        "//images:md",
+    ],
+    deps = [
+        ":test",
+        "//images:dot",
+    ],
 )
 
 ebook_epub(
-  name = "book_epub",
-  deps = [":md"],
-  metadata_xml = "epub-metadata.xml",
-  title_yaml = "title.yaml",
+    name = "book_epub",
+    metadata_xml = "epub-metadata.xml",
+    title_yaml = "title.yaml",
+    deps = [":md"],
 )
 
 ebook_pdf(
-  name = "book_pdf",
-  deps = [":md"],
-  metadata_xml = "epub-metadata.xml",
-  title_yaml = "title.yaml",
-  toc = True,
+    name = "book_pdf",
+    metadata_xml = "epub-metadata.xml",
+    title_yaml = "title.yaml",
+    toc = True,
+    deps = [":md"],
 )
 
 ebook_kindle(
-  name = "book_kindle",
-  deps = [":md"],
-  metadata_xml = "epub-metadata.xml",
-  title_yaml = "title.yaml",
+    name = "book_kindle",
+    metadata_xml = "epub-metadata.xml",
+    title_yaml = "title.yaml",
+    deps = [":md"],
 )
 
 pandoc_standalone_html(
     name = "html",
-    deps = [
-        ":md",
-    ],
     args = [
         "--katex=https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/",
     ],
     title = "This is a test title",
     toc = True,
+    deps = [
+        ":md",
+    ],
 )
 
 # This packages the files, but ignores the dir paths, which are important.
@@ -80,18 +81,18 @@ pkg_zip(
 
 pandoc_chunked_html(
     name = "html_chunked",
-    deps = [
-        ":md",
-    ],
     args = [
         "--katex=https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/",
     ],
-    #title = "This is a test title",
-    toc = True,
     filters = [
         "@pandoc_crossref//:pandoc_crossref",
         #"@bazel_ebook//third_party/pandoc-include:filter",
         #"@pandoc_ext_include_files//:filter",
+    ],
+    #title = "This is a test title",
+    toc = True,
+    deps = [
+        ":md",
     ],
 )
 
@@ -109,4 +110,3 @@ sh_test(
     size = "small",
     srcs = ["test.bash"],
 )
-
