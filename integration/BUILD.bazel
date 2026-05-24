@@ -16,6 +16,11 @@ asymptote(
   deps = ["//images:test2"],
 )
 
+filegroup(
+    name = "test_filegroup",
+    srcs = ["filegroup_test.md"],
+)
+
 markdown_lib(
   name = "md",
   srcs = [
@@ -23,6 +28,7 @@ markdown_lib(
     "book.ch002.md",
     "//images:md",
     "book.ch004.md",
+    ":test_filegroup",
   ],
   deps = [
     "//images:dot",
