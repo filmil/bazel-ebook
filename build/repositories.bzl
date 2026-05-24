@@ -8,6 +8,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_r
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def bazel_ebook_repositories():
+    """Declares repositories of the bazel-ebook workspace."""
 
     maybe(
         git_repository,

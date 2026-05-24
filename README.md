@@ -65,6 +65,18 @@ Check out a [built example here][xmp].
 
 [xmp]: https://www.hdlfactory.com/html_chunked
 
+## API Documentation
+
+Detailed, automatically generated documentation for all public API items in the `.bzl` files is available below:
+* [build/attrs.md](build/attrs.md)
+* [build/deps.md](build/deps.md)
+* [build/pandoc.md](build/pandoc.md)
+* [build/pandoc_metadata.md](build/pandoc_metadata.md)
+* [build/providers.md](build/providers.md)
+* [build/repositories.md](build/repositories.md)
+* [build/rules.md](build/rules.md)
+* [build/script.md](build/script.md)
+
 ## Defined build rules
 
 The build rules are defined in the file [build/rules.bzl](build/rules.bzl).  A

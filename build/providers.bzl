@@ -19,6 +19,13 @@ EbookInfo, _ebookinfo_init = provider(
 
 
 def merge_EbookInfo(infos):
+    """Merges a list of EbookInfo providers.
+
+    Args:
+        infos: A list of EbookInfo providers.
+    Returns:
+        An EbookInfo provider.
+    """
     figures = []
     markdowns = []
     additional_inputs = []
@@ -51,5 +58,12 @@ PandocMetadata ,_pandoc_metadata_init = provider(
 
 
 def pandoc_metadata(title=None):
+    """Creates a pandoc metadata struct.
+
+    Args:
+        title: The title of the document.
+    Returns:
+        A struct with pandoc metadata.
+    """
     return _new_pandoc_metadata(title)
 

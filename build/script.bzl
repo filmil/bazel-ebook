@@ -18,4 +18,12 @@ CONTAINER = "filipfilmar/ebook-buildenv:2.4"
 #   dir_reference: (string) The path to a file used for figuring out
 #       the reference directories (build root and repo root).
 def script_cmd(script_path, dir_reference):
+    """Creates a script command string adjusting the script path relative to a directory reference.
+
+    Args:
+        script_path: The script path.
+        dir_reference: The directory reference path.
+    Returns:
+        The command string.
+    """
     return run_docker_cmd(CONTAINER, script_path, dir_reference)
