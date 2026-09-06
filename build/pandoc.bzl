@@ -1,6 +1,7 @@
 load(":attrs.bzl", "ADDITIONAL_INPUTS")
 load(":providers.bzl", "EbookInfo", "PandocMetadata", "merge_EbookInfo")
 load(":script.bzl", _script_cmd = "script_cmd")
+load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE")
 
 """
 Pandoc metadata rules.
@@ -54,11 +55,12 @@ def _pandoc_html(
     output_file = output_artifact
     markdowns_paths = [file.path for file in markdowns]
 
-    script = ctx.executable._script
-    script_cmd = _script_cmd(script.path, markdowns_paths[0])
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    script = _tools.wrapper
+    script_cmd = _script_cmd(script.executable.path, markdowns_paths[0])
 
     # I think that run_shell does not support ctx.actions.args().
-    args = [script_cmd, "--", "pandoc"]
+    args = [script_cmd, "--", _tools.tools["pandoc"]]
     args += ["--write", format]  # This is unchunked, standalone
     args += ["-o", "{}{}".format(output_file.path, output_suffix)]
     if title:
@@ -118,11 +120,6 @@ _ATTRS = ADDITIONAL_INPUTS | {
     "title": attr.string(
         doc = "If set, this will be used as the title of the HTML",
     ),
-    "_script": attr.label(
-        default = "@rules_bid//build:docker_run",
-        executable = True,
-        cfg = "host",
-    ),
     "filters": attr.label_list(
         doc = "Targets representing filters binaries to use",
         cfg = "host",
@@ -141,6 +138,7 @@ pandoc_standalone_html = rule(
     implementation = _pandoc_standalone_html,
     doc = "Create a stand-alone HTML file from the Pandoc markdown",
     attrs = _ATTRS,
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _pandoc_chunked_html(ctx):
@@ -157,4 +155,5 @@ pandoc_chunked_html = rule(
     implementation = _pandoc_chunked_html,
     doc = "Create a chunked HTML file from the Pandoc markdown",
     attrs = _ATTRS,
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )

@@ -12,13 +12,15 @@ load(
 )
 load(":providers.bzl", "EbookInfo")
 load(":script.bzl", _script_cmd = "script_cmd")
+load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE")
 
 pandoc_standalone_html = _pandoc_standalone_html
 pandoc_chunked_html = _pandoc_chunked_html
 
 def _plantuml_png_impl(ctx):
-    cmd = "plantuml"
-    docker_run = ctx.executable._script
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    cmd = _tools.tools["plantuml"]
+    docker_run = _tools.wrapper
     figures = []
     log_files = []
 
@@ -33,7 +35,7 @@ def _plantuml_png_impl(ctx):
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
             log_files += [log_file]
 
-            script_cmd = _script_cmd(docker_run.path, in_file.path)
+            script_cmd = _script_cmd(docker_run.executable.path, in_file.path)
             ctx.actions.run_shell(
                 progress_message = "plantuml diagram to PNG with {1}: {0}".format(
                     in_file.short_path,
@@ -50,6 +52,7 @@ def _plantuml_png_impl(ctx):
                     cmd = cmd,
                     out_dir = out_file.dirname,
                     in_file = in_file.path,
+                    asy = _tools.tools["asy"],
                     script = script_cmd,
                     log = log_file.path,
                 ),
@@ -79,18 +82,15 @@ plantuml_png = rule(
             doc = "The dependencies, any targets should be allowed",
         ),
         "output": attr.output(doc = "The generated file"),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     },
     doc = "Transform a timing diagram file into png using plantuml",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _drawtiming_png_impl(ctx):
-    cmd = "drawtiming"
-    docker_run = ctx.executable._script
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    cmd = _tools.tools["drawtiming"]
+    docker_run = _tools.wrapper
     figures = []
     log_files = []
 
@@ -101,7 +101,7 @@ def _drawtiming_png_impl(ctx):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}..log".format(ctx.attr.name, in_file.basename))
 
-            script_cmd = _script_cmd(docker_run.path, in_file.path)
+            script_cmd = _script_cmd(docker_run.executable.path, in_file.path)
             ctx.actions.run_shell(
                 progress_message = "timing diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
                 inputs = [in_file],
@@ -148,17 +148,13 @@ drawtiming_png = rule(
         "args": attr.string_list(
             doc = "A list of arguments prepended verbatim to the invocation of drawtiming",
         ),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     },
     doc = "Transform a timing diagram file into png using drawtiming",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _generalized_graphviz_rule_impl(ctx, cmd):
-    docker_run = ctx.executable._script
+    docker_run = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook.wrapper
     figures = []
     log_files = []
 
@@ -169,7 +165,7 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
 
-            script_cmd = _script_cmd(docker_run.path, in_file.path)
+            script_cmd = _script_cmd(docker_run.executable.path, in_file.path)
             ctx.actions.run_shell(
                 progress_message = "graphviz to PNG with {1}: {0}".format(in_file.short_path, cmd),
                 inputs = [in_file],
@@ -201,7 +197,10 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
     ]
 
 def _neato_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(ctx, "/usr/bin/neato")
+    return _generalized_graphviz_rule_impl(
+        ctx,
+        ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook.tools["neato"],
+    )
 
 neato_png = rule(
     implementation = _neato_png_impl,
@@ -214,17 +213,16 @@ neato_png = rule(
             doc = "The dependencies, any targets should be allowed",
         ),
         "output": attr.output(doc = "The generated file"),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     },
     doc = "Transform a graphviz dot file into png using neato",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _dot_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(ctx, "dot")
+    return _generalized_graphviz_rule_impl(
+        ctx,
+        ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook.tools["dot"],
+    )
 
 dot_png = rule(
     implementation = _dot_png_impl,
@@ -237,17 +235,14 @@ dot_png = rule(
             doc = "The dependencies, any targets should be allowed",
         ),
         "output": attr.output(doc = "The generated file"),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     },
     doc = "Transform a graphviz dot file into png using dot",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _asymptote_impl(ctx):
-    asycc = ctx.executable._script
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    asycc = _tools.wrapper
     figures = []
 
     for target in ctx.attr.srcs:
@@ -257,7 +252,7 @@ def _asymptote_impl(ctx):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
 
-            script_cmd = _script_cmd(asycc.path, in_file.path)
+            script_cmd = _script_cmd(asycc.executable.path, in_file.path)
             ctx.actions.run_shell(
                 progress_message = "ASY to PNG: {0}".format(in_file.short_path),
                 inputs = [in_file],
@@ -265,13 +260,14 @@ def _asymptote_impl(ctx):
                 tools = [asycc],
                 command = """\
                 {script} -- \
-                  asy -render 5 -f png -o "{out_file}" "{in_file}" \
+                  {asy} -render 5 -f png -o "{out_file}" "{in_file}" \
                   2>&1 >{log} || (cat {log} && exit 1)
               """.format(
                     out_file = out_file.path[:-4],
                     in_file = in_file.path,
                     script = script_cmd,
                     log = log_file.path,
+                    asy = _tools.tools["asy"],
                 ),
             )
 
@@ -302,13 +298,9 @@ asymptote = rule(
             doc = "The dependencies, any targets should be allowed",
         ),
         "output": attr.output(doc = "The generated file"),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     },
     doc = "Transform an asymptote file into png",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _copy_file_to_workdir_renamed(ctx, src):
@@ -404,8 +396,9 @@ def _ebook_epub_impl(ctx):
     markdowns_paths = [file.path for file in markdowns]
     markdowns_paths_stripped = _strip_reference_dir_from_files(dir_reference, markdowns)
 
-    script = ctx.executable._script
-    script_cmd = _script_cmd(script.path, markdowns_paths[0])
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    script = _tools.wrapper
+    script_cmd = _script_cmd(script.executable.path, markdowns_paths[0])
 
     log_file = ctx.actions.declare_file("{}.pandoc.log".format(ctx.attr.name))
 
@@ -416,7 +409,7 @@ def _ebook_epub_impl(ctx):
         tools = [script],
         command = """\
             {script} \
-                pandoc -s --gladtex {args} -o {target} {sources} \
+                {pandoc} -s --gladtex {args} -o {target} {sources} \
                 2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
             script = script_cmd,
@@ -424,6 +417,7 @@ def _ebook_epub_impl(ctx):
             args = " ".join(ctx.attr.args),
             sources = " ".join(markdowns_paths),
             log = log_file.path,
+            pandoc = _tools.tools["pandoc"],
         ),
     )
 
@@ -440,13 +434,14 @@ def _ebook_epub_impl(ctx):
         command = """\
             (
                 {script} -- \
-                env LC_ALL=en_US gladtex -f 12 -d {outdir} {htex_file} \
+                env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
                 2>&1 >& {log} || (cat {log} && exit 1) )
         """.format(
             script = script_cmd,
             outdir = _strip_reference_dir(dir_reference, outdir.path),
             htex_file = htex_file.path,
             log = log_file2.path,
+            gladtex = _tools.tools["gladtex"],
         ),
     )
     outdir_tar = ctx.actions.declare_file("{}.tar".format(outdir.basename))
@@ -479,7 +474,7 @@ def _ebook_epub_impl(ctx):
         outputs = [ebook_epub, log_epub],
         command = """\
             {script} -- \
-                pandoc --epub-metadata={epub_metadata} {args} \
+                {pandoc} --epub-metadata={epub_metadata} {args} \
                   -f html -t epub3 -o {ebook_epub} {html_file} \
                   2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
@@ -489,6 +484,7 @@ def _ebook_epub_impl(ctx):
             args = " ".join(ctx.attr.args),
             html_file = _strip_reference_dir(dir_reference, html_file.path),
             log = log_epub.path,
+            pandoc = _tools.tools["pandoc"],
         ),
     )
     runfiles = ctx.runfiles(files = [ebook_epub])
@@ -528,13 +524,9 @@ ebook_epub = rule(
             doc = "Any additional args to insert",
             allow_empty = True,
         ),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     } | _ADDITIONAL_INPUTS,
     doc = "Generate an ebook in EPUB format",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _strip_reference_dir(reference_dir, path):
@@ -563,8 +555,9 @@ def _ebook_pdf_impl(ctx):
     # figure inclusion.
     markdowns_paths = _strip_reference_dir_from_files(dir_reference, markdowns)
 
-    script = ctx.executable._script
-    script_cmd = _script_cmd(script.path, dir_reference.path)
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    script = _tools.wrapper
+    script_cmd = _script_cmd(script.executable.path, dir_reference.path)
 
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
@@ -634,13 +627,9 @@ ebook_pdf = rule(
             doc = "Set to true to generate a Table of Contents",
             default = False,
         ),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     } | _ADDITIONAL_INPUTS,
     doc = "Generate an ebook in PDF format",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
 def _ebook_kindle_impl(ctx):
@@ -674,9 +663,10 @@ def _ebook_kindle_impl(ctx):
 
     dir_reference = epub_file
 
-    script = ctx.executable._script
+    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+    script = _tools.wrapper
     name = ctx.label.name
-    script_cmd = _script_cmd(script.path, epub_file.path)
+    script_cmd = _script_cmd(script.executable.path, epub_file.path)
     log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
     ctx.actions.run_shell(
         progress_message = "Building MOBI for: {}".format(name),
@@ -685,7 +675,7 @@ def _ebook_kindle_impl(ctx):
         outputs = [mobi_file, log_file],
         command = """\
             {script} -- \
-                ebook-convert {args} {epub_file} {mobi_file} \
+                {ebook_convert} {args} {epub_file} {mobi_file} \
                 2>&1 >& {log} || ( cat {log} && exit 1)
         """.format(
             script = script_cmd,
@@ -693,6 +683,7 @@ def _ebook_kindle_impl(ctx):
             mobi_file = _strip_reference_dir(dir_reference, mobi_file.path),
             args = " ".join(ctx.attr.args),
             log = log_file.path,
+            ebook_convert = _tools.tools["ebook-convert"],
         ),
     )
     runfiles = ctx.runfiles(files = [mobi_file])
@@ -724,11 +715,7 @@ ebook_kindle = rule(
             doc = "Any additional args to insert",
             allow_empty = True,
         ),
-        "_script": attr.label(
-            default = "@rules_bid//build:docker_run",
-            executable = True,
-            cfg = "host",
-        ),
     },
     doc = "Generate an ebook in the Kindle's MOBI format",
+    toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
