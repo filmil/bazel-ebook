@@ -1,0 +1,18 @@
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
+load("//build:svg.bzl", "svg_to_png")
+
+package(default_visibility = ["//visibility:public"])
+
+# A graphviz `dot -Tsvg` rendering, checked in so the test does not need
+# graphviz itself.
+svg_to_png(
+    name = "graph_png",
+    srcs = ["graph.svg"],
+)
+
+sh_test(
+    name = "graph_png_test",
+    srcs = ["check_png.sh"],
+    args = ["$(location :graph_png)"],
+    data = [":graph_png"],
+)

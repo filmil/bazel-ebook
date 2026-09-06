@@ -39,6 +39,12 @@ bzl_library(
 )
 
 bzl_library(
+    name = "svg_bzl",
+    srcs = ["svg.bzl"],
+    visibility = ["//visibility:public"],
+)
+
+bzl_library(
     name = "toolchain_bzl",
     srcs = ["toolchain.bzl"],
     visibility = ["//visibility:public"],
@@ -99,6 +105,7 @@ BZL_FILES = [
     "repositories",
     "rules",
     "script",
+    "svg",
     "toolchain",
 ]
 
