@@ -58,6 +58,32 @@ pip.parse(
 )
 use_repo(pip, "pypi")
 
+# Fonts for SVG rasterisation.
+#
+# resvg silently drops text when it cannot find a font: rendering the same
+# graphviz SVG produces 6436 bytes with a font present and 5986 without, with
+# only a warning. A hermetic build therefore has to ship its own fonts rather
+# than hope the host has some. graphviz emits `Times,serif`, which is mapped
+# onto DejaVu Serif via resvg's --serif-family.
+http_archive = use_repo_rule(
+    "@bazel_tools//tools/build_defs/repo:http.bzl",
+    "http_archive",
+)
+
+http_archive(
+    name = "dejavu_fonts",
+    build_file_content = """
+filegroup(
+    name = "ttf",
+    srcs = glob(["ttf/*.ttf"]),
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "7576310b219e04159d35ff61dd4a4ec4cdba4f35c00e002a136f00e96a908b0a",
+    strip_prefix = "dejavu-fonts-ttf-2.37",
+    urls = ["https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip"],
+)
+
 bazel_dep(name = "rules_multitool", version = "1.11.1")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
