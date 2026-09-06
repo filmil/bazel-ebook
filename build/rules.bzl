@@ -12,7 +12,8 @@ load(
 )
 load(":providers.bzl", "EbookInfo")
 load(":script.bzl", _script_cmd = "script_cmd")
-load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE")
+load(":svg.bzl", "RESVG_ATTRS", _rasterise = "rasterise")
+load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE", _ebook_tool = "ebook_tool")
 
 pandoc_standalone_html = _pandoc_standalone_html
 pandoc_chunked_html = _pandoc_chunked_html
@@ -153,35 +154,50 @@ drawtiming_png = rule(
     toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
-def _generalized_graphviz_rule_impl(ctx, cmd):
-    docker_run = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook.wrapper
+def _generalized_graphviz_rule_impl(ctx, engine):
+    """Lays a .dot file out and rasterises the result.
+
+    graphviz is asked for SVG rather than PNG. The Bazel-native graphviz build
+    has no raster renderer plugin -- `-Tpng` is simply not an available format
+    there -- so the PNG is produced from the SVG by //build:svg.bzl, which uses
+    resvg and Bazel-provided fonts.
+
+    The layout engine is selected with -K on the single `dot` binary rather
+    than by invoking a separate `neato` executable. That is how upstream
+    graphviz ships the engines, and it avoids depending on argv[0] dispatch or
+    on sibling binaries being present in an action's inputs.
+    """
+    tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
+
     figures = []
     log_files = []
 
     for target in ctx.attr.srcs:
         for src in target.files.to_list():
             in_file = src
+            svg_file = ctx.actions.declare_file(in_file.basename + ".svg")
             out_file = ctx.actions.declare_file(in_file.basename + ".png")
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
+            tool = _ebook_tool(tools, "dot", in_file.path, _script_cmd)
 
-            script_cmd = _script_cmd(docker_run.executable.path, in_file.path)
             ctx.actions.run_shell(
-                progress_message = "graphviz to PNG with {1}: {0}".format(in_file.short_path, cmd),
+                progress_message = "graphviz to SVG with {1}: {0}".format(in_file.short_path, engine),
                 inputs = [in_file],
-                outputs = [out_file, log_file],
-                tools = [docker_run],
-                command = """{script} -- \
-                      {cmd} -Tpng -o "{out_file}" "{in_file}" \
+                outputs = [svg_file, log_file],
+                tools = tool.tools,
+                command = """{prefix}{cmd} -K{engine} -Tsvg -o "{out_file}" "{in_file}" \
                       2>&1 >{log} || ( cat {log} && exit 1)
                 """.format(
-                    cmd = cmd,
-                    out_file = out_file.path,
+                    cmd = tool.cmd,
+                    engine = engine,
+                    prefix = tool.prefix,
+                    out_file = svg_file.path,
                     in_file = in_file.path,
-                    script = script_cmd,
                     log = log_file.path,
                 ),
             )
+            _rasterise(ctx, svg_file, out_file)
 
     deps = []
     for target in ctx.attr.deps:
@@ -197,14 +213,11 @@ def _generalized_graphviz_rule_impl(ctx, cmd):
     ]
 
 def _neato_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(
-        ctx,
-        ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook.tools["neato"],
-    )
+    return _generalized_graphviz_rule_impl(ctx, "neato")
 
 neato_png = rule(
     implementation = _neato_png_impl,
-    attrs = {
+    attrs = RESVG_ATTRS | {
         "srcs": attr.label_list(
             allow_files = [".dot"],
             doc = "The file to compile",
@@ -219,14 +232,11 @@ neato_png = rule(
 )
 
 def _dot_png_impl(ctx):
-    return _generalized_graphviz_rule_impl(
-        ctx,
-        ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook.tools["dot"],
-    )
+    return _generalized_graphviz_rule_impl(ctx, "dot")
 
 dot_png = rule(
     implementation = _dot_png_impl,
-    attrs = {
+    attrs = RESVG_ATTRS | {
         "srcs": attr.label_list(
             allow_files = [".dot"],
             doc = "The file to compile",

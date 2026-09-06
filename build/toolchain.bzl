@@ -32,7 +32,8 @@ EBOOK_TOOLCHAIN_TYPE = "//build/toolchains:toolchain_type"
 EBOOK_TOOLS = [
     # Renders .asy figures to PNG.
     "asy",
-    # Graphviz, laying out with `dot`.
+    # Graphviz. One binary serves every layout engine; the engine is
+    # selected with -K, which is how upstream ships neato, fdp and the rest.
     "dot",
     # Renders timing diagrams to PNG.
     "drawtiming",
@@ -40,8 +41,6 @@ EBOOK_TOOLS = [
     "ebook-convert",
     # Extracts LaTeX equations out of HTML.
     "gladtex",
-    # Graphviz, laying out with `neato`.
-    "neato",
     # The document converter everything else is built around.
     "pandoc",
     # Renders UML diagrams to PNG.
@@ -55,7 +54,13 @@ EbookToolchainInfo = provider(
                  "used to invoke it. For a container-based toolchain these " +
                  "are bare names resolved on the container PATH; for a " +
                  "hermetic toolchain they are paths to Bazel-provided binaries.",
-        "wrapper": "FilesToRunProvider: an executable that every tool " +
+        "hermetic": "dict: logical tool name -> FilesToRunProvider for a " +
+                    "binary Bazel builds or fetches itself. A tool listed " +
+                    "here is invoked directly and bypasses the wrapper " +
+                    "entirely; anything absent falls back to `tools` and the " +
+                    "wrapper. This is what lets the migration off the " +
+                    "container happen one tool at a time.",
+        "wrapper": "FilesToRunProvider: an executable that every non-hermetic " +
                    "invocation is routed through, or None when the tools are " +
                    "invoked directly. Carrying the whole provider (rather " +
                    "than just the File) keeps the wrapper's runfiles attached " +
@@ -64,7 +69,24 @@ EbookToolchainInfo = provider(
 )
 
 def _ebook_toolchain_impl(ctx):
-    missing = [t for t in EBOOK_TOOLS if t not in ctx.attr.tools]
+    hermetic = {
+        name: target[DefaultInfo].files_to_run
+        for name, target in ctx.attr.hermetic_tools.items()
+    }
+    unknown_hermetic = [t for t in hermetic if t not in EBOOK_TOOLS]
+    if unknown_hermetic:
+        fail("ebook_toolchain {} provides unknown hermetic tools: {}".format(
+            ctx.label,
+            ", ".join(unknown_hermetic),
+        ))
+
+    # A hermetic binary satisfies the requirement on its own, so only the
+    # remainder has to be named in `tools`.
+    missing = [
+        t
+        for t in EBOOK_TOOLS
+        if t not in ctx.attr.tools and t not in hermetic
+    ]
     if missing:
         fail("ebook_toolchain {} does not provide: {}".format(
             ctx.label,
@@ -78,6 +100,7 @@ def _ebook_toolchain_impl(ctx):
         ))
     return [platform_common.ToolchainInfo(
         ebook = EbookToolchainInfo(
+            hermetic = hermetic,
             tools = ctx.attr.tools,
             wrapper = ctx.attr.wrapper[DefaultInfo].files_to_run if ctx.attr.wrapper else None,
         ),
@@ -86,9 +109,15 @@ def _ebook_toolchain_impl(ctx):
 ebook_toolchain = rule(
     implementation = _ebook_toolchain_impl,
     attrs = {
+        "hermetic_tools": attr.string_keyed_label_dict(
+            cfg = "exec",
+            doc = "Maps a name in EBOOK_TOOLS to an executable target that " +
+                  "Bazel provides. Such a tool is run directly, without the " +
+                  "wrapper.",
+        ),
         "tools": attr.string_dict(
-            mandatory = True,
-            doc = "Maps each name in EBOOK_TOOLS to the command that runs it.",
+            doc = "Maps each name in EBOOK_TOOLS not covered by " +
+                  "hermetic_tools to the command that runs it.",
         ),
         "wrapper": attr.label(
             cfg = "exec",
@@ -98,3 +127,31 @@ ebook_toolchain = rule(
     },
     doc = "Declares how the ebook rules reach the programs they need.",
 )
+
+def ebook_tool(info, name, dir_reference, script_cmd):
+    """Describes how to invoke one tool.
+
+    Args:
+        info: the EbookToolchainInfo from the resolved toolchain.
+        name: a logical tool name from EBOOK_TOOLS.
+        dir_reference: path used by the wrapper to locate the build root.
+        script_cmd: function(wrapper_path, dir_reference) -> wrapper invocation.
+
+    Returns:
+        A struct with:
+            prefix: text to place before the command ("" when hermetic).
+            cmd: the command that runs the tool.
+            tools: what to pass to the action's `tools` argument.
+    """
+    hermetic = info.hermetic.get(name)
+    if hermetic != None:
+        return struct(
+            cmd = hermetic.executable.path,
+            prefix = "",
+            tools = [hermetic],
+        )
+    return struct(
+        cmd = info.tools[name],
+        prefix = script_cmd(info.wrapper.executable.path, dir_reference) + " -- ",
+        tools = [info.wrapper],
+    )

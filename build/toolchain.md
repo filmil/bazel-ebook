@@ -25,7 +25,7 @@ fetched by Bazel and no wrapper at all.
 <pre>
 load("@bazel_ebook//build:toolchain.bzl", "ebook_toolchain")
 
-ebook_toolchain(<a href="#ebook_toolchain-name">name</a>, <a href="#ebook_toolchain-tools">tools</a>, <a href="#ebook_toolchain-wrapper">wrapper</a>)
+ebook_toolchain(<a href="#ebook_toolchain-name">name</a>, <a href="#ebook_toolchain-hermetic_tools">hermetic_tools</a>, <a href="#ebook_toolchain-tools">tools</a>, <a href="#ebook_toolchain-wrapper">wrapper</a>)
 </pre>
 
 Declares how the ebook rules reach the programs they need.
@@ -36,7 +36,8 @@ Declares how the ebook rules reach the programs they need.
 | Name  | Description | Type | Mandatory | Default |
 | :------------- | :------------- | :------------- | :------------- | :------------- |
 | <a id="ebook_toolchain-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
-| <a id="ebook_toolchain-tools"></a>tools |  Maps each name in EBOOK_TOOLS to the command that runs it.   | <a href="https://bazel.build/rules/lib/core/dict">Dictionary: String -> String</a> | required |  |
+| <a id="ebook_toolchain-hermetic_tools"></a>hermetic_tools |  Maps a name in EBOOK_TOOLS to an executable target that Bazel provides. Such a tool is run directly, without the wrapper.   | Dictionary: String -> Label | optional |  `{}`  |
+| <a id="ebook_toolchain-tools"></a>tools |  Maps each name in EBOOK_TOOLS not covered by hermetic_tools to the command that runs it.   | <a href="https://bazel.build/rules/lib/core/dict">Dictionary: String -> String</a> | optional |  `{}`  |
 | <a id="ebook_toolchain-wrapper"></a>wrapper |  Executable each tool invocation is routed through, if any.   | <a href="https://bazel.build/concepts/labels">Label</a> | optional |  `None`  |
 
 
@@ -47,7 +48,7 @@ Declares how the ebook rules reach the programs they need.
 <pre>
 load("@bazel_ebook//build:toolchain.bzl", "EbookToolchainInfo")
 
-EbookToolchainInfo(<a href="#EbookToolchainInfo-tools">tools</a>, <a href="#EbookToolchainInfo-wrapper">wrapper</a>)
+EbookToolchainInfo(<a href="#EbookToolchainInfo-tools">tools</a>, <a href="#EbookToolchainInfo-hermetic">hermetic</a>, <a href="#EbookToolchainInfo-wrapper">wrapper</a>)
 </pre>
 
 The external programs used by the ebook rules.
@@ -57,6 +58,37 @@ The external programs used by the ebook rules.
 | Name  | Description |
 | :------------- | :------------- |
 | <a id="EbookToolchainInfo-tools"></a>tools |  dict: logical tool name (see EBOOK_TOOLS) -> the command used to invoke it. For a container-based toolchain these are bare names resolved on the container PATH; for a hermetic toolchain they are paths to Bazel-provided binaries.    |
-| <a id="EbookToolchainInfo-wrapper"></a>wrapper |  FilesToRunProvider: an executable that every tool invocation is routed through, or None when the tools are invoked directly. Carrying the whole provider (rather than just the File) keeps the wrapper's runfiles attached when it is passed to an action's `tools`.    |
+| <a id="EbookToolchainInfo-hermetic"></a>hermetic |  dict: logical tool name -> FilesToRunProvider for a binary Bazel builds or fetches itself. A tool listed here is invoked directly and bypasses the wrapper entirely; anything absent falls back to `tools` and the wrapper. This is what lets the migration off the container happen one tool at a time.    |
+| <a id="EbookToolchainInfo-wrapper"></a>wrapper |  FilesToRunProvider: an executable that every non-hermetic invocation is routed through, or None when the tools are invoked directly. Carrying the whole provider (rather than just the File) keeps the wrapper's runfiles attached when it is passed to an action's `tools`.    |
+
+
+<a id="ebook_tool"></a>
+
+## ebook_tool
+
+<pre>
+load("@bazel_ebook//build:toolchain.bzl", "ebook_tool")
+
+ebook_tool(<a href="#ebook_tool-info">info</a>, <a href="#ebook_tool-name">name</a>, <a href="#ebook_tool-dir_reference">dir_reference</a>, <a href="#ebook_tool-script_cmd">script_cmd</a>)
+</pre>
+
+Describes how to invoke one tool.
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="ebook_tool-info"></a>info |  the EbookToolchainInfo from the resolved toolchain.   |  none |
+| <a id="ebook_tool-name"></a>name |  a logical tool name from EBOOK_TOOLS.   |  none |
+| <a id="ebook_tool-dir_reference"></a>dir_reference |  path used by the wrapper to locate the build root.   |  none |
+| <a id="ebook_tool-script_cmd"></a>script_cmd |  function(wrapper_path, dir_reference) -> wrapper invocation.   |  none |
+
+**RETURNS**
+
+A struct with:
+      prefix: text to place before the command ("" when hermetic).
+      cmd: the command that runs the tool.
+      tools: what to pass to the action's `tools` argument.
 
 

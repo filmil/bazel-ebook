@@ -22,19 +22,25 @@ toolchain_type(
     visibility = ["//visibility:public"],
 )
 
-# The historical, container-based implementation. Every tool is a bare name
-# resolved on the PATH inside the ebook-buildenv container, and each invocation
-# is routed through rules_bid's docker_run.
+# The default toolchain, part hermetic and part container-based.
+#
+# dot comes from the Bazel-native graphviz module and runs directly; it
+# serves neato and the other engines too, selected with -K.
+# Everything still named in `tools` is a bare name resolved on the PATH inside
+# the ebook-buildenv container, reached through rules_bid's docker_run. Moving
+# a tool from `tools` to `hermetic_tools` is what retires the container one
+# program at a time.
 ebook_toolchain(
-    name = "docker_tools",
+    name = "default_tools",
+    hermetic_tools = {
+        # One binary serves every layout engine; the rules pass -K.
+        "dot": "@graphviz//:dot",
+    },
     tools = {
         "asy": "asy",
-        "dot": "dot",
         "drawtiming": "drawtiming",
         "ebook-convert": "ebook-convert",
         "gladtex": "gladtex",
-        # Absolute rather than bare, as it has always been here.
-        "neato": "/usr/bin/neato",
         "pandoc": "pandoc",
         "plantuml": "plantuml",
     },
@@ -44,7 +50,7 @@ ebook_toolchain(
 
 toolchain(
     name = "docker_toolchain",
-    toolchain = ":docker_tools",
+    toolchain = ":default_tools",
     toolchain_type = ":toolchain_type",
     visibility = ["//visibility:public"],
 )

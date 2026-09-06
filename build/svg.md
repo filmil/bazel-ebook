@@ -40,3 +40,28 @@ Rasterise SVG files to PNG using a hermetic renderer and fonts.
 | <a id="svg_to_png-zoom"></a>zoom |  Optional scale factor, e.g. "2" for twice the size.   | String | optional |  `""`  |
 
 
+<a id="rasterise"></a>
+
+## rasterise
+
+<pre>
+load("@bazel_ebook//build:svg.bzl", "rasterise")
+
+rasterise(<a href="#rasterise-ctx">ctx</a>, <a href="#rasterise-svg">svg</a>, <a href="#rasterise-png">png</a>)
+</pre>
+
+Registers an action turning one SVG file into one PNG file.
+
+The rule calling this must include RESVG_ATTRS in its attrs.
+
+
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="rasterise-ctx"></a>ctx |  the rule context.   |  none |
+| <a id="rasterise-svg"></a>svg |  the input SVG File.   |  none |
+| <a id="rasterise-png"></a>png |  the output PNG File to declare the action for.   |  none |
+
+

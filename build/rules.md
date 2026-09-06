@@ -32,7 +32,7 @@ Transform an asymptote file into png
 <pre>
 load("@bazel_ebook//build:rules.bzl", "dot_png")
 
-dot_png(<a href="#dot_png-name">name</a>, <a href="#dot_png-deps">deps</a>, <a href="#dot_png-srcs">srcs</a>, <a href="#dot_png-output">output</a>)
+dot_png(<a href="#dot_png-name">name</a>, <a href="#dot_png-deps">deps</a>, <a href="#dot_png-srcs">srcs</a>, <a href="#dot_png-fonts">fonts</a>, <a href="#dot_png-output">output</a>, <a href="#dot_png-sans_serif_family">sans_serif_family</a>, <a href="#dot_png-serif_family">serif_family</a>, <a href="#dot_png-zoom">zoom</a>)
 </pre>
 
 Transform a graphviz dot file into png using dot
@@ -45,7 +45,11 @@ Transform a graphviz dot file into png using dot
 | <a id="dot_png-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
 | <a id="dot_png-deps"></a>deps |  The dependencies, any targets should be allowed   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
 | <a id="dot_png-srcs"></a>srcs |  The file to compile   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
+| <a id="dot_png-fonts"></a>fonts |  Fonts made available to the renderer. Host fonts are not used, so text needing a font absent from here is dropped.   | <a href="https://bazel.build/concepts/labels">Label</a> | optional |  `"@dejavu_fonts//:ttf"`  |
 | <a id="dot_png-output"></a>output |  The generated file   | <a href="https://bazel.build/concepts/labels">Label</a>; <a href="https://bazel.build/reference/be/common-definitions#configurable-attributes">nonconfigurable</a> | optional |  `None`  |
+| <a id="dot_png-sans_serif_family"></a>sans_serif_family |  Font family used for `sans-serif`.   | String | optional |  `"DejaVu Sans"`  |
+| <a id="dot_png-serif_family"></a>serif_family |  Font family used for `serif`. graphviz emits `Times,serif`.   | String | optional |  `"DejaVu Serif"`  |
+| <a id="dot_png-zoom"></a>zoom |  Optional scale factor, e.g. "2" for twice the size.   | String | optional |  `""`  |
 
 
 <a id="drawtiming_png"></a>
@@ -177,7 +181,7 @@ Declares a set of markdown files
 <pre>
 load("@bazel_ebook//build:rules.bzl", "neato_png")
 
-neato_png(<a href="#neato_png-name">name</a>, <a href="#neato_png-deps">deps</a>, <a href="#neato_png-srcs">srcs</a>, <a href="#neato_png-output">output</a>)
+neato_png(<a href="#neato_png-name">name</a>, <a href="#neato_png-deps">deps</a>, <a href="#neato_png-srcs">srcs</a>, <a href="#neato_png-fonts">fonts</a>, <a href="#neato_png-output">output</a>, <a href="#neato_png-sans_serif_family">sans_serif_family</a>, <a href="#neato_png-serif_family">serif_family</a>, <a href="#neato_png-zoom">zoom</a>)
 </pre>
 
 Transform a graphviz dot file into png using neato
@@ -190,7 +194,11 @@ Transform a graphviz dot file into png using neato
 | <a id="neato_png-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
 | <a id="neato_png-deps"></a>deps |  The dependencies, any targets should be allowed   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
 | <a id="neato_png-srcs"></a>srcs |  The file to compile   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
+| <a id="neato_png-fonts"></a>fonts |  Fonts made available to the renderer. Host fonts are not used, so text needing a font absent from here is dropped.   | <a href="https://bazel.build/concepts/labels">Label</a> | optional |  `"@dejavu_fonts//:ttf"`  |
 | <a id="neato_png-output"></a>output |  The generated file   | <a href="https://bazel.build/concepts/labels">Label</a>; <a href="https://bazel.build/reference/be/common-definitions#configurable-attributes">nonconfigurable</a> | optional |  `None`  |
+| <a id="neato_png-sans_serif_family"></a>sans_serif_family |  Font family used for `sans-serif`.   | String | optional |  `"DejaVu Sans"`  |
+| <a id="neato_png-serif_family"></a>serif_family |  Font family used for `serif`. graphviz emits `Times,serif`.   | String | optional |  `"DejaVu Serif"`  |
+| <a id="neato_png-zoom"></a>zoom |  Optional scale factor, e.g. "2" for twice the size.   | String | optional |  `""`  |
 
 
 <a id="pandoc_chunked_html"></a>
