@@ -91,6 +91,7 @@ bzl_library(
         ":pandoc_bzl",
         ":providers_bzl",
         ":script_bzl",
+        ":svg_bzl",
         ":toolchain_bzl",
         "@bazel_skylib//lib:paths",
     ],
