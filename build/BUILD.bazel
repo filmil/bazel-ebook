@@ -6,40 +6,6 @@
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@stardoc//stardoc:stardoc.bzl", "stardoc")
-load(":toolchain.bzl", "ebook_toolchain")
-
-# The toolchain type the ebook rules resolve to reach their external programs.
-toolchain_type(
-    name = "toolchain_type",
-    visibility = ["//visibility:public"],
-)
-
-# The historical, container-based implementation. Every tool is a bare name
-# resolved on the PATH inside the ebook-buildenv container, and each invocation
-# is routed through rules_bid's docker_run.
-ebook_toolchain(
-    name = "docker_tools",
-    tools = {
-        "asy": "asy",
-        "dot": "dot",
-        "drawtiming": "drawtiming",
-        "ebook-convert": "ebook-convert",
-        "gladtex": "gladtex",
-        # Absolute rather than bare, as it has always been here.
-        "neato": "/usr/bin/neato",
-        "pandoc": "pandoc",
-        "plantuml": "plantuml",
-    },
-    visibility = ["//visibility:public"],
-    wrapper = "@rules_bid//build:docker_run",
-)
-
-toolchain(
-    name = "docker_toolchain",
-    toolchain = ":docker_tools",
-    toolchain_type = ":toolchain_type",
-    visibility = ["//visibility:public"],
-)
 
 bzl_library(
     name = "bazel_tools_bzl",

@@ -29,7 +29,7 @@ bazel_dep(name = "rules_python_gazelle_plugin", version = "2.1.0-rc0")
 
 # The container-based tool toolchain. A hermetic implementation can be
 # registered ahead of this one to take precedence.
-register_toolchains("//build:docker_toolchain")
+register_toolchains("//build/toolchains:docker_toolchain")
 
 bazel_ebook_extension = use_extension(
     "//:extensions.bzl",
