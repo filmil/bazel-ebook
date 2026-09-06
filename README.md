@@ -32,6 +32,40 @@ LaTeX supported is somewhat limited).
 > This is not an officially supported Google product.  Even though Google owns
 > the copyright. I just happened to work there while I worked on this tool.
 
+## Usage
+
+`bazel_ebook` and several of its dependencies are published in
+[my Bazel registry][reg] rather than the Bazel Central Registry, so a project
+that depends on it must declare both registries.
+
+Add the registry to your `.bazelrc` file.
+
+```
+common --registry=https://bcr.bazel.build
+common --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main
+```
+
+Then declare the dependency in `MODULE.bazel`:
+
+```starlark
+bazel_dep(name = "bazel_ebook", version = "2.0.15")
+
+bazel_ebook_extension = use_extension(
+    "@bazel_ebook//:extensions.bzl",
+    "bazel_ebook_extension",
+)
+use_repo(
+    bazel_ebook_extension,
+    "pandoc_crossref",
+    "pandoc_ext_include_files",
+)
+```
+
+Without the extra `--registry` line the build fails at module resolution with
+`module bazel_ebook@... not found in registries`.
+
+[reg]: https://github.com/filmil/bazel-registry
+
 ## Prerequisites
 
 * [docker](https://docker.io), because part of the bazel build process needs
