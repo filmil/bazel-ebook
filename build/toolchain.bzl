@@ -23,7 +23,7 @@ fetched by Bazel and no wrapper at all.
 """
 
 # The toolchain type the ebook rules resolve.
-EBOOK_TOOLCHAIN_TYPE = "//build:toolchain_type"
+EBOOK_TOOLCHAIN_TYPE = "//build/toolchains:toolchain_type"
 
 # The logical name of every external binary the ebook rules need.
 #

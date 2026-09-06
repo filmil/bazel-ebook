@@ -1,0 +1,50 @@
+# Copyright (C) 2020 Google Inc.
+#
+# This file has been licensed under Apache 2.0 license.  Please see the LICENSE
+# file at the root of the repository.
+
+# These targets deliberately live in their own package rather than in //build.
+#
+# Registering a toolchain makes every consumer of this module load the package
+# that declares it. //build loads @stardoc for its documentation targets, and
+# stardoc is a dev_dependency -- invisible to consumers -- so putting the
+# toolchain there broke any downstream build with:
+#
+#   No repository visible as '@stardoc' from repository '@@bazel_ebook+'
+#
+# Keep this package free of dev-only dependencies.
+
+load("//build:toolchain.bzl", "ebook_toolchain")
+
+# The toolchain type the ebook rules resolve to reach their external programs.
+toolchain_type(
+    name = "toolchain_type",
+    visibility = ["//visibility:public"],
+)
+
+# The historical, container-based implementation. Every tool is a bare name
+# resolved on the PATH inside the ebook-buildenv container, and each invocation
+# is routed through rules_bid's docker_run.
+ebook_toolchain(
+    name = "docker_tools",
+    tools = {
+        "asy": "asy",
+        "dot": "dot",
+        "drawtiming": "drawtiming",
+        "ebook-convert": "ebook-convert",
+        "gladtex": "gladtex",
+        # Absolute rather than bare, as it has always been here.
+        "neato": "/usr/bin/neato",
+        "pandoc": "pandoc",
+        "plantuml": "plantuml",
+    },
+    visibility = ["//visibility:public"],
+    wrapper = "@rules_bid//build:docker_run",
+)
+
+toolchain(
+    name = "docker_toolchain",
+    toolchain = ":docker_tools",
+    toolchain_type = ":toolchain_type",
+    visibility = ["//visibility:public"],
+)
