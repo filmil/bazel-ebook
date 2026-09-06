@@ -41,9 +41,14 @@ that depends on it must declare both registries.
 Add the registry to your `.bazelrc` file.
 
 ```
-common --registry=https://bcr.bazel.build
 common --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main
+common --registry=https://bcr.bazel.build
 ```
+
+Bazel consults registries in the order listed and takes the first one that has
+the module, so the custom registry goes **first**: that lets it override a
+module that also exists in the Bazel Central Registry. This matches this
+repo's own `.bazelrc` and `integration/.bazelrc`.
 
 Then declare the dependency in `MODULE.bazel`:
 
