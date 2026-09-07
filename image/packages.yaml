@@ -1,0 +1,14 @@
+version: 1
+
+# Programs the ebook rules need that have no upstream binary release. Keep this
+# list minimal: every package here is downloaded by anyone building this
+# repository.
+sources:
+  - channel: noble main restricted universe multiverse
+    url: https://snapshot.ubuntu.com/ubuntu/
+
+archs:
+  - amd64
+
+packages:
+  - drawtiming

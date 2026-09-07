@@ -37,10 +37,12 @@ ebook_toolchain(
         "dot": "@graphviz//:dot",
         # The GraalVM native build, so no JVM is needed.
         "plantuml": "@multitool//tools/plantuml",
+        # No upstream binary release, so it comes out of the Debian rootfs
+        # built in //image.
+        "drawtiming": "//image:drawtiming",
     },
     tools = {
         "asy": "asy",
-        "drawtiming": "drawtiming",
         "ebook-convert": "ebook-convert",
         "gladtex": "gladtex",
         "pandoc": "pandoc",

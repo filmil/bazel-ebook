@@ -20,6 +20,23 @@ bazel_dep(name = "rules_pkg", version = "1.2.0")
 # needed for this repository's own builds, and consumers bring their own.
 bazel_dep(name = "graphviz", version = "0.1.0")
 
+# drawtiming has no upstream binary release, so it comes from a Debian package
+# instead. bazel_rootfs turns an apt package list into a rootfs and wraps
+# binaries out of it; the rootfs here holds only what this repository needs, so
+# no other consumer pays for it.
+bazel_dep(name = "bazel_rootfs", version = "1.1.1")
+bazel_dep(name = "rules_distroless", version = "0.8.0")
+bazel_dep(name = "rules_oci", version = "2.3.0")
+bazel_dep(name = "rules_zstd", version = "1.0.0")
+
+apt = use_extension("@rules_distroless//apt:extensions.bzl", "apt")
+apt.install(
+    name = "ebook_apt",
+    lock = "//image:packages.lock.json",
+    manifest = "//image:packages.yaml",
+)
+use_repo(apt, "ebook_apt")
+
 bazel_dep(name = "hermetic_cc_toolchain", version = "4.1.0", dev_dependency = True)
 
 zig = use_extension(

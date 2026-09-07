@@ -1,0 +1,53 @@
+# Copyright (C) 2020 Google Inc.
+#
+# This file has been licensed under Apache 2.0 license.  Please see the LICENSE
+# file at the root of the repository.
+
+load("@bazel_rootfs//bin:defs.bzl", "rootfs_binary")
+load("@bazel_rootfs//image:rules.bzl", "rootfs")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
+
+package(default_visibility = ["//visibility:public"])
+
+# A rootfs holding only the programs this repository needs and cannot get as an
+# upstream binary release. Everything else comes from multitool or is built by
+# Bazel.
+oci_image(
+    name = "image",
+    architecture = "amd64",
+    os = "linux",
+    tars = ["@ebook_apt//:flat"],
+)
+
+oci_load(
+    name = "load",
+    image = ":image",
+    repo_tags = ["bazel-ebook-tools:latest"],
+)
+
+filegroup(
+    name = "image.tar",
+    srcs = [":load"],
+    output_group = "tarball",
+)
+
+rootfs(
+    name = "rootfs",
+    image_tar = ":image.tar",
+    # Symlinks whose targets are not installed. Bazel rejects a dangling
+    # symlink inside a tree artifact, so they are dropped during extraction.
+    to_remove = [
+        "etc/rmt",
+        "usr/share/doc/libxml2/NEWS.gz",
+        # Debian ships /usr/bin/X11 as a symlink to its own directory. Bazel
+        # walks a tree artifact and gives up at "Too many levels of symbolic
+        # links", so the loop has to go.
+        "usr/bin/X11",
+    ],
+)
+
+rootfs_binary(
+    name = "drawtiming",
+    binary_path = "/usr/bin/drawtiming",
+    rootfs = ":rootfs",
+)
