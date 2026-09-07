@@ -26,8 +26,15 @@ jobs:
         run: "cd integration && bazel build //:html_chunked"
       - name: "Build bazel-ebook manual"
         run: "bazel build //:bazel_ebook_html //:bazel_ebook_pdf"
-      - name: "Examine the environment"
-        run: "ls -lR && ls -lR ./integration/bazel-bin && ls -lR ./integration/bazel-bin/html_chunked.d"
+      # The PDF step publishes a directory, and it used to publish all of
+      # bazel-bin, excluding only *.d. bazel-bin now holds the Debian rootfs
+      # the tools run out of -- twice, once per root module -- and the push
+      # failed with "pack exceeds maximum allowed size (2.00 GiB)". Publish a
+      # directory that holds the PDF and nothing else.
+      - name: "Collect the PDF"
+        run: "mkdir -p pages/bazel_ebook_pdf && cp -L bazel-bin/bazel_ebook_pdf.pdf pages/bazel_ebook_pdf/"
+      - name: "Examine what will be published"
+        run: "ls -l pages/bazel_ebook_pdf ./bazel-bin/bazel_ebook_html.d/bazel_ebook_html ./integration/bazel-bin/html_chunked.d/html_chunked"
       - name: "Deploy ebook-example"
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -52,9 +59,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           external_repository: filmil/hdlfactory.com.template
-          publish_dir: ./bazel-bin
+          publish_dir: ./pages/bazel_ebook_pdf
           destination_dir: static/bazel_ebook_pdf
-          exclude_assets: '*.d'
           publish_branch: main
           deploy_key: "${{ secrets.DEPLOY_KEY }}"
 
