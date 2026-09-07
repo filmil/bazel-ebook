@@ -633,7 +633,11 @@ ebook_pdf = rule(
 )
 
 def _ebook_kindle_impl(ctx):
-    mobi_file = ctx.actions.declare_file("{}.mobi".format(ctx.label.name))
+    # AZW3 rather than MOBI. Amazon retired MOBI: KDP no longer accepts it, and
+    # Send to Kindle takes EPUB and converts server side. AZW3 is the format
+    # current devices use for sideloading. ebook-convert picks the output
+    # format from the file extension, so the conversion command is unchanged.
+    kindle_file = ctx.actions.declare_file("{}.azw3".format(ctx.label.name))
 
     # First provider is EbookInfo, second is DefaultInfo.
     (ebook_info, default_info) = _ebook_epub_impl(ctx)
@@ -669,29 +673,29 @@ def _ebook_kindle_impl(ctx):
     script_cmd = _script_cmd(script.executable.path, epub_file.path)
     log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
     ctx.actions.run_shell(
-        progress_message = "Building MOBI for: {}".format(name),
+        progress_message = "Building AZW3 for: {}".format(name),
         inputs = [epub_file, equation_outdir],
         tools = [script],
-        outputs = [mobi_file, log_file],
+        outputs = [kindle_file, log_file],
         command = """\
             {script} -- \
-                {ebook_convert} {args} {epub_file} {mobi_file} \
+                {ebook_convert} {args} {epub_file} {kindle_file} \
                 2>&1 >& {log} || ( cat {log} && exit 1)
         """.format(
             script = script_cmd,
             epub_file = _strip_reference_dir(dir_reference, epub_file.path),
-            mobi_file = _strip_reference_dir(dir_reference, mobi_file.path),
+            kindle_file = _strip_reference_dir(dir_reference, kindle_file.path),
             args = " ".join(ctx.attr.args),
             log = log_file.path,
             ebook_convert = _tools.tools["ebook-convert"],
         ),
     )
-    runfiles = ctx.runfiles(files = [mobi_file])
+    runfiles = ctx.runfiles(files = [kindle_file])
     for dep in ctx.attr.deps:
         runfiles = runfiles.merge(dep[DefaultInfo].data_runfiles)
     return [
         DefaultInfo(
-            files = depset([mobi_file, captured_output, log_file]),
+            files = depset([kindle_file, captured_output, log_file]),
             runfiles = runfiles,
         ),
     ]

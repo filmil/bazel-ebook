@@ -12,7 +12,7 @@
 
 This repository is a set of [bazel][bazel] build rules that allow you to write
 a moderately complex book in the Markdown text format, and produce EPUB and
-Kindle's MOBI formats from them.  You can also produce a PDF format book, which
+Kindle's AZW3 formats from them.  You can also produce a PDF format book, which
 allows you to preview the results slightly more convenient than by reading the
 resulting books.
 
@@ -127,7 +127,7 @@ quick list is here:
 | `dot_png(name, srcs, deps, output)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `dot`. |
 | `drawtiming_png(name, srcs, deps, output, args)` | Typeset a timing diagram using [drawtiming][dtg]. |
 | `ebook_epub(name, deps, metadata_xml, title_yaml, args, additional_inputs)` | This build rule assembles all `markdown_lib` rules in sequece and produces a book named `[name].epub` |
-| `ebook_kindle(name, deps, metadata_xml, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].mobi` |
+| `ebook_kindle(name, deps, metadata_xml, title_yaml, args)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].azw3` |
 | `ebook_pdf(name, deps, metadata_xml, title_yaml, args, additional_inputs)` | This build rule assembles all `markdown_lib` rules in sequence and produces a book named `[name].pdf` |
 | `markdown_lib(name, srcs, deps, additional_inputs)` |  This build rule makes a library out of `*/md` files.  `deps` may be any `markdown_lib` or `asymptote` or other such rule, and those will be used correctly. |
 | `neato_png(name, srcs, deps, output)` | This build rule converts a [Graphviz][gvz] source files into PNG images that can be included in the book.  This rule can take any `*.dot` file in `srcs` and can depend on any rule in `deps`. The `.dot` file is laid out using the graphviz program `neato`. |
