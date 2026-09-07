@@ -1,5 +1,12 @@
 name: Build
 on:
+  # A run on main after every merge, and not only for its own sake: a cache a
+  # run writes is readable by later runs on the same ref and on the base
+  # branch's descendants, and nothing else. A cache written on a pull request
+  # dies with the pull request. Only a run on main writes a cache every pull
+  # request can start from.
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   schedule:
