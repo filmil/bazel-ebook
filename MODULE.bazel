@@ -14,10 +14,10 @@ bazel_dep(name = "bazel_bats", version = "0.38.23")
 bazel_dep(name = "rules_pkg", version = "1.2.0")
 
 # graphviz supplies dot and the other layout engines. It is built from source,
-# which makes this the first C++ in the repository, so a toolchain has to exist
-# for it. hermetic_cc_toolchain provides one rather than relying on whatever
-# compiler the host happens to have; it is a dev_dependency because it is only
-# needed for this repository's own builds, and consumers bring their own.
+# which makes this the first C++ in the repository, so a build now needs a C++
+# toolchain where it did not before. That comes from the host, as it does for
+# any other Bazel project; registering one here would impose it on every target
+# in the build, including cgo, which is not this module's business.
 bazel_dep(name = "graphviz", version = "0.1.0")
 
 # drawtiming has no upstream binary release, so it comes from a Debian package
@@ -48,21 +48,6 @@ apt.install(
     manifest = "//image:packages.yaml",
 )
 use_repo(apt, "ebook_apt")
-
-bazel_dep(name = "hermetic_cc_toolchain", version = "4.1.0", dev_dependency = True)
-
-zig = use_extension(
-    "@hermetic_cc_toolchain//toolchain:ext.bzl",
-    "toolchains",
-    dev_dependency = True,
-)
-use_repo(zig, "zig_sdk")
-
-register_toolchains(
-    "@zig_sdk//toolchain/...",
-    "@zig_sdk//libc_aware/toolchain/...",
-    dev_dependency = True,
-)
 
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "bazel_lib", version = "3.3.1")
