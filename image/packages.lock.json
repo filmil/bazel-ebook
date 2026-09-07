@@ -3392,6 +3392,3479 @@
 			"arch": "amd64",
 			"dependencies": [
 				{
+					"key": "xdg-utils_1.1.3-4.1ubuntu3_amd64",
+					"name": "xdg-utils",
+					"version": "1.1.3-4.1ubuntu3"
+				},
+				{
+					"key": "webp_1.3.2-0.4build3_amd64",
+					"name": "webp",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "libwebpmux3_1.3.2-0.4build3_amd64",
+					"name": "libwebpmux3",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "libwebp7_1.3.2-0.4build3_amd64",
+					"name": "libwebp7",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "libsharpyuv0_1.3.2-0.4build3_amd64",
+					"name": "libsharpyuv0",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "libc6_2.39-0ubuntu8_amd64",
+					"name": "libc6",
+					"version": "2.39-0ubuntu8"
+				},
+				{
+					"key": "libgcc-s1_14-20240412-0ubuntu1_amd64",
+					"name": "libgcc-s1",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "gcc-14-base_14-20240412-0ubuntu1_amd64",
+					"name": "gcc-14-base",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "libwebpdemux2_1.3.2-0.4build3_amd64",
+					"name": "libwebpdemux2",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "libtiff6_4.5.1-p-git230720-4ubuntu2_amd64",
+					"name": "libtiff6",
+					"version": "4.5.1+git230720-4ubuntu2"
+				},
+				{
+					"key": "zlib1g_1-1.3.dfsg-3.1ubuntu2_amd64",
+					"name": "zlib1g",
+					"version": "1:1.3.dfsg-3.1ubuntu2"
+				},
+				{
+					"key": "libzstd1_1.5.5-p-dfsg2-2build1_amd64",
+					"name": "libzstd1",
+					"version": "1.5.5+dfsg2-2build1"
+				},
+				{
+					"key": "liblzma5_5.6.1-p-really5.4.5-1_amd64",
+					"name": "liblzma5",
+					"version": "5.6.1+really5.4.5-1"
+				},
+				{
+					"key": "liblerc4_4.0.0-p-ds-4ubuntu2_amd64",
+					"name": "liblerc4",
+					"version": "4.0.0+ds-4ubuntu2"
+				},
+				{
+					"key": "libstdc-p--p-6_14-20240412-0ubuntu1_amd64",
+					"name": "libstdc++6",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "libjpeg8_8c-2ubuntu11_amd64",
+					"name": "libjpeg8",
+					"version": "8c-2ubuntu11"
+				},
+				{
+					"key": "libjpeg-turbo8_2.1.5-2ubuntu2_amd64",
+					"name": "libjpeg-turbo8",
+					"version": "2.1.5-2ubuntu2"
+				},
+				{
+					"key": "libjbig0_2.1-6.1ubuntu2_amd64",
+					"name": "libjbig0",
+					"version": "2.1-6.1ubuntu2"
+				},
+				{
+					"key": "libdeflate0_1.19-1build1_amd64",
+					"name": "libdeflate0",
+					"version": "1.19-1build1"
+				},
+				{
+					"key": "libpng16-16t64_1.6.43-5build1_amd64",
+					"name": "libpng16-16t64",
+					"version": "1.6.43-5build1"
+				},
+				{
+					"key": "libopengl0_1.7.0-1build1_amd64",
+					"name": "libopengl0",
+					"version": "1.7.0-1build1"
+				},
+				{
+					"key": "libglvnd0_1.7.0-1build1_amd64",
+					"name": "libglvnd0",
+					"version": "1.7.0-1build1"
+				},
+				{
+					"key": "libglx0_1.7.0-1build1_amd64",
+					"name": "libglx0",
+					"version": "1.7.0-1build1"
+				},
+				{
+					"key": "libglx-mesa0_24.0.5-1ubuntu1_amd64",
+					"name": "libglx-mesa0",
+					"version": "24.0.5-1ubuntu1"
+				},
+				{
+					"key": "libgl1-mesa-dri_24.0.5-1ubuntu1_amd64",
+					"name": "libgl1-mesa-dri",
+					"version": "24.0.5-1ubuntu1"
+				},
+				{
+					"key": "libxcb-dri3-0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-dri3-0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb1_1.15-1ubuntu2_amd64",
+					"name": "libxcb1",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxdmcp6_1-1.1.3-0ubuntu6_amd64",
+					"name": "libxdmcp6",
+					"version": "1:1.1.3-0ubuntu6"
+				},
+				{
+					"key": "libbsd0_0.12.1-1build1_amd64",
+					"name": "libbsd0",
+					"version": "0.12.1-1build1"
+				},
+				{
+					"key": "libmd0_1.1.0-2build1_amd64",
+					"name": "libmd0",
+					"version": "1.1.0-2build1"
+				},
+				{
+					"key": "libxau6_1-1.0.9-1build6_amd64",
+					"name": "libxau6",
+					"version": "1:1.0.9-1build6"
+				},
+				{
+					"key": "libsensors5_1-3.6.0-9build1_amd64",
+					"name": "libsensors5",
+					"version": "1:3.6.0-9build1"
+				},
+				{
+					"key": "libsensors-config_1-3.6.0-9build1_amd64",
+					"name": "libsensors-config",
+					"version": "1:3.6.0-9build1"
+				},
+				{
+					"key": "libllvm17t64_1-17.0.6-9ubuntu1_amd64",
+					"name": "libllvm17t64",
+					"version": "1:17.0.6-9ubuntu1"
+				},
+				{
+					"key": "libxml2_2.9.14-p-dfsg-1.3ubuntu3_amd64",
+					"name": "libxml2",
+					"version": "2.9.14+dfsg-1.3ubuntu3"
+				},
+				{
+					"key": "libicu74_74.2-1ubuntu3_amd64",
+					"name": "libicu74",
+					"version": "74.2-1ubuntu3"
+				},
+				{
+					"key": "libtinfo6_6.4-p-20240113-1ubuntu2_amd64",
+					"name": "libtinfo6",
+					"version": "6.4+20240113-1ubuntu2"
+				},
+				{
+					"key": "libffi8_3.4.6-1build1_amd64",
+					"name": "libffi8",
+					"version": "3.4.6-1build1"
+				},
+				{
+					"key": "libedit2_3.1-20230828-1build1_amd64",
+					"name": "libedit2",
+					"version": "3.1-20230828-1build1"
+				},
+				{
+					"key": "libglapi-mesa_24.0.5-1ubuntu1_amd64",
+					"name": "libglapi-mesa",
+					"version": "24.0.5-1ubuntu1"
+				},
+				{
+					"key": "libexpat1_2.6.1-2build1_amd64",
+					"name": "libexpat1",
+					"version": "2.6.1-2build1"
+				},
+				{
+					"key": "libelf1t64_0.190-1.1build4_amd64",
+					"name": "libelf1t64",
+					"version": "0.190-1.1build4"
+				},
+				{
+					"key": "libdrm2_2.4.120-2build1_amd64",
+					"name": "libdrm2",
+					"version": "2.4.120-2build1"
+				},
+				{
+					"key": "libdrm-common_2.4.120-2build1_amd64",
+					"name": "libdrm-common",
+					"version": "2.4.120-2build1"
+				},
+				{
+					"key": "libdrm-radeon1_2.4.120-2build1_amd64",
+					"name": "libdrm-radeon1",
+					"version": "2.4.120-2build1"
+				},
+				{
+					"key": "libdrm-nouveau2_2.4.120-2build1_amd64",
+					"name": "libdrm-nouveau2",
+					"version": "2.4.120-2build1"
+				},
+				{
+					"key": "libdrm-intel1_2.4.120-2build1_amd64",
+					"name": "libdrm-intel1",
+					"version": "2.4.120-2build1"
+				},
+				{
+					"key": "libpciaccess0_0.17-3build1_amd64",
+					"name": "libpciaccess0",
+					"version": "0.17-3build1"
+				},
+				{
+					"key": "libdrm-amdgpu1_2.4.120-2build1_amd64",
+					"name": "libdrm-amdgpu1",
+					"version": "2.4.120-2build1"
+				},
+				{
+					"key": "libvulkan1_1.3.275.0-1build1_amd64",
+					"name": "libvulkan1",
+					"version": "1.3.275.0-1build1"
+				},
+				{
+					"key": "libxxf86vm1_1-1.1.4-1build4_amd64",
+					"name": "libxxf86vm1",
+					"version": "1:1.1.4-1build4"
+				},
+				{
+					"key": "libxext6_2-1.3.4-1build2_amd64",
+					"name": "libxext6",
+					"version": "2:1.3.4-1build2"
+				},
+				{
+					"key": "libx11-6_2-1.8.7-1build1_amd64",
+					"name": "libx11-6",
+					"version": "2:1.8.7-1build1"
+				},
+				{
+					"key": "libx11-data_2-1.8.7-1build1_amd64",
+					"name": "libx11-data",
+					"version": "2:1.8.7-1build1"
+				},
+				{
+					"key": "libxshmfence1_1.3-1build5_amd64",
+					"name": "libxshmfence1",
+					"version": "1.3-1build5"
+				},
+				{
+					"key": "libxfixes3_1-6.0.0-2build1_amd64",
+					"name": "libxfixes3",
+					"version": "1:6.0.0-2build1"
+				},
+				{
+					"key": "libxcb-xfixes0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-xfixes0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-sync1_1.15-1ubuntu2_amd64",
+					"name": "libxcb-sync1",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-shm0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-shm0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-randr0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-randr0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-present0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-present0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-glx0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-glx0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-dri2-0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-dri2-0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libx11-xcb1_2-1.8.7-1build1_amd64",
+					"name": "libx11-xcb1",
+					"version": "2:1.8.7-1build1"
+				},
+				{
+					"key": "libglut3.12_3.4.0-1build1_amd64",
+					"name": "libglut3.12",
+					"version": "3.4.0-1build1"
+				},
+				{
+					"key": "libxi6_2-1.8.1-1build1_amd64",
+					"name": "libxi6",
+					"version": "2:1.8.1-1build1"
+				},
+				{
+					"key": "libgl1_1.7.0-1build1_amd64",
+					"name": "libgl1",
+					"version": "1.7.0-1build1"
+				},
+				{
+					"key": "libgif7_5.2.2-1ubuntu1_amd64",
+					"name": "libgif7",
+					"version": "5.2.2-1ubuntu1"
+				},
+				{
+					"key": "python3-zeroconf_0.131.0-1_amd64",
+					"name": "python3-zeroconf",
+					"version": "0.131.0-1"
+				},
+				{
+					"key": "python3_3.12.3-0ubuntu1_amd64",
+					"name": "python3",
+					"version": "3.12.3-0ubuntu1"
+				},
+				{
+					"key": "libpython3-stdlib_3.12.3-0ubuntu1_amd64",
+					"name": "libpython3-stdlib",
+					"version": "3.12.3-0ubuntu1"
+				},
+				{
+					"key": "libpython3.12-stdlib_3.12.3-1_amd64",
+					"name": "libpython3.12-stdlib",
+					"version": "3.12.3-1"
+				},
+				{
+					"key": "libsqlite3-0_3.45.1-1ubuntu2_amd64",
+					"name": "libsqlite3-0",
+					"version": "3.45.1-1ubuntu2"
+				},
+				{
+					"key": "libreadline8t64_8.2-4build1_amd64",
+					"name": "libreadline8t64",
+					"version": "8.2-4build1"
+				},
+				{
+					"key": "readline-common_8.2-4build1_amd64",
+					"name": "readline-common",
+					"version": "8.2-4build1"
+				},
+				{
+					"key": "libncursesw6_6.4-p-20240113-1ubuntu2_amd64",
+					"name": "libncursesw6",
+					"version": "6.4+20240113-1ubuntu2"
+				},
+				{
+					"key": "libdb5.3t64_5.3.28-p-dfsg2-7_amd64",
+					"name": "libdb5.3t64",
+					"version": "5.3.28+dfsg2-7"
+				},
+				{
+					"key": "libcrypt1_1-4.4.36-4build1_amd64",
+					"name": "libcrypt1",
+					"version": "1:4.4.36-4build1"
+				},
+				{
+					"key": "libbz2-1.0_1.0.8-5.1_amd64",
+					"name": "libbz2-1.0",
+					"version": "1.0.8-5.1"
+				},
+				{
+					"key": "tzdata_2024a-2ubuntu1_amd64",
+					"name": "tzdata",
+					"version": "2024a-2ubuntu1"
+				},
+				{
+					"key": "debconf_1.5.86ubuntu1_amd64",
+					"name": "debconf",
+					"version": "1.5.86ubuntu1"
+				},
+				{
+					"key": "netbase_6.4_amd64",
+					"name": "netbase",
+					"version": "6.4"
+				},
+				{
+					"key": "media-types_10.1.0_amd64",
+					"name": "media-types",
+					"version": "10.1.0"
+				},
+				{
+					"key": "libpython3.12-minimal_3.12.3-1_amd64",
+					"name": "libpython3.12-minimal",
+					"version": "3.12.3-1"
+				},
+				{
+					"key": "libssl3t64_3.0.13-0ubuntu3_amd64",
+					"name": "libssl3t64",
+					"version": "3.0.13-0ubuntu3"
+				},
+				{
+					"key": "python3.12_3.12.3-1_amd64",
+					"name": "python3.12",
+					"version": "3.12.3-1"
+				},
+				{
+					"key": "python3.12-minimal_3.12.3-1_amd64",
+					"name": "python3.12-minimal",
+					"version": "3.12.3-1"
+				},
+				{
+					"key": "python3-minimal_3.12.3-0ubuntu1_amd64",
+					"name": "python3-minimal",
+					"version": "3.12.3-0ubuntu1"
+				},
+				{
+					"key": "dpkg_1.22.6ubuntu6_amd64",
+					"name": "dpkg",
+					"version": "1.22.6ubuntu6"
+				},
+				{
+					"key": "tar_1.35-p-dfsg-3build1_amd64",
+					"name": "tar",
+					"version": "1.35+dfsg-3build1"
+				},
+				{
+					"key": "libselinux1_3.5-2ubuntu2_amd64",
+					"name": "libselinux1",
+					"version": "3.5-2ubuntu2"
+				},
+				{
+					"key": "libpcre2-8-0_10.42-4ubuntu2_amd64",
+					"name": "libpcre2-8-0",
+					"version": "10.42-4ubuntu2"
+				},
+				{
+					"key": "libacl1_2.3.2-1build1_amd64",
+					"name": "libacl1",
+					"version": "2.3.2-1build1"
+				},
+				{
+					"key": "python3-ifaddr_0.2.0-1_amd64",
+					"name": "python3-ifaddr",
+					"version": "0.2.0-1"
+				},
+				{
+					"key": "python3-async-timeout_4.0.3-1_amd64",
+					"name": "python3-async-timeout",
+					"version": "4.0.3-1"
+				},
+				{
+					"key": "python3-typing-extensions_4.10.0-1_amd64",
+					"name": "python3-typing-extensions",
+					"version": "4.10.0-1"
+				},
+				{
+					"key": "python3-xxhash_3.2.0-1build3_amd64",
+					"name": "python3-xxhash",
+					"version": "3.2.0-1build3"
+				},
+				{
+					"key": "libxxhash0_0.8.2-2build1_amd64",
+					"name": "libxxhash0",
+					"version": "0.8.2-2build1"
+				},
+				{
+					"key": "python3-speechd_0.12.0_rc2-2build3_amd64",
+					"name": "python3-speechd",
+					"version": "0.12.0~rc2-2build3"
+				},
+				{
+					"key": "python3-xdg_0.28-2_amd64",
+					"name": "python3-xdg",
+					"version": "0.28-2"
+				},
+				{
+					"key": "python3-routes_2.5.1-1ubuntu1_amd64",
+					"name": "python3-routes",
+					"version": "2.5.1-1ubuntu1"
+				},
+				{
+					"key": "python3-pkg-resources_68.1.2-2ubuntu1_amd64",
+					"name": "python3-pkg-resources",
+					"version": "68.1.2-2ubuntu1"
+				},
+				{
+					"key": "libjs-sphinxdoc_7.2.6-6_amd64",
+					"name": "libjs-sphinxdoc",
+					"version": "7.2.6-6"
+				},
+				{
+					"key": "libjs-underscore_1.13.4_dfsg-p-_1.11.4-3_amd64",
+					"name": "libjs-underscore",
+					"version": "1.13.4~dfsg+~1.11.4-3"
+				},
+				{
+					"key": "libjs-jquery_3.6.1-p-dfsg-p-_3.5.14-1_amd64",
+					"name": "libjs-jquery",
+					"version": "3.6.1+dfsg+~3.5.14-1"
+				},
+				{
+					"key": "python3-six_1.16.0-4_amd64",
+					"name": "python3-six",
+					"version": "1.16.0-4"
+				},
+				{
+					"key": "python3-repoze.lru_0.7-3_amd64",
+					"name": "python3-repoze.lru",
+					"version": "0.7-3"
+				},
+				{
+					"key": "python3-regex_0.1.20221031-2build1_amd64",
+					"name": "python3-regex",
+					"version": "0.1.20221031-2build1"
+				},
+				{
+					"key": "python3-pyqt6.sip_13.6.0-1build2_amd64",
+					"name": "python3-pyqt6.sip",
+					"version": "13.6.0-1build2"
+				},
+				{
+					"key": "python3-pyqt6.qtwebengine_6.6.0-1build2_amd64",
+					"name": "python3-pyqt6.qtwebengine",
+					"version": "6.6.0-1build2"
+				},
+				{
+					"key": "libqt6widgets6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6widgets6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libqt6core6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6core6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libpcre2-16-0_10.42-4ubuntu2_amd64",
+					"name": "libpcre2-16-0",
+					"version": "10.42-4ubuntu2"
+				},
+				{
+					"key": "libglib2.0-0t64_2.80.0-6ubuntu1_amd64",
+					"name": "libglib2.0-0t64",
+					"version": "2.80.0-6ubuntu1"
+				},
+				{
+					"key": "libmount1_2.39.3-9ubuntu6_amd64",
+					"name": "libmount1",
+					"version": "2.39.3-9ubuntu6"
+				},
+				{
+					"key": "libblkid1_2.39.3-9ubuntu6_amd64",
+					"name": "libblkid1",
+					"version": "2.39.3-9ubuntu6"
+				},
+				{
+					"key": "libdouble-conversion3_3.3.0-1build1_amd64",
+					"name": "libdouble-conversion3",
+					"version": "3.3.0-1build1"
+				},
+				{
+					"key": "libb2-1_0.98.1-1.1build1_amd64",
+					"name": "libb2-1",
+					"version": "0.98.1-1.1build1"
+				},
+				{
+					"key": "libgomp1_14-20240412-0ubuntu1_amd64",
+					"name": "libgomp1",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "shared-mime-info_2.4-4_amd64",
+					"name": "shared-mime-info",
+					"version": "2.4-4"
+				},
+				{
+					"key": "libqt6gui6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6gui6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libxkbcommon0_1.6.0-1build1_amd64",
+					"name": "libxkbcommon0",
+					"version": "1.6.0-1build1"
+				},
+				{
+					"key": "xkb-data_2.41-2ubuntu1_amd64",
+					"name": "xkb-data",
+					"version": "2.41-2ubuntu1"
+				},
+				{
+					"key": "libxkbcommon-x11-0_1.6.0-1build1_amd64",
+					"name": "libxkbcommon-x11-0",
+					"version": "1.6.0-1build1"
+				},
+				{
+					"key": "libxcb-xkb1_1.15-1ubuntu2_amd64",
+					"name": "libxcb-xkb1",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-shape0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-shape0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-render0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-render0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-render-util0_0.3.9-1build4_amd64",
+					"name": "libxcb-render-util0",
+					"version": "0.3.9-1build4"
+				},
+				{
+					"key": "libxcb-keysyms1_0.4.0-1build4_amd64",
+					"name": "libxcb-keysyms1",
+					"version": "0.4.0-1build4"
+				},
+				{
+					"key": "libxcb-image0_0.4.0-2build1_amd64",
+					"name": "libxcb-image0",
+					"version": "0.4.0-2build1"
+				},
+				{
+					"key": "libxcb-util1_0.4.0-1build3_amd64",
+					"name": "libxcb-util1",
+					"version": "0.4.0-1build3"
+				},
+				{
+					"key": "libxcb-icccm4_0.4.1-1.1build3_amd64",
+					"name": "libxcb-icccm4",
+					"version": "0.4.1-1.1build3"
+				},
+				{
+					"key": "libudev1_255.4-1ubuntu8_amd64",
+					"name": "libudev1",
+					"version": "255.4-1ubuntu8"
+				},
+				{
+					"key": "libcap2_1-2.66-5ubuntu2_amd64",
+					"name": "libcap2",
+					"version": "1:2.66-5ubuntu2"
+				},
+				{
+					"key": "libts0t64_1.22-1.1build1_amd64",
+					"name": "libts0t64",
+					"version": "1.22-1.1build1"
+				},
+				{
+					"key": "libsm6_2-1.2.3-1build3_amd64",
+					"name": "libsm6",
+					"version": "2:1.2.3-1build3"
+				},
+				{
+					"key": "libuuid1_2.39.3-9ubuntu6_amd64",
+					"name": "libuuid1",
+					"version": "2.39.3-9ubuntu6"
+				},
+				{
+					"key": "libice6_2-1.0.10-1build3_amd64",
+					"name": "libice6",
+					"version": "2:1.0.10-1build3"
+				},
+				{
+					"key": "x11-common_1-7.7-p-23ubuntu3_amd64",
+					"name": "x11-common",
+					"version": "1:7.7+23ubuntu3"
+				},
+				{
+					"key": "sysvinit-utils_3.08-6ubuntu3_amd64",
+					"name": "sysvinit-utils",
+					"version": "3.08-6ubuntu3"
+				},
+				{
+					"key": "libqt6dbus6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6dbus6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libdbus-1-3_1.14.10-4ubuntu4_amd64",
+					"name": "libdbus-1-3",
+					"version": "1.14.10-4ubuntu4"
+				},
+				{
+					"key": "libsystemd0_255.4-1ubuntu8_amd64",
+					"name": "libsystemd0",
+					"version": "255.4-1ubuntu8"
+				},
+				{
+					"key": "liblz4-1_1.9.4-1build1_amd64",
+					"name": "liblz4-1",
+					"version": "1.9.4-1build1"
+				},
+				{
+					"key": "libgcrypt20_1.10.3-2build1_amd64",
+					"name": "libgcrypt20",
+					"version": "1.10.3-2build1"
+				},
+				{
+					"key": "libgpg-error0_1.47-3build2_amd64",
+					"name": "libgpg-error0",
+					"version": "1.47-3build2"
+				},
+				{
+					"key": "libmtdev1t64_1.1.6-1.1build1_amd64",
+					"name": "libmtdev1t64",
+					"version": "1.1.6-1.1build1"
+				},
+				{
+					"key": "libmd4c0_0.4.8-1build1_amd64",
+					"name": "libmd4c0",
+					"version": "0.4.8-1build1"
+				},
+				{
+					"key": "libinput10_1.25.0-1ubuntu2_amd64",
+					"name": "libinput10",
+					"version": "1.25.0-1ubuntu2"
+				},
+				{
+					"key": "libinput-bin_1.25.0-1ubuntu2_amd64",
+					"name": "libinput-bin",
+					"version": "1.25.0-1ubuntu2"
+				},
+				{
+					"key": "libwacom9_2.10.0-2_amd64",
+					"name": "libwacom9",
+					"version": "2.10.0-2"
+				},
+				{
+					"key": "libwacom-common_2.10.0-2_amd64",
+					"name": "libwacom-common",
+					"version": "2.10.0-2"
+				},
+				{
+					"key": "libgudev-1.0-0_1-238-5ubuntu1_amd64",
+					"name": "libgudev-1.0-0",
+					"version": "1:238-5ubuntu1"
+				},
+				{
+					"key": "libevdev2_1.13.1-p-dfsg-1build1_amd64",
+					"name": "libevdev2",
+					"version": "1.13.1+dfsg-1build1"
+				},
+				{
+					"key": "libharfbuzz0b_8.3.0-2build2_amd64",
+					"name": "libharfbuzz0b",
+					"version": "8.3.0-2build2"
+				},
+				{
+					"key": "libgraphite2-3_1.3.14-2build1_amd64",
+					"name": "libgraphite2-3",
+					"version": "1.3.14-2build1"
+				},
+				{
+					"key": "libfreetype6_2.13.2-p-dfsg-1build3_amd64",
+					"name": "libfreetype6",
+					"version": "2.13.2+dfsg-1build3"
+				},
+				{
+					"key": "libbrotli1_1.1.0-2build2_amd64",
+					"name": "libbrotli1",
+					"version": "1.1.0-2build2"
+				},
+				{
+					"key": "libfontconfig1_2.15.0-1.1ubuntu2_amd64",
+					"name": "libfontconfig1",
+					"version": "2.15.0-1.1ubuntu2"
+				},
+				{
+					"key": "fontconfig-config_2.15.0-1.1ubuntu2_amd64",
+					"name": "fontconfig-config",
+					"version": "2.15.0-1.1ubuntu2"
+				},
+				{
+					"key": "fonts-dejavu-core_2.37-8_amd64",
+					"name": "fonts-dejavu-core",
+					"version": "2.37-8"
+				},
+				{
+					"key": "fonts-dejavu-mono_2.37-8_amd64",
+					"name": "fonts-dejavu-mono",
+					"version": "2.37-8"
+				},
+				{
+					"key": "libegl1_1.7.0-1build1_amd64",
+					"name": "libegl1",
+					"version": "1.7.0-1build1"
+				},
+				{
+					"key": "libegl-mesa0_24.0.5-1ubuntu1_amd64",
+					"name": "libegl-mesa0",
+					"version": "24.0.5-1ubuntu1"
+				},
+				{
+					"key": "libwayland-server0_1.22.0-2.1build1_amd64",
+					"name": "libwayland-server0",
+					"version": "1.22.0-2.1build1"
+				},
+				{
+					"key": "libwayland-client0_1.22.0-2.1build1_amd64",
+					"name": "libwayland-client0",
+					"version": "1.22.0-2.1build1"
+				},
+				{
+					"key": "libgbm1_24.0.5-1ubuntu1_amd64",
+					"name": "libgbm1",
+					"version": "24.0.5-1ubuntu1"
+				},
+				{
+					"key": "fontconfig_2.15.0-1.1ubuntu2_amd64",
+					"name": "fontconfig",
+					"version": "2.15.0-1.1ubuntu2"
+				},
+				{
+					"key": "libqt6webenginewidgets6_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+					"name": "libqt6webenginewidgets6",
+					"version": "6.4.2-final+dfsg-12ubuntu9"
+				},
+				{
+					"key": "libqt6webenginecore6-bin_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+					"name": "libqt6webenginecore6-bin",
+					"version": "6.4.2-final+dfsg-12ubuntu9"
+				},
+				{
+					"key": "libqt6webenginecore6_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+					"name": "libqt6webenginecore6",
+					"version": "6.4.2-final+dfsg-12ubuntu9"
+				},
+				{
+					"key": "libxtst6_2-1.2.3-1.1build1_amd64",
+					"name": "libxtst6",
+					"version": "2:1.2.3-1.1build1"
+				},
+				{
+					"key": "libxslt1.1_1.1.39-0exp1build1_amd64",
+					"name": "libxslt1.1",
+					"version": "1.1.39-0exp1build1"
+				},
+				{
+					"key": "libxrandr2_2-1.5.2-2build1_amd64",
+					"name": "libxrandr2",
+					"version": "2:1.5.2-2build1"
+				},
+				{
+					"key": "libxrender1_1-0.9.10-1.1build1_amd64",
+					"name": "libxrender1",
+					"version": "1:0.9.10-1.1build1"
+				},
+				{
+					"key": "libxkbfile1_1-1.1.0-1build4_amd64",
+					"name": "libxkbfile1",
+					"version": "1:1.1.0-1build4"
+				},
+				{
+					"key": "libxdamage1_1-1.1.6-1build1_amd64",
+					"name": "libxdamage1",
+					"version": "1:1.1.6-1build1"
+				},
+				{
+					"key": "libxcomposite1_1-0.4.5-1build3_amd64",
+					"name": "libxcomposite1",
+					"version": "1:0.4.5-1build3"
+				},
+				{
+					"key": "libvpx9_1.14.0-1ubuntu2_amd64",
+					"name": "libvpx9",
+					"version": "1.14.0-1ubuntu2"
+				},
+				{
+					"key": "libsnappy1v5_1.1.10-1build1_amd64",
+					"name": "libsnappy1v5",
+					"version": "1.1.10-1build1"
+				},
+				{
+					"key": "libqt6webchannel6_6.4.2-3build2_amd64",
+					"name": "libqt6webchannel6",
+					"version": "6.4.2-3build2"
+				},
+				{
+					"key": "libqt6qml6_6.4.2-p-dfsg-4build3_amd64",
+					"name": "libqt6qml6",
+					"version": "6.4.2+dfsg-4build3"
+				},
+				{
+					"key": "libqt6network6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6network6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libproxy1v5_0.5.4-4build1_amd64",
+					"name": "libproxy1v5",
+					"version": "0.5.4-4build1"
+				},
+				{
+					"key": "libduktape207_2.7.0-p-tests-0ubuntu3_amd64",
+					"name": "libduktape207",
+					"version": "2.7.0+tests-0ubuntu3"
+				},
+				{
+					"key": "libcurl3t64-gnutls_8.5.0-2ubuntu10_amd64",
+					"name": "libcurl3t64-gnutls",
+					"version": "8.5.0-2ubuntu10"
+				},
+				{
+					"key": "libssh-4_0.10.6-2build2_amd64",
+					"name": "libssh-4",
+					"version": "0.10.6-2build2"
+				},
+				{
+					"key": "libgssapi-krb5-2_1.20.1-6ubuntu2_amd64",
+					"name": "libgssapi-krb5-2",
+					"version": "1.20.1-6ubuntu2"
+				},
+				{
+					"key": "libkrb5support0_1.20.1-6ubuntu2_amd64",
+					"name": "libkrb5support0",
+					"version": "1.20.1-6ubuntu2"
+				},
+				{
+					"key": "libk5crypto3_1.20.1-6ubuntu2_amd64",
+					"name": "libk5crypto3",
+					"version": "1.20.1-6ubuntu2"
+				},
+				{
+					"key": "libcom-err2_1.47.0-2.4_exp1ubuntu4_amd64",
+					"name": "libcom-err2",
+					"version": "1.47.0-2.4~exp1ubuntu4"
+				},
+				{
+					"key": "libkrb5-3_1.20.1-6ubuntu2_amd64",
+					"name": "libkrb5-3",
+					"version": "1.20.1-6ubuntu2"
+				},
+				{
+					"key": "libkeyutils1_1.6.3-3build1_amd64",
+					"name": "libkeyutils1",
+					"version": "1.6.3-3build1"
+				},
+				{
+					"key": "librtmp1_2.4-p-20151223.gitfa8646d.1-2build7_amd64",
+					"name": "librtmp1",
+					"version": "2.4+20151223.gitfa8646d.1-2build7"
+				},
+				{
+					"key": "libnettle8t64_3.9.1-2.2build1_amd64",
+					"name": "libnettle8t64",
+					"version": "3.9.1-2.2build1"
+				},
+				{
+					"key": "libhogweed6t64_3.9.1-2.2build1_amd64",
+					"name": "libhogweed6t64",
+					"version": "3.9.1-2.2build1"
+				},
+				{
+					"key": "libgmp10_2-6.3.0-p-dfsg-2ubuntu6_amd64",
+					"name": "libgmp10",
+					"version": "2:6.3.0+dfsg-2ubuntu6"
+				},
+				{
+					"key": "libgnutls30t64_3.8.3-1.1ubuntu3_amd64",
+					"name": "libgnutls30t64",
+					"version": "3.8.3-1.1ubuntu3"
+				},
+				{
+					"key": "libunistring5_1.1-2build1_amd64",
+					"name": "libunistring5",
+					"version": "1.1-2build1"
+				},
+				{
+					"key": "libtasn1-6_4.19.0-3build1_amd64",
+					"name": "libtasn1-6",
+					"version": "4.19.0-3build1"
+				},
+				{
+					"key": "libp11-kit0_0.25.3-4ubuntu2_amd64",
+					"name": "libp11-kit0",
+					"version": "0.25.3-4ubuntu2"
+				},
+				{
+					"key": "libidn2-0_2.3.7-2build1_amd64",
+					"name": "libidn2-0",
+					"version": "2.3.7-2build1"
+				},
+				{
+					"key": "libpsl5t64_0.21.2-1.1build1_amd64",
+					"name": "libpsl5t64",
+					"version": "0.21.2-1.1build1"
+				},
+				{
+					"key": "libnghttp2-14_1.59.0-1build4_amd64",
+					"name": "libnghttp2-14",
+					"version": "1.59.0-1build4"
+				},
+				{
+					"key": "libldap2_2.6.7-p-dfsg-1_exp1ubuntu8_amd64",
+					"name": "libldap2",
+					"version": "2.6.7+dfsg-1~exp1ubuntu8"
+				},
+				{
+					"key": "libsasl2-2_2.1.28-p-dfsg1-5ubuntu3_amd64",
+					"name": "libsasl2-2",
+					"version": "2.1.28+dfsg1-5ubuntu3"
+				},
+				{
+					"key": "libsasl2-modules-db_2.1.28-p-dfsg1-5ubuntu3_amd64",
+					"name": "libsasl2-modules-db",
+					"version": "2.1.28+dfsg1-5ubuntu3"
+				},
+				{
+					"key": "libqt6quick6_6.4.2-p-dfsg-4build3_amd64",
+					"name": "libqt6quick6",
+					"version": "6.4.2+dfsg-4build3"
+				},
+				{
+					"key": "libqt6qmlmodels6_6.4.2-p-dfsg-4build3_amd64",
+					"name": "libqt6qmlmodels6",
+					"version": "6.4.2+dfsg-4build3"
+				},
+				{
+					"key": "libqt6opengl6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6opengl6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libqt6positioning6_6.4.2-3build3_amd64",
+					"name": "libqt6positioning6",
+					"version": "6.4.2-3build3"
+				},
+				{
+					"key": "libopus0_1.4-1build1_amd64",
+					"name": "libopus0",
+					"version": "1.4-1build1"
+				},
+				{
+					"key": "libopenjp2-7_2.5.0-2build3_amd64",
+					"name": "libopenjp2-7",
+					"version": "2.5.0-2build3"
+				},
+				{
+					"key": "libnss3_2-3.98-1build1_amd64",
+					"name": "libnss3",
+					"version": "2:3.98-1build1"
+				},
+				{
+					"key": "libnspr4_2-4.35-1.1build1_amd64",
+					"name": "libnspr4",
+					"version": "2:4.35-1.1build1"
+				},
+				{
+					"key": "libminizip1t64_1-1.3.dfsg-3.1ubuntu2_amd64",
+					"name": "libminizip1t64",
+					"version": "1:1.3.dfsg-3.1ubuntu2"
+				},
+				{
+					"key": "liblcms2-2_2.14-2build1_amd64",
+					"name": "liblcms2-2",
+					"version": "2.14-2build1"
+				},
+				{
+					"key": "libharfbuzz-subset0_8.3.0-2build2_amd64",
+					"name": "libharfbuzz-subset0",
+					"version": "8.3.0-2build2"
+				},
+				{
+					"key": "libevent-2.1-7t64_2.1.12-stable-9ubuntu2_amd64",
+					"name": "libevent-2.1-7t64",
+					"version": "2.1.12-stable-9ubuntu2"
+				},
+				{
+					"key": "sse3-support_21build1_amd64",
+					"name": "sse3-support",
+					"version": "21build1"
+				},
+				{
+					"key": "isa-support_21build1_amd64",
+					"name": "isa-support",
+					"version": "21build1"
+				},
+				{
+					"key": "libqt6webengine6-data_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+					"name": "libqt6webengine6-data",
+					"version": "6.4.2-final+dfsg-12ubuntu9"
+				},
+				{
+					"key": "libqt6quickwidgets6_6.4.2-p-dfsg-4build3_amd64",
+					"name": "libqt6quickwidgets6",
+					"version": "6.4.2+dfsg-4build3"
+				},
+				{
+					"key": "libqt6printsupport6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6printsupport6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libcups2t64_2.4.7-1.2ubuntu7_amd64",
+					"name": "libcups2t64",
+					"version": "2.4.7-1.2ubuntu7"
+				},
+				{
+					"key": "libavahi-common3_0.8-13ubuntu6_amd64",
+					"name": "libavahi-common3",
+					"version": "0.8-13ubuntu6"
+				},
+				{
+					"key": "libavahi-common-data_0.8-13ubuntu6_amd64",
+					"name": "libavahi-common-data",
+					"version": "0.8-13ubuntu6"
+				},
+				{
+					"key": "libavahi-client3_0.8-13ubuntu6_amd64",
+					"name": "libavahi-client3",
+					"version": "0.8-13ubuntu6"
+				},
+				{
+					"key": "libqt6webenginequick6_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+					"name": "libqt6webenginequick6",
+					"version": "6.4.2-final+dfsg-12ubuntu9"
+				},
+				{
+					"key": "python3-pyqt6_6.6.1-2build4_amd64",
+					"name": "python3-pyqt6",
+					"version": "6.6.1-2build4"
+				},
+				{
+					"key": "libqt6xml6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6xml6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libqt6test6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6test6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libqt6sql6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6sql6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "libqt6openglwidgets6t64_6.4.2-p-dfsg-21.1build5_amd64",
+					"name": "libqt6openglwidgets6t64",
+					"version": "6.4.2+dfsg-21.1build5"
+				},
+				{
+					"key": "python3-pyqt6.qtwebchannel_6.6.1-2build4_amd64",
+					"name": "python3-pyqt6.qtwebchannel",
+					"version": "6.6.1-2build4"
+				},
+				{
+					"key": "python3-pyqt6.qtqml_6.6.1-2build4_amd64",
+					"name": "python3-pyqt6.qtqml",
+					"version": "6.6.1-2build4"
+				},
+				{
+					"key": "libpython3.12t64_3.12.3-1_amd64",
+					"name": "libpython3.12t64",
+					"version": "3.12.3-1"
+				},
+				{
+					"key": "python3-pyqt6.qtsvg_6.6.1-2build4_amd64",
+					"name": "python3-pyqt6.qtsvg",
+					"version": "6.6.1-2build4"
+				},
+				{
+					"key": "libqt6svgwidgets6_6.4.2-4ubuntu3_amd64",
+					"name": "libqt6svgwidgets6",
+					"version": "6.4.2-4ubuntu3"
+				},
+				{
+					"key": "libqt6svg6_6.4.2-4ubuntu3_amd64",
+					"name": "libqt6svg6",
+					"version": "6.4.2-4ubuntu3"
+				},
+				{
+					"key": "python3-pyqt6.qtquick_6.6.1-2build4_amd64",
+					"name": "python3-pyqt6.qtquick",
+					"version": "6.6.1-2build4"
+				},
+				{
+					"key": "python3-pyparsing_3.1.1-1_amd64",
+					"name": "python3-pyparsing",
+					"version": "3.1.1-1"
+				},
+				{
+					"key": "python3-pygments_2.17.2-p-dfsg-1_amd64",
+					"name": "python3-pygments",
+					"version": "2.17.2+dfsg-1"
+				},
+				{
+					"key": "python3-pycryptodome_3.20.0-p-dfsg-1_amd64",
+					"name": "python3-pycryptodome",
+					"version": "3.20.0+dfsg-1"
+				},
+				{
+					"key": "python3-py7zr_0.11.3-p-dfsg-8build1_amd64",
+					"name": "python3-py7zr",
+					"version": "0.11.3+dfsg-8build1"
+				},
+				{
+					"key": "python3-texttable_1.6.7-1_amd64",
+					"name": "python3-texttable",
+					"version": "1.6.7-1"
+				},
+				{
+					"key": "python3-importlib-metadata_4.12.0-1_amd64",
+					"name": "python3-importlib-metadata",
+					"version": "4.12.0-1"
+				},
+				{
+					"key": "python3-zipp_1.0.0-6_amd64",
+					"name": "python3-zipp",
+					"version": "1.0.0-6"
+				},
+				{
+					"key": "python3-more-itertools_10.2.0-1_amd64",
+					"name": "python3-more-itertools",
+					"version": "10.2.0-1"
+				},
+				{
+					"key": "python3-pil_10.2.0-1build1_amd64",
+					"name": "python3-pil",
+					"version": "10.2.0-1build1"
+				},
+				{
+					"key": "libraqm0_0.10.1-1build1_amd64",
+					"name": "libraqm0",
+					"version": "0.10.1-1build1"
+				},
+				{
+					"key": "libfribidi0_1.0.13-3build1_amd64",
+					"name": "libfribidi0",
+					"version": "1.0.13-3build1"
+				},
+				{
+					"key": "libimagequant0_2.18.0-1build1_amd64",
+					"name": "libimagequant0",
+					"version": "2.18.0-1build1"
+				},
+				{
+					"key": "python3-netifaces_0.11.0-2build3_amd64",
+					"name": "python3-netifaces",
+					"version": "0.11.0-2build3"
+				},
+				{
+					"key": "python3-msgpack_1.0.3-3build2_amd64",
+					"name": "python3-msgpack",
+					"version": "1.0.3-3build2"
+				},
+				{
+					"key": "python3-mechanize_1-0.4.9-p-ds-2_amd64",
+					"name": "python3-mechanize",
+					"version": "1:0.4.9+ds-2"
+				},
+				{
+					"key": "python3-html5lib_1.1-6_amd64",
+					"name": "python3-html5lib",
+					"version": "1.1-6"
+				},
+				{
+					"key": "python3-webencodings_0.5.1-5_amd64",
+					"name": "python3-webencodings",
+					"version": "0.5.1-5"
+				},
+				{
+					"key": "python3-markdown_3.5.2-1_amd64",
+					"name": "python3-markdown",
+					"version": "3.5.2-1"
+				},
+				{
+					"key": "python3-lxml_5.2.1-1_amd64",
+					"name": "python3-lxml",
+					"version": "5.2.1-1"
+				},
+				{
+					"key": "python3-jeepney_0.8.0-3_amd64",
+					"name": "python3-jeepney",
+					"version": "0.8.0-3"
+				},
+				{
+					"key": "python3-html5-parser_0.4.12-p-ds-1build1_amd64",
+					"name": "python3-html5-parser",
+					"version": "0.4.12+ds-1build1"
+				},
+				{
+					"key": "python3-chardet_5.2.0-p-dfsg-1_amd64",
+					"name": "python3-chardet",
+					"version": "5.2.0+dfsg-1"
+				},
+				{
+					"key": "python3-html2text_2024.2.26-1_amd64",
+					"name": "python3-html2text",
+					"version": "2024.2.26-1"
+				},
+				{
+					"key": "python3-fonttools_4.46.0-1build2_amd64",
+					"name": "python3-fonttools",
+					"version": "4.46.0-1build2"
+				},
+				{
+					"key": "unicode-data_15.1.0-1_amd64",
+					"name": "unicode-data",
+					"version": "15.1.0-1"
+				},
+				{
+					"key": "python3-unicodedata2_15.1.0-p-ds-1build1_amd64",
+					"name": "python3-unicodedata2",
+					"version": "15.1.0+ds-1build1"
+				},
+				{
+					"key": "python3-lz4_4.0.2-p-dfsg-1build4_amd64",
+					"name": "python3-lz4",
+					"version": "4.0.2+dfsg-1build4"
+				},
+				{
+					"key": "python3-fs_2.4.16-3_amd64",
+					"name": "python3-fs",
+					"version": "2.4.16-3"
+				},
+				{
+					"key": "python3-appdirs_1.4.4-4_amd64",
+					"name": "python3-appdirs",
+					"version": "1.4.4-4"
+				},
+				{
+					"key": "python3-tz_2024.1-2_amd64",
+					"name": "python3-tz",
+					"version": "2024.1-2"
+				},
+				{
+					"key": "python3-sympy_1.12-7_amd64",
+					"name": "python3-sympy",
+					"version": "1.12-7"
+				},
+				{
+					"key": "python3-mpmath_1.2.1-3_amd64",
+					"name": "python3-mpmath",
+					"version": "1.2.1-3"
+				},
+				{
+					"key": "python3-ufolib2_0.16.0-p-dfsg1-1_amd64",
+					"name": "python3-ufolib2",
+					"version": "0.16.0+dfsg1-1"
+				},
+				{
+					"key": "python3-attr_23.2.0-2_amd64",
+					"name": "python3-attr",
+					"version": "23.2.0-2"
+				},
+				{
+					"key": "python3-scipy_1.11.4-6build1_amd64",
+					"name": "python3-scipy",
+					"version": "1.11.4-6build1"
+				},
+				{
+					"key": "liblbfgsb0_3.0-p-dfsg.4-1build1_amd64",
+					"name": "liblbfgsb0",
+					"version": "3.0+dfsg.4-1build1"
+				},
+				{
+					"key": "liblapack3_3.12.0-3build1_amd64",
+					"name": "liblapack3",
+					"version": "3.12.0-3build1"
+				},
+				{
+					"key": "libgfortran5_14-20240412-0ubuntu1_amd64",
+					"name": "libgfortran5",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "libblas3_3.12.0-3build1_amd64",
+					"name": "libblas3",
+					"version": "3.12.0-3build1"
+				},
+				{
+					"key": "python3-numpy_1-1.26.4-p-ds-6ubuntu1_amd64",
+					"name": "python3-numpy",
+					"version": "1:1.26.4+ds-6ubuntu1"
+				},
+				{
+					"key": "python3-decorator_5.1.1-5_amd64",
+					"name": "python3-decorator",
+					"version": "5.1.1-5"
+				},
+				{
+					"key": "python3-brotli_1.1.0-2build2_amd64",
+					"name": "python3-brotli",
+					"version": "1.1.0-2build2"
+				},
+				{
+					"key": "python3-feedparser_6.0.10-1_amd64",
+					"name": "python3-feedparser",
+					"version": "6.0.10-1"
+				},
+				{
+					"key": "python3-sgmllib3k_1.0.0-4_amd64",
+					"name": "python3-sgmllib3k",
+					"version": "1.0.0-4"
+				},
+				{
+					"key": "python3-dateutil_2.8.2-3ubuntu1_amd64",
+					"name": "python3-dateutil",
+					"version": "2.8.2-3ubuntu1"
+				},
+				{
+					"key": "python3-cssselect_1.2.0-2_amd64",
+					"name": "python3-cssselect",
+					"version": "1.2.0-2"
+				},
+				{
+					"key": "python3-css-parser_1.0.10-1_amd64",
+					"name": "python3-css-parser",
+					"version": "1.0.10-1"
+				},
+				{
+					"key": "python3-chm_0.8.6-4build1_amd64",
+					"name": "python3-chm",
+					"version": "0.8.6-4build1"
+				},
+				{
+					"key": "libchm1_2-0.40a-8_amd64",
+					"name": "libchm1",
+					"version": "2:0.40a-8"
+				},
+				{
+					"key": "python3-bs4_4.12.3-1_amd64",
+					"name": "python3-bs4",
+					"version": "4.12.3-1"
+				},
+				{
+					"key": "python3-soupsieve_2.5-1_amd64",
+					"name": "python3-soupsieve",
+					"version": "2.5-1"
+				},
+				{
+					"key": "python3-apsw_3.43.0.0-1build2_amd64",
+					"name": "python3-apsw",
+					"version": "3.43.0.0-1build2"
+				},
+				{
+					"key": "pyqt6-dev-tools_6.6.1-2build4_amd64",
+					"name": "pyqt6-dev-tools",
+					"version": "6.6.1-2build4"
+				},
+				{
+					"key": "poppler-utils_24.02.0-1ubuntu9_amd64",
+					"name": "poppler-utils",
+					"version": "24.02.0-1ubuntu9"
+				},
+				{
+					"key": "libcairo2_1.18.0-3build1_amd64",
+					"name": "libcairo2",
+					"version": "1.18.0-3build1"
+				},
+				{
+					"key": "libpixman-1-0_0.42.2-1build1_amd64",
+					"name": "libpixman-1-0",
+					"version": "0.42.2-1build1"
+				},
+				{
+					"key": "libpoppler134_24.02.0-1ubuntu9_amd64",
+					"name": "libpoppler134",
+					"version": "24.02.0-1ubuntu9"
+				},
+				{
+					"key": "optipng_0.7.8-p-ds-1build2_amd64",
+					"name": "optipng",
+					"version": "0.7.8+ds-1build2"
+				},
+				{
+					"key": "libjxr-tools_1.2_git20170615.f752187-5.1ubuntu2_amd64",
+					"name": "libjxr-tools",
+					"version": "1.2~git20170615.f752187-5.1ubuntu2"
+				},
+				{
+					"key": "libjxr0t64_1.2_git20170615.f752187-5.1ubuntu2_amd64",
+					"name": "libjxr0t64",
+					"version": "1.2~git20170615.f752187-5.1ubuntu2"
+				},
+				{
+					"key": "libjpeg-turbo-progs_2.1.5-2ubuntu2_amd64",
+					"name": "libjpeg-turbo-progs",
+					"version": "2.1.5-2ubuntu2"
+				},
+				{
+					"key": "libturbojpeg_1-2.1.5-2ubuntu2_amd64",
+					"name": "libturbojpeg",
+					"version": "1:2.1.5-2ubuntu2"
+				},
+				{
+					"key": "fonts-liberation_1-2.1.5-3_amd64",
+					"name": "fonts-liberation",
+					"version": "1:2.1.5-3"
+				},
+				{
+					"key": "ca-certificates_20240203_amd64",
+					"name": "ca-certificates",
+					"version": "20240203"
+				},
+				{
+					"key": "openssl_3.0.13-0ubuntu3_amd64",
+					"name": "openssl",
+					"version": "3.0.13-0ubuntu3"
+				},
+				{
+					"key": "calibre-bin_7.6.0-p-ds-1build1_amd64",
+					"name": "calibre-bin",
+					"version": "7.6.0+ds-1build1"
+				},
+				{
+					"key": "libusb-1.0-0_2-1.0.27-1_amd64",
+					"name": "libusb-1.0-0",
+					"version": "2:1.0.27-1"
+				},
+				{
+					"key": "libuchardet0_0.0.8-1build1_amd64",
+					"name": "libuchardet0",
+					"version": "0.0.8-1build1"
+				},
+				{
+					"key": "libstemmer0d_2.2.0-4build1_amd64",
+					"name": "libstemmer0d",
+					"version": "2.2.0-4build1"
+				},
+				{
+					"key": "libpodofo0.9.8t64_0.9.8-p-dfsg-3.1build3_amd64",
+					"name": "libpodofo0.9.8t64",
+					"version": "0.9.8+dfsg-3.1build3"
+				},
+				{
+					"key": "libidn12_1.42-1build1_amd64",
+					"name": "libidn12",
+					"version": "1.42-1build1"
+				},
+				{
+					"key": "libmtp9t64_1.1.21-3.1build1_amd64",
+					"name": "libmtp9t64",
+					"version": "1.1.21-3.1build1"
+				},
+				{
+					"key": "libmtp-common_1.1.21-3.1build1_amd64",
+					"name": "libmtp-common",
+					"version": "1.1.21-3.1build1"
+				},
+				{
+					"key": "libhyphen0_2.8.8-7build3_amd64",
+					"name": "libhyphen0",
+					"version": "2.8.8-7build3"
+				},
+				{
+					"key": "libhunspell-1.7-0_1.7.2-p-really1.7.2-10build3_amd64",
+					"name": "libhunspell-1.7-0",
+					"version": "1.7.2+really1.7.2-10build3"
+				}
+			],
+			"key": "calibre_7.6.0-p-ds-1build1_amd64",
+			"name": "calibre",
+			"sha256": "e54f7c3bf85af94796157d98f9c34cc6844c0040919e4a2d785fb808f52d10a1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/c/calibre/calibre_7.6.0+ds-1build1_all.deb"
+			],
+			"version": "7.6.0+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "webp_1.3.2-0.4build3_amd64",
+			"name": "webp",
+			"sha256": "2ffd89d05824178ca88d41de830b1571556f6b126c76c0dfb9e7947a5ade3c79",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/libw/libwebp/webp_1.3.2-0.4build3_amd64.deb"
+			],
+			"version": "1.3.2-0.4build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libopengl0_1.7.0-1build1_amd64",
+			"name": "libopengl0",
+			"sha256": "da36bd4d30c13b40b697fa8b72cc09d309ff36a5bd9750341ef78492bf3f3966",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libg/libglvnd/libopengl0_1.7.0-1build1_amd64.deb"
+			],
+			"version": "1.7.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libgif7_5.2.2-1ubuntu1_amd64",
+			"name": "libgif7",
+			"sha256": "2640ecc16a63c5f580c3bdb1271fdb04d9fb392c573bdfef1daf22165bb14c00",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/g/giflib/libgif7_5.2.2-1ubuntu1_amd64.deb"
+			],
+			"version": "5.2.2-1ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-zeroconf_0.131.0-1_amd64",
+			"name": "python3-zeroconf",
+			"sha256": "d2e46ea0797e072522d8f3e02cada01e55e184e07b26bca37c03542bf44c1cad",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-zeroconf/python3-zeroconf_0.131.0-1_all.deb"
+			],
+			"version": "0.131.0-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-ifaddr_0.2.0-1_amd64",
+			"name": "python3-ifaddr",
+			"sha256": "c4cb9a4c20457be1acc01d11b088d2f95cb96b4a2ce30e9e8dab3f7fc883c2c4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-ifaddr/python3-ifaddr_0.2.0-1_all.deb"
+			],
+			"version": "0.2.0-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-async-timeout_4.0.3-1_amd64",
+			"name": "python3-async-timeout",
+			"sha256": "5ebe309842dd3f96d92b3cdc88666df9302bc85dadde20534b0defeb4e8bb44b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-async-timeout/python3-async-timeout_4.0.3-1_all.deb"
+			],
+			"version": "4.0.3-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-typing-extensions_4.10.0-1_amd64",
+			"name": "python3-typing-extensions",
+			"sha256": "6aa1ce3d7aff6a7a1b9f12bd6d7f2ecb9015a394f0be2688de5dde1d75c40e8a",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-typing-extensions/python3-typing-extensions_4.10.0-1_all.deb"
+			],
+			"version": "4.10.0-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-xxhash_3.2.0-1build3_amd64",
+			"name": "python3-xxhash",
+			"sha256": "518a43996cc20d40021eb8773308735f51c2c3ef5af6a780ce8bb5a0104aae81",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-xxhash/python3-xxhash_3.2.0-1build3_amd64.deb"
+			],
+			"version": "3.2.0-1build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxxhash0_0.8.2-2build1_amd64",
+			"name": "libxxhash0",
+			"sha256": "75de256c2d162dfc541beb69a83f025742cd13329262af9059eff3ca42a53239",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xxhash/libxxhash0_0.8.2-2build1_amd64.deb"
+			],
+			"version": "0.8.2-2build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-speechd_0.12.0_rc2-2build3_amd64",
+			"name": "python3-speechd",
+			"sha256": "ac2ae9a0883ec90cbe4d1cfdf53c5d2d044282e68fc75a37f3e7fe646ddc49ef",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/speech-dispatcher/python3-speechd_0.12.0~rc2-2build3_all.deb"
+			],
+			"version": "0.12.0~rc2-2build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-xdg_0.28-2_amd64",
+			"name": "python3-xdg",
+			"sha256": "beebf75cb9f17dd8f40ed68d04d722552ba895a5bc8357034e529dec5cfe92a6",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pyxdg/python3-xdg_0.28-2_all.deb"
+			],
+			"version": "0.28-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-routes_2.5.1-1ubuntu1_amd64",
+			"name": "python3-routes",
+			"sha256": "38e0df2beb095c24bffaf179120b23de754bfb310d5c6ea35b701c7e2f1ecd5f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/r/routes/python3-routes_2.5.1-1ubuntu1_all.deb"
+			],
+			"version": "2.5.1-1ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pkg-resources_68.1.2-2ubuntu1_amd64",
+			"name": "python3-pkg-resources",
+			"sha256": "2ae733be7fe2dc55e1fe419c5483488f8ee91393aac467f18ba30cd70bed6766",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/setuptools/python3-pkg-resources_68.1.2-2ubuntu1_all.deb"
+			],
+			"version": "68.1.2-2ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libjs-sphinxdoc_7.2.6-6_amd64",
+			"name": "libjs-sphinxdoc",
+			"sha256": "3221a4bbc32830cef39def2e20fce04c0af523463444f0bcf27ded153f7c4055",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/sphinx/libjs-sphinxdoc_7.2.6-6_all.deb"
+			],
+			"version": "7.2.6-6"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libjs-underscore_1.13.4_dfsg-p-_1.11.4-3_amd64",
+			"name": "libjs-underscore",
+			"sha256": "d5257b7b4aacb4ebfbe6deda3d672090b85674db457377084e47f12dcc63992b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/u/underscore/libjs-underscore_1.13.4~dfsg+~1.11.4-3_all.deb"
+			],
+			"version": "1.13.4~dfsg+~1.11.4-3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libjs-jquery_3.6.1-p-dfsg-p-_3.5.14-1_amd64",
+			"name": "libjs-jquery",
+			"sha256": "8cd2eccd9c73c78c8dfdc5394861c63645f7e114553f29b4d9f15628625d191d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/n/node-jquery/libjs-jquery_3.6.1+dfsg+~3.5.14-1_all.deb"
+			],
+			"version": "3.6.1+dfsg+~3.5.14-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-six_1.16.0-4_amd64",
+			"name": "python3-six",
+			"sha256": "54e6bb624a89feccbcf6bc16f0641b9aa24231dd1988d4e0b50f430b44a7a1ae",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/six/python3-six_1.16.0-4_all.deb"
+			],
+			"version": "1.16.0-4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-repoze.lru_0.7-3_amd64",
+			"name": "python3-repoze.lru",
+			"sha256": "b3cfa26736378cc4384932d9c59994a27fa67591fef541b3058d43414ecd3b83",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-repoze.lru/python3-repoze.lru_0.7-3_all.deb"
+			],
+			"version": "0.7-3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-regex_0.1.20221031-2build1_amd64",
+			"name": "python3-regex",
+			"sha256": "57a172dde7afe1887ae11fe512dca655c8ea4e3aba3f070c9f4e647c63a5a697",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-regex/python3-regex_0.1.20221031-2build1_amd64.deb"
+			],
+			"version": "0.1.20221031-2build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6.sip_13.6.0-1build2_amd64",
+			"name": "python3-pyqt6.sip",
+			"sha256": "630d26be454c2a5a0d274de482ea5d143ef15e0699e6b5166fd0e22b6e0b7a83",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6-sip/python3-pyqt6.sip_13.6.0-1build2_amd64.deb"
+			],
+			"version": "13.6.0-1build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6.qtwebengine_6.6.0-1build2_amd64",
+			"name": "python3-pyqt6.qtwebengine",
+			"sha256": "9e85ed37e29fc65e2256f29754b2ddd5d232a689e13e8e0fed44f4f7d3d35884",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6-webengine/python3-pyqt6.qtwebengine_6.6.0-1build2_amd64.deb"
+			],
+			"version": "6.6.0-1build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6widgets6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6widgets6t64",
+			"sha256": "9d5aba1eeb471c1230a94eb1865a95df0595ed8311971acf50fff2652452562d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6widgets6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6core6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6core6t64",
+			"sha256": "1f6e26589271c1d7aa549cb86d0156ff589b764d37edf356712fecebfe5f30f8",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6core6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpcre2-16-0_10.42-4ubuntu2_amd64",
+			"name": "libpcre2-16-0",
+			"sha256": "ba3608a572b918e40668cf81efc223eeaca41b5a54db9c2932937f3b6c3ab614",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pcre2/libpcre2-16-0_10.42-4ubuntu2_amd64.deb"
+			],
+			"version": "10.42-4ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libdouble-conversion3_3.3.0-1build1_amd64",
+			"name": "libdouble-conversion3",
+			"sha256": "856f534738da20fa9d8c271e17781fba3dc180bbbab116c22a0b569f6f506e25",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/d/double-conversion/libdouble-conversion3_3.3.0-1build1_amd64.deb"
+			],
+			"version": "3.3.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libb2-1_0.98.1-1.1build1_amd64",
+			"name": "libb2-1",
+			"sha256": "c23173e035b257118540266098bd4f1928c67d918ad981b1e13e6e0d9847d69c",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/libb/libb2/libb2-1_0.98.1-1.1build1_amd64.deb"
+			],
+			"version": "0.98.1-1.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "shared-mime-info_2.4-4_amd64",
+			"name": "shared-mime-info",
+			"sha256": "7a774ea291ab99bfa987866c6b68e825531eeea7c8a732dd47d14cf480453fda",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/shared-mime-info/shared-mime-info_2.4-4_amd64.deb"
+			],
+			"version": "2.4-4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6gui6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6gui6t64",
+			"sha256": "f8774151f151a932d389817a371a3241004b1c3031cf53afd91feed73c8dd68e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6gui6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxkbcommon0_1.6.0-1build1_amd64",
+			"name": "libxkbcommon0",
+			"sha256": "2b9caeb423efb540296a1cb20b872cc630c23908407ecb5c1c787a617622d664",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxkbcommon/libxkbcommon0_1.6.0-1build1_amd64.deb"
+			],
+			"version": "1.6.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "xkb-data_2.41-2ubuntu1_amd64",
+			"name": "xkb-data",
+			"sha256": "5f0a5188398b606d723f1bed48ee38c11eaeb98357ab29a3bf33c451056815d1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xkeyboard-config/xkb-data_2.41-2ubuntu1_all.deb"
+			],
+			"version": "2.41-2ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxkbcommon-x11-0_1.6.0-1build1_amd64",
+			"name": "libxkbcommon-x11-0",
+			"sha256": "3befe840ce612ddfc0998d8610c6eed295726722a78e75cd08520bbd75065a23",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxkbcommon/libxkbcommon-x11-0_1.6.0-1build1_amd64.deb"
+			],
+			"version": "1.6.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-xkb1_1.15-1ubuntu2_amd64",
+			"name": "libxcb-xkb1",
+			"sha256": "53bc0a58834c981fa8ce5c3ab6195387e5c8a417039d82cc7a8b49724fa53228",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-xkb1_1.15-1ubuntu2_amd64.deb"
+			],
+			"version": "1.15-1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-shape0_1.15-1ubuntu2_amd64",
+			"name": "libxcb-shape0",
+			"sha256": "ad57fed687ec9c2a4808b8e30ab1753d57daeddc9ad7fb883bfa0701f6da57c8",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-shape0_1.15-1ubuntu2_amd64.deb"
+			],
+			"version": "1.15-1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-render-util0_0.3.9-1build4_amd64",
+			"name": "libxcb-render-util0",
+			"sha256": "95d895ceb921e38e4edd85555b407b1a0564d8ad097ec7566e261764ce27787b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xcb-util-renderutil/libxcb-render-util0_0.3.9-1build4_amd64.deb"
+			],
+			"version": "0.3.9-1build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-keysyms1_0.4.0-1build4_amd64",
+			"name": "libxcb-keysyms1",
+			"sha256": "6c261aae923175b88a032018c530873ffb40f2bf96b045fdda42bd8bc74cb1c3",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xcb-util-keysyms/libxcb-keysyms1_0.4.0-1build4_amd64.deb"
+			],
+			"version": "0.4.0-1build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-image0_0.4.0-2build1_amd64",
+			"name": "libxcb-image0",
+			"sha256": "6af300eeef5523aa0d8dbfab3a23c1fe7006ecc19f8abdc5c636d734d7bb5287",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xcb-util-image/libxcb-image0_0.4.0-2build1_amd64.deb"
+			],
+			"version": "0.4.0-2build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-util1_0.4.0-1build3_amd64",
+			"name": "libxcb-util1",
+			"sha256": "b6ff05729519514bddcbcd460f8be7e55c986daa5a97ecdc612b2815614194ab",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xcb-util/libxcb-util1_0.4.0-1build3_amd64.deb"
+			],
+			"version": "0.4.0-1build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcb-icccm4_0.4.1-1.1build3_amd64",
+			"name": "libxcb-icccm4",
+			"sha256": "9e0e349f3904cd5bc07fea45498c4d03527a5d1178edd78555e84fdbd3793708",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xcb-util-wm/libxcb-icccm4_0.4.1-1.1build3_amd64.deb"
+			],
+			"version": "0.4.1-1.1build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libudev1_255.4-1ubuntu8_amd64",
+			"name": "libudev1",
+			"sha256": "0955df93006711ba7328cc919673902c75a04f57f6ad37010b0ee052996fbb08",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/systemd/libudev1_255.4-1ubuntu8_amd64.deb"
+			],
+			"version": "255.4-1ubuntu8"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libts0t64_1.22-1.1build1_amd64",
+			"name": "libts0t64",
+			"sha256": "892524fd6a070e9e6a6b084d3a4099b81d6fbbd82a1c7bd4b67a8e6e998ac5a3",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/t/tslib/libts0t64_1.22-1.1build1_amd64.deb"
+			],
+			"version": "1.22-1.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6dbus6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6dbus6t64",
+			"sha256": "20891a752f6569b8b0772b0c81b7251eb3394fdef57bf52870f4825cb0e9c0de",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6dbus6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libmtdev1t64_1.1.6-1.1build1_amd64",
+			"name": "libmtdev1t64",
+			"sha256": "fa86080d67defabc076ead97d86ccff14c906d21fe4cc1625ba73a8cf8022dfa",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/m/mtdev/libmtdev1t64_1.1.6-1.1build1_amd64.deb"
+			],
+			"version": "1.1.6-1.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libmd4c0_0.4.8-1build1_amd64",
+			"name": "libmd4c0",
+			"sha256": "34fd2e7a7aa62ada2597cffd4529f086cb5058a6d7ac0048695254bd9fd882d7",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/m/md4c/libmd4c0_0.4.8-1build1_amd64.deb"
+			],
+			"version": "0.4.8-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libinput10_1.25.0-1ubuntu2_amd64",
+			"name": "libinput10",
+			"sha256": "97cff5b2732de2e708a5f647199a610ba3a7a671b951650ddc359952c57e6d98",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libi/libinput/libinput10_1.25.0-1ubuntu2_amd64.deb"
+			],
+			"version": "1.25.0-1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libinput-bin_1.25.0-1ubuntu2_amd64",
+			"name": "libinput-bin",
+			"sha256": "581c38bd73ae3d8ad461289be2ca2b986eec2d9be6cf3684e884acd5a0a8f71f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libi/libinput/libinput-bin_1.25.0-1ubuntu2_amd64.deb"
+			],
+			"version": "1.25.0-1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libwacom9_2.10.0-2_amd64",
+			"name": "libwacom9",
+			"sha256": "87c707e4e7cbef1080b7c6cfb14acb0e5b0a4b07b19ce5545923952fbcf82298",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libw/libwacom/libwacom9_2.10.0-2_amd64.deb"
+			],
+			"version": "2.10.0-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libwacom-common_2.10.0-2_amd64",
+			"name": "libwacom-common",
+			"sha256": "416099ceae870ec8ce13f875dfdf71f81a884b3641e404a74eafd378c15a78b4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libw/libwacom/libwacom-common_2.10.0-2_all.deb"
+			],
+			"version": "2.10.0-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libgudev-1.0-0_1-238-5ubuntu1_amd64",
+			"name": "libgudev-1.0-0",
+			"sha256": "8bdd42c584a8d18759df2311b126dc679d438e9780038743b792cf5315f248dc",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libg/libgudev/libgudev-1.0-0_238-5ubuntu1_amd64.deb"
+			],
+			"version": "1:238-5ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libevdev2_1.13.1-p-dfsg-1build1_amd64",
+			"name": "libevdev2",
+			"sha256": "a14b1ea7b3220a063458590734920879cec8431b4fc5160eb0f044dfb8d76515",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libe/libevdev/libevdev2_1.13.1+dfsg-1build1_amd64.deb"
+			],
+			"version": "1.13.1+dfsg-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libegl1_1.7.0-1build1_amd64",
+			"name": "libegl1",
+			"sha256": "e549f7776216f7bd3b1c216729fb40a97a562e2eb7c563cde632b4931f9a4e57",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libg/libglvnd/libegl1_1.7.0-1build1_amd64.deb"
+			],
+			"version": "1.7.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libegl-mesa0_24.0.5-1ubuntu1_amd64",
+			"name": "libegl-mesa0",
+			"sha256": "9861744c850c60973d68d221f0b75196211852965947be6c18aca3cea015dad1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/m/mesa/libegl-mesa0_24.0.5-1ubuntu1_amd64.deb"
+			],
+			"version": "24.0.5-1ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libwayland-server0_1.22.0-2.1build1_amd64",
+			"name": "libwayland-server0",
+			"sha256": "edbfa4b6857691ae922cc768a753fab230eee9e956aa2ce4f2eaa8d9ad777dca",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/w/wayland/libwayland-server0_1.22.0-2.1build1_amd64.deb"
+			],
+			"version": "1.22.0-2.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libwayland-client0_1.22.0-2.1build1_amd64",
+			"name": "libwayland-client0",
+			"sha256": "6af0aed41d75149bea22fa468f01eb058ffe3e35ef07ff2f13fb88a90387881d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/w/wayland/libwayland-client0_1.22.0-2.1build1_amd64.deb"
+			],
+			"version": "1.22.0-2.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libgbm1_24.0.5-1ubuntu1_amd64",
+			"name": "libgbm1",
+			"sha256": "bffad21d2383429d6dbec8395ba8d8476a0ed69e7e0b1c3ef2f27da99211b200",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/m/mesa/libgbm1_24.0.5-1ubuntu1_amd64.deb"
+			],
+			"version": "24.0.5-1ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "fontconfig_2.15.0-1.1ubuntu2_amd64",
+			"name": "fontconfig",
+			"sha256": "ddf0aace42b13a5bc38904e848b145b787ea254cddf5213d150254bd654db6e5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/f/fontconfig/fontconfig_2.15.0-1.1ubuntu2_amd64.deb"
+			],
+			"version": "2.15.0-1.1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6webenginewidgets6_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+			"name": "libqt6webenginewidgets6",
+			"sha256": "7cf9accad85000ed388583babb589ee83514241ff847b56958e39261bfd1e98b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-webengine/libqt6webenginewidgets6_6.4.2-final+dfsg-12ubuntu9_amd64.deb"
+			],
+			"version": "6.4.2-final+dfsg-12ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6webenginecore6-bin_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+			"name": "libqt6webenginecore6-bin",
+			"sha256": "3aac25f9d382016a20d474ca6bdc3e1bc25935b145ad93d3da52c20beef93fe5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-webengine/libqt6webenginecore6-bin_6.4.2-final+dfsg-12ubuntu9_amd64.deb"
+			],
+			"version": "6.4.2-final+dfsg-12ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6webenginecore6_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+			"name": "libqt6webenginecore6",
+			"sha256": "4cf09a810c38db43ffed9168ebb1a97af1be0db5537e9a7aec5bf3786328eba4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-webengine/libqt6webenginecore6_6.4.2-final+dfsg-12ubuntu9_amd64.deb"
+			],
+			"version": "6.4.2-final+dfsg-12ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxtst6_2-1.2.3-1.1build1_amd64",
+			"name": "libxtst6",
+			"sha256": "632d74c760f0a4e844c499e7bc1eca4c709aa096fde783a7a6807604aef77545",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxtst/libxtst6_1.2.3-1.1build1_amd64.deb"
+			],
+			"version": "2:1.2.3-1.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxslt1.1_1.1.39-0exp1build1_amd64",
+			"name": "libxslt1.1",
+			"sha256": "152684a8e830291d02999bbc7f35b807d365e4aa52ff921db625bb6b04c3b229",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxslt/libxslt1.1_1.1.39-0exp1build1_amd64.deb"
+			],
+			"version": "1.1.39-0exp1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxrandr2_2-1.5.2-2build1_amd64",
+			"name": "libxrandr2",
+			"sha256": "f2955a5e594f5724b58ad241d9231ea191cb36574a0d5e5ca6b661cd41d6256d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxrandr/libxrandr2_1.5.2-2build1_amd64.deb"
+			],
+			"version": "2:1.5.2-2build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxkbfile1_1-1.1.0-1build4_amd64",
+			"name": "libxkbfile1",
+			"sha256": "22ac5b7dca740e606261cebdfaf1a07738e92ad3d123570694374ddb4d5afea2",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxkbfile/libxkbfile1_1.1.0-1build4_amd64.deb"
+			],
+			"version": "1:1.1.0-1build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxdamage1_1-1.1.6-1build1_amd64",
+			"name": "libxdamage1",
+			"sha256": "6891faf325e996ebd28ef53ebb9c043dc96f67327500490affc3e89d366d35ed",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxdamage/libxdamage1_1.1.6-1build1_amd64.deb"
+			],
+			"version": "1:1.1.6-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libxcomposite1_1-0.4.5-1build3_amd64",
+			"name": "libxcomposite1",
+			"sha256": "a12d5d9ae70b798cbbf284080eae32b87367561fc9c24492f641b8860ac0f308",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libx/libxcomposite/libxcomposite1_0.4.5-1build3_amd64.deb"
+			],
+			"version": "1:0.4.5-1build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libvpx9_1.14.0-1ubuntu2_amd64",
+			"name": "libvpx9",
+			"sha256": "bf7f2eb5a17d3c4f57df0c118df2317880c9840eeec8f33f8b39c94f2393e34e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libv/libvpx/libvpx9_1.14.0-1ubuntu2_amd64.deb"
+			],
+			"version": "1.14.0-1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libsnappy1v5_1.1.10-1build1_amd64",
+			"name": "libsnappy1v5",
+			"sha256": "c44dfa3b8be7c2873efb770890cb282a36a7e59b3b1900cb50d99f92e6be2da5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/snappy/libsnappy1v5_1.1.10-1build1_amd64.deb"
+			],
+			"version": "1.1.10-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6webchannel6_6.4.2-3build2_amd64",
+			"name": "libqt6webchannel6",
+			"sha256": "6de831287adffd42bf75161a193ec1211b0bc538750893c0f632bcbfebf7d5ad",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-webchannel/libqt6webchannel6_6.4.2-3build2_amd64.deb"
+			],
+			"version": "6.4.2-3build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6qml6_6.4.2-p-dfsg-4build3_amd64",
+			"name": "libqt6qml6",
+			"sha256": "e490f2df6ddba340f50b061d7a48dbdd0fa8bc418cfa3713d2641e794ad2aff4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-declarative/libqt6qml6_6.4.2+dfsg-4build3_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-4build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6network6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6network6t64",
+			"sha256": "743f289d5f7b1a4cafa021de62bcd705122bad06ba5d3a2c971fd7d34b87752f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6network6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libproxy1v5_0.5.4-4build1_amd64",
+			"name": "libproxy1v5",
+			"sha256": "4fa847fdf40dfaf198d94b1534bbc616410647dd917bca95bd28aba79d3796ba",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libp/libproxy/libproxy1v5_0.5.4-4build1_amd64.deb"
+			],
+			"version": "0.5.4-4build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libduktape207_2.7.0-p-tests-0ubuntu3_amd64",
+			"name": "libduktape207",
+			"sha256": "6b7df26e298b890ebe6ca7b0d87fcfddb103b728b8fd731469ba5135d0bac183",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/d/duktape/libduktape207_2.7.0+tests-0ubuntu3_amd64.deb"
+			],
+			"version": "2.7.0+tests-0ubuntu3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6quick6_6.4.2-p-dfsg-4build3_amd64",
+			"name": "libqt6quick6",
+			"sha256": "85e7c9973b88b102202164a2f7f0766f3a717196dc92e5bb7ef05e57af50b2be",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-declarative/libqt6quick6_6.4.2+dfsg-4build3_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-4build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6qmlmodels6_6.4.2-p-dfsg-4build3_amd64",
+			"name": "libqt6qmlmodels6",
+			"sha256": "859d0fc930633cda2bf07a0e0725b98e2a9f268b1c169c0575c49c7accd821db",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-declarative/libqt6qmlmodels6_6.4.2+dfsg-4build3_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-4build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6opengl6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6opengl6t64",
+			"sha256": "dc7b43aa74d5694ab10e02bee7751c1bea0905ed6f0aaf527bff1952c582403f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6opengl6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6positioning6_6.4.2-3build3_amd64",
+			"name": "libqt6positioning6",
+			"sha256": "beb50c7d8b841ca67279743792a5e93bef006d0ccf4527b59191d8c56c3c7392",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-positioning/libqt6positioning6_6.4.2-3build3_amd64.deb"
+			],
+			"version": "6.4.2-3build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libopus0_1.4-1build1_amd64",
+			"name": "libopus0",
+			"sha256": "6d8da32a832e655c9603543b47a0bc90c6f60bdee0c00fe7499bd50acad566cf",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/o/opus/libopus0_1.4-1build1_amd64.deb"
+			],
+			"version": "1.4-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libnss3_2-3.98-1build1_amd64",
+			"name": "libnss3",
+			"sha256": "88247fe0db5cd4c273b7dd026d9ded4ff9ba828b62437d12a2f1c2abc29468d2",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/n/nss/libnss3_3.98-1build1_amd64.deb"
+			],
+			"version": "2:3.98-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libnspr4_2-4.35-1.1build1_amd64",
+			"name": "libnspr4",
+			"sha256": "e579e72d091f6c7a13f5a756c31065b15aae5b81840d61b069355aa2283c07b4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/n/nspr/libnspr4_4.35-1.1build1_amd64.deb"
+			],
+			"version": "2:4.35-1.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libminizip1t64_1-1.3.dfsg-3.1ubuntu2_amd64",
+			"name": "libminizip1t64",
+			"sha256": "97616c0c808c10fc2d4016250b9df2af35e5eb84a1120d70d2159fa66cbe45f2",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/z/zlib/libminizip1t64_1.3.dfsg-3.1ubuntu2_amd64.deb"
+			],
+			"version": "1:1.3.dfsg-3.1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libharfbuzz-subset0_8.3.0-2build2_amd64",
+			"name": "libharfbuzz-subset0",
+			"sha256": "acd9db760e372a931ae04d834998366fb50717e1ba590c987224b3b72b2e411d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/h/harfbuzz/libharfbuzz-subset0_8.3.0-2build2_amd64.deb"
+			],
+			"version": "8.3.0-2build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libevent-2.1-7t64_2.1.12-stable-9ubuntu2_amd64",
+			"name": "libevent-2.1-7t64",
+			"sha256": "f95eddfc9e9028567a21b8162a1cb8aae96b2fb168f149c0a5b01d72bfd42471",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libe/libevent/libevent-2.1-7t64_2.1.12-stable-9ubuntu2_amd64.deb"
+			],
+			"version": "2.1.12-stable-9ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "sse3-support_21build1_amd64",
+			"name": "sse3-support",
+			"sha256": "7b513b8f1ad091c22ac49739f1333121a97493aa8e896ea12177d1c37f54d0ff",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/i/isa-support/sse3-support_21build1_amd64.deb"
+			],
+			"version": "21build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "isa-support_21build1_amd64",
+			"name": "isa-support",
+			"sha256": "140c63433367c0d75b1f8dd3cdec76c6123f8036e450ae8ecc158839a40885eb",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/i/isa-support/isa-support_21build1_amd64.deb"
+			],
+			"version": "21build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6webengine6-data_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+			"name": "libqt6webengine6-data",
+			"sha256": "3ee9da2ae1712e7a079c883dbdd5ad0cf3be10fe50302d54d36c4b08dc6e518e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-webengine/libqt6webengine6-data_6.4.2-final+dfsg-12ubuntu9_all.deb"
+			],
+			"version": "6.4.2-final+dfsg-12ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6quickwidgets6_6.4.2-p-dfsg-4build3_amd64",
+			"name": "libqt6quickwidgets6",
+			"sha256": "658c5997221aff781bc4580e406369a67e161f50a75391b43c27b17a6effd2ca",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-declarative/libqt6quickwidgets6_6.4.2+dfsg-4build3_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-4build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6printsupport6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6printsupport6t64",
+			"sha256": "5e068edcc290d740bcbf34d2bcc7be8efb738f47bb2460849742ba221cbb7b15",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6printsupport6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6webenginequick6_6.4.2-final-p-dfsg-12ubuntu9_amd64",
+			"name": "libqt6webenginequick6",
+			"sha256": "3119d620fe726e004fa98743555367022aa2df1ff7615b23650101bc0ea02655",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-webengine/libqt6webenginequick6_6.4.2-final+dfsg-12ubuntu9_amd64.deb"
+			],
+			"version": "6.4.2-final+dfsg-12ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6_6.6.1-2build4_amd64",
+			"name": "python3-pyqt6",
+			"sha256": "9a1b25520888b8c65589d6483c1991ce43d0e5746fa3af56ccdd785d49023c8e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6/python3-pyqt6_6.6.1-2build4_amd64.deb"
+			],
+			"version": "6.6.1-2build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6xml6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6xml6t64",
+			"sha256": "7999c22f56a9b8d23e4d5e7cd7d0e679df581c8e72015baaa4e2b870746245ad",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6xml6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6test6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6test6t64",
+			"sha256": "7d0f27c84fab37ec9f574d8cb47f117d411bceffba2eada10436928bccb22537",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6test6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6sql6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6sql6t64",
+			"sha256": "35155bb0ef40d8769004f75a2a000029f86adfdd3cd76a14eeab2e68951f407e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6sql6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6openglwidgets6t64_6.4.2-p-dfsg-21.1build5_amd64",
+			"name": "libqt6openglwidgets6t64",
+			"sha256": "68a328430e1d354532d718969c74f2df4579777375d3a47d5e2bc999819cdc9d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-base/libqt6openglwidgets6t64_6.4.2+dfsg-21.1build5_amd64.deb"
+			],
+			"version": "6.4.2+dfsg-21.1build5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6.qtwebchannel_6.6.1-2build4_amd64",
+			"name": "python3-pyqt6.qtwebchannel",
+			"sha256": "aeafa045abbcf972790698fa67add11c250683d4c3f4759e42f4407670f3bc3c",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6/python3-pyqt6.qtwebchannel_6.6.1-2build4_amd64.deb"
+			],
+			"version": "6.6.1-2build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6.qtqml_6.6.1-2build4_amd64",
+			"name": "python3-pyqt6.qtqml",
+			"sha256": "4e81765675602ca1b4ba3a79bf2a1bbe9ac8cdb93cb7ac7aac4054e2c3884392",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6/python3-pyqt6.qtqml_6.6.1-2build4_amd64.deb"
+			],
+			"version": "6.6.1-2build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpython3.12t64_3.12.3-1_amd64",
+			"name": "libpython3.12t64",
+			"sha256": "31df8af8521fb3fdf198d7507765d4ebf435c7165a50013b39d2761fd6c0d98c",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python3.12/libpython3.12t64_3.12.3-1_amd64.deb"
+			],
+			"version": "3.12.3-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6.qtsvg_6.6.1-2build4_amd64",
+			"name": "python3-pyqt6.qtsvg",
+			"sha256": "be968f46e76292c0318ee5ad512d25ed0d7743d8f8d5d4f5edf2149f7b07db74",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6/python3-pyqt6.qtsvg_6.6.1-2build4_amd64.deb"
+			],
+			"version": "6.6.1-2build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6svgwidgets6_6.4.2-4ubuntu3_amd64",
+			"name": "libqt6svgwidgets6",
+			"sha256": "5154e06c7d90b6f7fe9693593a1647fb44522b26e8048e5151cddc189235bdc5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-svg/libqt6svgwidgets6_6.4.2-4ubuntu3_amd64.deb"
+			],
+			"version": "6.4.2-4ubuntu3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libqt6svg6_6.4.2-4ubuntu3_amd64",
+			"name": "libqt6svg6",
+			"sha256": "222dbeaea3dbf6af8d7faabce0ff210df6c0e80403fa9ed869c746c15de32481",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/q/qt6-svg/libqt6svg6_6.4.2-4ubuntu3_amd64.deb"
+			],
+			"version": "6.4.2-4ubuntu3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyqt6.qtquick_6.6.1-2build4_amd64",
+			"name": "python3-pyqt6.qtquick",
+			"sha256": "a98e12f28fdab96089215f3804410be8ecae8bd2f004e81f657e66d020e46590",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6/python3-pyqt6.qtquick_6.6.1-2build4_amd64.deb"
+			],
+			"version": "6.6.1-2build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pyparsing_3.1.1-1_amd64",
+			"name": "python3-pyparsing",
+			"sha256": "ec2395b1fe34a7a828f5cfabc4262217f6a86fb6ecb993fc18fbad3fc9edabba",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pyparsing/python3-pyparsing_3.1.1-1_all.deb"
+			],
+			"version": "3.1.1-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pygments_2.17.2-p-dfsg-1_amd64",
+			"name": "python3-pygments",
+			"sha256": "c26c308f21f99cd7543bc71e9a31cebff8a1eb0077b02800b73bf43dfd616ad0",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pygments/python3-pygments_2.17.2+dfsg-1_all.deb"
+			],
+			"version": "2.17.2+dfsg-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pycryptodome_3.20.0-p-dfsg-1_amd64",
+			"name": "python3-pycryptodome",
+			"sha256": "e9f2752e5a1f8ffcc567726c54fd6a651bb2f5b215b71a744d06777211a55938",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pycryptodome/python3-pycryptodome_3.20.0+dfsg-1_amd64.deb"
+			],
+			"version": "3.20.0+dfsg-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-py7zr_0.11.3-p-dfsg-8build1_amd64",
+			"name": "python3-py7zr",
+			"sha256": "3c72100a62a3c71f1ef4f69b41ccb53fcaa3203033f17073a1a1779e64af0137",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/py7zr/python3-py7zr_0.11.3+dfsg-8build1_amd64.deb"
+			],
+			"version": "0.11.3+dfsg-8build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-texttable_1.6.7-1_amd64",
+			"name": "python3-texttable",
+			"sha256": "a6ddd6c486bb8e43307241aedb2b2bd26e44aed4059be619484a83d066eb8ba5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/t/texttable/python3-texttable_1.6.7-1_all.deb"
+			],
+			"version": "1.6.7-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-importlib-metadata_4.12.0-1_amd64",
+			"name": "python3-importlib-metadata",
+			"sha256": "2948c1f4ff8a03b5b9badaabd8b5033ed27533b34e61567ee1653d29ffab9891",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-importlib-metadata/python3-importlib-metadata_4.12.0-1_all.deb"
+			],
+			"version": "4.12.0-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-zipp_1.0.0-6_amd64",
+			"name": "python3-zipp",
+			"sha256": "6a4ecc3fab55e7f3c37a55c39ec538299817eba8e22097bd896e548a1b05d498",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-zipp/python3-zipp_1.0.0-6_all.deb"
+			],
+			"version": "1.0.0-6"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-more-itertools_10.2.0-1_amd64",
+			"name": "python3-more-itertools",
+			"sha256": "f6ad092c9568b044befdb7d6edfd3f9ea35ec31de01c26fafac20a32c0d7b3e1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/m/more-itertools/python3-more-itertools_10.2.0-1_all.deb"
+			],
+			"version": "10.2.0-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-pil_10.2.0-1build1_amd64",
+			"name": "python3-pil",
+			"sha256": "355a8fe884f88b36631624c941459fe23d955ef2345248d43a531b161ccfe369",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pillow/python3-pil_10.2.0-1build1_amd64.deb"
+			],
+			"version": "10.2.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libraqm0_0.10.1-1build1_amd64",
+			"name": "libraqm0",
+			"sha256": "6817de16981bbc8bf5346cf55516fc53d8f1ac851ab76b2bfd84b4a2190c3302",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/r/raqm/libraqm0_0.10.1-1build1_amd64.deb"
+			],
+			"version": "0.10.1-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libfribidi0_1.0.13-3build1_amd64",
+			"name": "libfribidi0",
+			"sha256": "6cd50259d39ce0dfafee2632c6268538e6a02590e77161a133e9683af346dd1d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/f/fribidi/libfribidi0_1.0.13-3build1_amd64.deb"
+			],
+			"version": "1.0.13-3build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libimagequant0_2.18.0-1build1_amd64",
+			"name": "libimagequant0",
+			"sha256": "94bfa8908323a469292bd68ccae984414e8f5f1dc28cacbe952b7cbce36c6865",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libi/libimagequant/libimagequant0_2.18.0-1build1_amd64.deb"
+			],
+			"version": "2.18.0-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-netifaces_0.11.0-2build3_amd64",
+			"name": "python3-netifaces",
+			"sha256": "c2c1276f2578454d99013e059ccb72043cc5022850ca4d1d0d46d0b6e38c925f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/n/netifaces/python3-netifaces_0.11.0-2build3_amd64.deb"
+			],
+			"version": "0.11.0-2build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-msgpack_1.0.3-3build2_amd64",
+			"name": "python3-msgpack",
+			"sha256": "9f7d2e1da6e21f5f47d2d598660024ce0113bc462800f7bad0239dc716d7a6e1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-msgpack/python3-msgpack_1.0.3-3build2_amd64.deb"
+			],
+			"version": "1.0.3-3build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-mechanize_1-0.4.9-p-ds-2_amd64",
+			"name": "python3-mechanize",
+			"sha256": "4c134af953516e399d875a63abaa733c14aefcc936a39cd9869394a74cd3eb44",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-mechanize/python3-mechanize_0.4.9+ds-2_all.deb"
+			],
+			"version": "1:0.4.9+ds-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-html5lib_1.1-6_amd64",
+			"name": "python3-html5lib",
+			"sha256": "3de1bd4d1c3bc8827cf4452ed4030588c5a98fa168b6974ae1b0a4f23ae2b3a9",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/h/html5lib/python3-html5lib_1.1-6_all.deb"
+			],
+			"version": "1.1-6"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-webencodings_0.5.1-5_amd64",
+			"name": "python3-webencodings",
+			"sha256": "1a0418481b7719cf5f240b1d4d26c0bbc1995d0a36a5093ebcc9affda915d3af",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-webencodings/python3-webencodings_0.5.1-5_all.deb"
+			],
+			"version": "0.5.1-5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-markdown_3.5.2-1_amd64",
+			"name": "python3-markdown",
+			"sha256": "abf3e1ef9e7ee1b412ef40e78eec8c5cac3d62731c0870eee1cfae5d49baa0ad",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-markdown/python3-markdown_3.5.2-1_all.deb"
+			],
+			"version": "3.5.2-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-lxml_5.2.1-1_amd64",
+			"name": "python3-lxml",
+			"sha256": "e9c883e7a99c61cf519706a6d127f1b39fcf327f0cf8b203310c71fd24217d1b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/l/lxml/python3-lxml_5.2.1-1_amd64.deb"
+			],
+			"version": "5.2.1-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-jeepney_0.8.0-3_amd64",
+			"name": "python3-jeepney",
+			"sha256": "ec4d581ee79b9cda105becb2a4b937a2d02092c37cfc3e3b22e9d22ba4ab5068",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/j/jeepney/python3-jeepney_0.8.0-3_all.deb"
+			],
+			"version": "0.8.0-3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-html5-parser_0.4.12-p-ds-1build1_amd64",
+			"name": "python3-html5-parser",
+			"sha256": "1ff8289266f1457ff095af3d3c7304008e776f82bf2b9e165a922acce317e386",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/h/html5-parser/python3-html5-parser_0.4.12+ds-1build1_amd64.deb"
+			],
+			"version": "0.4.12+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-chardet_5.2.0-p-dfsg-1_amd64",
+			"name": "python3-chardet",
+			"sha256": "042ec127434ad634a1f312514680b8d0de7bd1e9733b255d93170a6bb843a043",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/c/chardet/python3-chardet_5.2.0+dfsg-1_all.deb"
+			],
+			"version": "5.2.0+dfsg-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-html2text_2024.2.26-1_amd64",
+			"name": "python3-html2text",
+			"sha256": "ae82e00fa6586ec9989dc89503b3f884ccac51201987432294f341b1c28e007c",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-html2text/python3-html2text_2024.2.26-1_all.deb"
+			],
+			"version": "2024.2.26-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-fonttools_4.46.0-1build2_amd64",
+			"name": "python3-fonttools",
+			"sha256": "dc337ee3630667455e394fda7cf4f9c8f13146f930cbcb49f09de833379b2a89",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/f/fonttools/python3-fonttools_4.46.0-1build2_amd64.deb"
+			],
+			"version": "4.46.0-1build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "unicode-data_15.1.0-1_amd64",
+			"name": "unicode-data",
+			"sha256": "220c12f6fe66bc355ccba97a5cc2bd0953ec6725e30d67b09190f9e97f37d5f5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/u/unicode-data/unicode-data_15.1.0-1_all.deb"
+			],
+			"version": "15.1.0-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-unicodedata2_15.1.0-p-ds-1build1_amd64",
+			"name": "python3-unicodedata2",
+			"sha256": "16a6c21d00d18f8dedd6fa3531d32a0240b34cdad22ad184718e1e356460c9bd",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-unicodedata2/python3-unicodedata2_15.1.0+ds-1build1_amd64.deb"
+			],
+			"version": "15.1.0+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-lz4_4.0.2-p-dfsg-1build4_amd64",
+			"name": "python3-lz4",
+			"sha256": "762b09ec8d6c9a8c918f56664d8cc4c47a20c550acc64580e23474051d0641a3",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-lz4/python3-lz4_4.0.2+dfsg-1build4_amd64.deb"
+			],
+			"version": "4.0.2+dfsg-1build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-fs_2.4.16-3_amd64",
+			"name": "python3-fs",
+			"sha256": "0ada75289c62d04270668cf7b4aa773a0b3667433346012404e9fb6486df3331",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-fs/python3-fs_2.4.16-3_all.deb"
+			],
+			"version": "2.4.16-3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-appdirs_1.4.4-4_amd64",
+			"name": "python3-appdirs",
+			"sha256": "584d169c1afa41fe9651a4ea6efbeef498c9a7b1c7de5372a5a5617c13d0ee2b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/a/appdirs/python3-appdirs_1.4.4-4_all.deb"
+			],
+			"version": "1.4.4-4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-tz_2024.1-2_amd64",
+			"name": "python3-tz",
+			"sha256": "fea61f0993810c2ad36aa46757e1c3f4c1da3cbb8b2b2bb42975f5a4dad9300f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-tz/python3-tz_2024.1-2_all.deb"
+			],
+			"version": "2024.1-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-sympy_1.12-7_amd64",
+			"name": "python3-sympy",
+			"sha256": "3c81fccc39058bcda3a83b1591ca086aebdb0d24e2ed25bb119d0df21456e058",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/s/sympy/python3-sympy_1.12-7_all.deb"
+			],
+			"version": "1.12-7"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-mpmath_1.2.1-3_amd64",
+			"name": "python3-mpmath",
+			"sha256": "d04b81d8266d37fd9370e2ed070487890bf7c2077c5f7855ffafaac568f35f33",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/m/mpmath/python3-mpmath_1.2.1-3_all.deb"
+			],
+			"version": "1.2.1-3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-ufolib2_0.16.0-p-dfsg1-1_amd64",
+			"name": "python3-ufolib2",
+			"sha256": "b1eef68af3f794a2893765b6995543ff1f7e43d294bd3aa6e104e5bdaa8f1346",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/u/ufolib2/python3-ufolib2_0.16.0+dfsg1-1_all.deb"
+			],
+			"version": "0.16.0+dfsg1-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-attr_23.2.0-2_amd64",
+			"name": "python3-attr",
+			"sha256": "219601ac95dbb78c22e5347704a272dfeee7e2ce38b31f521f50c74647c28bc9",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-attrs/python3-attr_23.2.0-2_all.deb"
+			],
+			"version": "23.2.0-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-scipy_1.11.4-6build1_amd64",
+			"name": "python3-scipy",
+			"sha256": "ab2abe2431b49d54f203cc2cc394885a3a8bf3a3eebf0b1748f916158a1c9f31",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/s/scipy/python3-scipy_1.11.4-6build1_amd64.deb"
+			],
+			"version": "1.11.4-6build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "liblbfgsb0_3.0-p-dfsg.4-1build1_amd64",
+			"name": "liblbfgsb0",
+			"sha256": "54fb5cef115594e46819e0dfbe33d69b9086b9849ab73369fdbe5fa211bd628d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/l/lbfgsb/liblbfgsb0_3.0+dfsg.4-1build1_amd64.deb"
+			],
+			"version": "3.0+dfsg.4-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "liblapack3_3.12.0-3build1_amd64",
+			"name": "liblapack3",
+			"sha256": "02fb8be068c4e306a9e8138bfead1bc58f2b3c4d2306b4e0c66f1fbf42d72b73",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/l/lapack/liblapack3_3.12.0-3build1_amd64.deb"
+			],
+			"version": "3.12.0-3build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libgfortran5_14-20240412-0ubuntu1_amd64",
+			"name": "libgfortran5",
+			"sha256": "86d85417b95626b45080550fc03c7a83a05f100454987b722901da20fc358682",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/g/gcc-14/libgfortran5_14-20240412-0ubuntu1_amd64.deb"
+			],
+			"version": "14-20240412-0ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libblas3_3.12.0-3build1_amd64",
+			"name": "libblas3",
+			"sha256": "0a161e527a76597f8b65eff103f3871c6f441a91a8359adbe097015e0af3c154",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/l/lapack/libblas3_3.12.0-3build1_amd64.deb"
+			],
+			"version": "3.12.0-3build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-numpy_1-1.26.4-p-ds-6ubuntu1_amd64",
+			"name": "python3-numpy",
+			"sha256": "480e35b664e381dc6bb9627b728e138ae13acd3ebb9dffd220fb8806709e69f1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/n/numpy/python3-numpy_1.26.4+ds-6ubuntu1_amd64.deb"
+			],
+			"version": "1:1.26.4+ds-6ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-decorator_5.1.1-5_amd64",
+			"name": "python3-decorator",
+			"sha256": "60063dc9d7b2fd681b7ed0fc71905c92ec024b314693eacdd374c836968d47e8",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-decorator/python3-decorator_5.1.1-5_all.deb"
+			],
+			"version": "5.1.1-5"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-brotli_1.1.0-2build2_amd64",
+			"name": "python3-brotli",
+			"sha256": "f42bb87f98c01017c291cb0cfce99c92c1c91fd38e798f978e4fd10ee98601fc",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/b/brotli/python3-brotli_1.1.0-2build2_amd64.deb"
+			],
+			"version": "1.1.0-2build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-feedparser_6.0.10-1_amd64",
+			"name": "python3-feedparser",
+			"sha256": "49bb29f7df04995bc267ee9e3665d52c5e26b3ddc9dc7882c0190b7e47c5518d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/f/feedparser/python3-feedparser_6.0.10-1_all.deb"
+			],
+			"version": "6.0.10-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-sgmllib3k_1.0.0-4_amd64",
+			"name": "python3-sgmllib3k",
+			"sha256": "835e55183fb1a875e5032481e56915d63b7927f02cd482f7bdf52ef849a3b2f8",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/s/sgmllib3k/python3-sgmllib3k_1.0.0-4_all.deb"
+			],
+			"version": "1.0.0-4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-dateutil_2.8.2-3ubuntu1_amd64",
+			"name": "python3-dateutil",
+			"sha256": "cdee46578ba57ad77ade552a1c8b92d7b9350384c60564cc22aafb898c517d68",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-dateutil/python3-dateutil_2.8.2-3ubuntu1_all.deb"
+			],
+			"version": "2.8.2-3ubuntu1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-cssselect_1.2.0-2_amd64",
+			"name": "python3-cssselect",
+			"sha256": "269973b279d56826c983354a294302f0c319283cbd573ba42b158ddf4cfb9d9c",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/python-cssselect/python3-cssselect_1.2.0-2_all.deb"
+			],
+			"version": "1.2.0-2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-css-parser_1.0.10-1_amd64",
+			"name": "python3-css-parser",
+			"sha256": "5930de280f7aed2b2822a2ffc05d0409fed0e173d43902ae7d0d374111d87f2f",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-css-parser/python3-css-parser_1.0.10-1_all.deb"
+			],
+			"version": "1.0.10-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-chm_0.8.6-4build1_amd64",
+			"name": "python3-chm",
+			"sha256": "44fbdfdbc8aabd9977c1f625bb420159ba118bdf6e91a535cf65c5a213c3aced",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pychm/python3-chm_0.8.6-4build1_amd64.deb"
+			],
+			"version": "0.8.6-4build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libchm1_2-0.40a-8_amd64",
+			"name": "libchm1",
+			"sha256": "215a42bb6d2dc05c43f20c2d49e8d72cf09ad66ca328f3e26819a7b247cdcdbf",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/c/chmlib/libchm1_0.40a-8_amd64.deb"
+			],
+			"version": "2:0.40a-8"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-bs4_4.12.3-1_amd64",
+			"name": "python3-bs4",
+			"sha256": "6e8ca374a4ae0cc2044a382f49122ac9e99ae7206b109d58ec4e9dd32705488b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/b/beautifulsoup4/python3-bs4_4.12.3-1_all.deb"
+			],
+			"version": "4.12.3-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-soupsieve_2.5-1_amd64",
+			"name": "python3-soupsieve",
+			"sha256": "58f48753dd23e341462ab492c43d32055ed92f040766279fb4954387bf10f815",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/soupsieve/python3-soupsieve_2.5-1_all.deb"
+			],
+			"version": "2.5-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "python3-apsw_3.43.0.0-1build2_amd64",
+			"name": "python3-apsw",
+			"sha256": "a5ee9b5c280ad669cca7f112292a29110de69dd3e6aee9094537b05445fc910a",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/python-apsw/python3-apsw_3.43.0.0-1build2_amd64.deb"
+			],
+			"version": "3.43.0.0-1build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "pyqt6-dev-tools_6.6.1-2build4_amd64",
+			"name": "pyqt6-dev-tools",
+			"sha256": "31cef08f9a70976620366dbb405d3862526757d1a6e6276f91ef2cb9c48da2d5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/p/pyqt6/pyqt6-dev-tools_6.6.1-2build4_all.deb"
+			],
+			"version": "6.6.1-2build4"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "poppler-utils_24.02.0-1ubuntu9_amd64",
+			"name": "poppler-utils",
+			"sha256": "8b324a07f3593e0c2fc22bd04899f329d72cefdbc7d42a47f1f946173cc8efbe",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/poppler/poppler-utils_24.02.0-1ubuntu9_amd64.deb"
+			],
+			"version": "24.02.0-1ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpoppler134_24.02.0-1ubuntu9_amd64",
+			"name": "libpoppler134",
+			"sha256": "8de16f026ec342acda9ad7b53828f2115b1e814c47fc1a4a2eaedabaa8f9d35b",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/poppler/libpoppler134_24.02.0-1ubuntu9_amd64.deb"
+			],
+			"version": "24.02.0-1ubuntu9"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "optipng_0.7.8-p-ds-1build2_amd64",
+			"name": "optipng",
+			"sha256": "826b9be722f02eaa983e6d0f6c31ee12cf7cf53ef963f95fb963e704c5954027",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/o/optipng/optipng_0.7.8+ds-1build2_amd64.deb"
+			],
+			"version": "0.7.8+ds-1build2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libjxr-tools_1.2_git20170615.f752187-5.1ubuntu2_amd64",
+			"name": "libjxr-tools",
+			"sha256": "21813c3f99a07cf8a2955ad1ca9de4c0171d894060ea6df29a43b6dc9c6e86a1",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/j/jxrlib/libjxr-tools_1.2~git20170615.f752187-5.1ubuntu2_amd64.deb"
+			],
+			"version": "1.2~git20170615.f752187-5.1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libjxr0t64_1.2_git20170615.f752187-5.1ubuntu2_amd64",
+			"name": "libjxr0t64",
+			"sha256": "9de792bc7484e00b1251f4deaf4b49c7c653397eeef3c78e389607f3fffdc6e2",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/j/jxrlib/libjxr0t64_1.2~git20170615.f752187-5.1ubuntu2_amd64.deb"
+			],
+			"version": "1.2~git20170615.f752187-5.1ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libjpeg-turbo-progs_2.1.5-2ubuntu2_amd64",
+			"name": "libjpeg-turbo-progs",
+			"sha256": "5b1c47554c5dfcc27f23fafd65b0714dae41d312da7993ff3727e27afc67167a",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/libj/libjpeg-turbo/libjpeg-turbo-progs_2.1.5-2ubuntu2_amd64.deb"
+			],
+			"version": "2.1.5-2ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libturbojpeg_1-2.1.5-2ubuntu2_amd64",
+			"name": "libturbojpeg",
+			"sha256": "fa7b45ffe672caa7460729990f6a8c62000c44ca2e3dc560a2e6bea3908b53a3",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/libj/libjpeg-turbo/libturbojpeg_2.1.5-2ubuntu2_amd64.deb"
+			],
+			"version": "1:2.1.5-2ubuntu2"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "fonts-liberation_1-2.1.5-3_amd64",
+			"name": "fonts-liberation",
+			"sha256": "065c2ab1abc9108b17d401016dc594b79750904390f095845c93bb06e1153acc",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/f/fonts-liberation/fonts-liberation_2.1.5-3_all.deb"
+			],
+			"version": "1:2.1.5-3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "ca-certificates_20240203_amd64",
+			"name": "ca-certificates",
+			"sha256": "641de77d8f142cfd62a1a6f964ba67b20754d3337c480efb529d086075a06c9a",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20240203_all.deb"
+			],
+			"version": "20240203"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "openssl_3.0.13-0ubuntu3_amd64",
+			"name": "openssl",
+			"sha256": "9c79333ab21bce0fb8dd92304cd76b3b1c427b0f2fedc897257fb5cced37c39e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/o/openssl/openssl_3.0.13-0ubuntu3_amd64.deb"
+			],
+			"version": "3.0.13-0ubuntu3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "calibre-bin_7.6.0-p-ds-1build1_amd64",
+			"name": "calibre-bin",
+			"sha256": "0a4c4a8ea4a3b20941fac39d1d818b202c6bca5a49aad46a41715507bde08495",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/c/calibre/calibre-bin_7.6.0+ds-1build1_amd64.deb"
+			],
+			"version": "7.6.0+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libusb-1.0-0_2-1.0.27-1_amd64",
+			"name": "libusb-1.0-0",
+			"sha256": "d59e679a82ee2b724c556397e831e879936adbe8a007705872b65a5e1ec887b5",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libu/libusb-1.0/libusb-1.0-0_1.0.27-1_amd64.deb"
+			],
+			"version": "2:1.0.27-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libuchardet0_0.0.8-1build1_amd64",
+			"name": "libuchardet0",
+			"sha256": "e2c390d8c1843059922f7ff3a74106c5af6fbf03c94532c07de16bf5af256fb4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/u/uchardet/libuchardet0_0.0.8-1build1_amd64.deb"
+			],
+			"version": "0.0.8-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libstemmer0d_2.2.0-4build1_amd64",
+			"name": "libstemmer0d",
+			"sha256": "131d145e9b110df4b4b953b5ab7b95a6531fab86e6d4b461728a63860fe00d53",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/s/snowball/libstemmer0d_2.2.0-4build1_amd64.deb"
+			],
+			"version": "2.2.0-4build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpodofo0.9.8t64_0.9.8-p-dfsg-3.1build3_amd64",
+			"name": "libpodofo0.9.8t64",
+			"sha256": "7cefd6c461eb553b44fced812e52056267e8c0c34639a0285c3062e174a5f663",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/libp/libpodofo/libpodofo0.9.8t64_0.9.8+dfsg-3.1build3_amd64.deb"
+			],
+			"version": "0.9.8+dfsg-3.1build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libmtp9t64_1.1.21-3.1build1_amd64",
+			"name": "libmtp9t64",
+			"sha256": "5e212ba5163ab43b9cbb88b9895b08c490c7b5eb40d8ece29846832b4075594e",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libm/libmtp/libmtp9t64_1.1.21-3.1build1_amd64.deb"
+			],
+			"version": "1.1.21-3.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libmtp-common_1.1.21-3.1build1_amd64",
+			"name": "libmtp-common",
+			"sha256": "0d01a7e1dc35a20cb5670e59987b2b8366674b7f40667d87bd8baa76622335ef",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libm/libmtp/libmtp-common_1.1.21-3.1build1_all.deb"
+			],
+			"version": "1.1.21-3.1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libhyphen0_2.8.8-7build3_amd64",
+			"name": "libhyphen0",
+			"sha256": "b508d3a5da168ddb2ae6e79ea0521ba64cd121285db0ece438d0bd56ba628556",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/h/hyphen/libhyphen0_2.8.8-7build3_amd64.deb"
+			],
+			"version": "2.8.8-7build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libhunspell-1.7-0_1.7.2-p-really1.7.2-10build3_amd64",
+			"name": "libhunspell-1.7-0",
+			"sha256": "77849069ed487a16c1dcf71122cc9578f6610542e52a85fc259aa0932a13da22",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/h/hunspell/libhunspell-1.7-0_1.7.2+really1.7.2-10build3_amd64.deb"
+			],
+			"version": "1.7.2+really1.7.2-10build3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [
+				{
 					"key": "fonts-urw-base35_20200910-8_amd64",
 					"name": "fonts-urw-base35",
 					"version": "20200910-8"
@@ -4513,17 +7986,6 @@
 		{
 			"arch": "amd64",
 			"dependencies": [],
-			"key": "libxxhash0_0.8.2-2build1_amd64",
-			"name": "libxxhash0",
-			"sha256": "75de256c2d162dfc541beb69a83f025742cd13329262af9059eff3ca42a53239",
-			"urls": [
-				"https://snapshot.ubuntu.com/ubuntu/pool/main/x/xxhash/libxxhash0_0.8.2-2build1_amd64.deb"
-			],
-			"version": "0.8.2-2build1"
-		},
-		{
-			"arch": "amd64",
-			"dependencies": [],
 			"key": "libwoff1_1.0.2-2build1_amd64",
 			"name": "libwoff1",
 			"sha256": "e23a6287ff611ff60a5a598de21f8f60f6236b6ad9443376318e6cc7914219c1",
@@ -4553,6 +8015,428 @@
 				"https://snapshot.ubuntu.com/ubuntu/pool/universe/t/texlive-base/texlive-fonts-recommended_2023.20240207-1_all.deb"
 			],
 			"version": "2023.20240207-1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [
+				{
+					"key": "libxml2_2.9.14-p-dfsg-1.3ubuntu3_amd64",
+					"name": "libxml2",
+					"version": "2.9.14+dfsg-1.3ubuntu3"
+				},
+				{
+					"key": "zlib1g_1-1.3.dfsg-3.1ubuntu2_amd64",
+					"name": "zlib1g",
+					"version": "1:1.3.dfsg-3.1ubuntu2"
+				},
+				{
+					"key": "libc6_2.39-0ubuntu8_amd64",
+					"name": "libc6",
+					"version": "2.39-0ubuntu8"
+				},
+				{
+					"key": "libgcc-s1_14-20240412-0ubuntu1_amd64",
+					"name": "libgcc-s1",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "gcc-14-base_14-20240412-0ubuntu1_amd64",
+					"name": "gcc-14-base",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "liblzma5_5.6.1-p-really5.4.5-1_amd64",
+					"name": "liblzma5",
+					"version": "5.6.1+really5.4.5-1"
+				},
+				{
+					"key": "libicu74_74.2-1ubuntu3_amd64",
+					"name": "libicu74",
+					"version": "74.2-1ubuntu3"
+				},
+				{
+					"key": "libstdc-p--p-6_14-20240412-0ubuntu1_amd64",
+					"name": "libstdc++6",
+					"version": "14-20240412-0ubuntu1"
+				},
+				{
+					"key": "libpangoft2-1.0-0_1.52.1-p-ds-1build1_amd64",
+					"name": "libpangoft2-1.0-0",
+					"version": "1.52.1+ds-1build1"
+				},
+				{
+					"key": "libpango-1.0-0_1.52.1-p-ds-1build1_amd64",
+					"name": "libpango-1.0-0",
+					"version": "1.52.1+ds-1build1"
+				},
+				{
+					"key": "libthai0_0.1.29-2build1_amd64",
+					"name": "libthai0",
+					"version": "0.1.29-2build1"
+				},
+				{
+					"key": "libdatrie1_0.2.13-3build1_amd64",
+					"name": "libdatrie1",
+					"version": "0.2.13-3build1"
+				},
+				{
+					"key": "libthai-data_0.1.29-2build1_amd64",
+					"name": "libthai-data",
+					"version": "0.1.29-2build1"
+				},
+				{
+					"key": "libharfbuzz0b_8.3.0-2build2_amd64",
+					"name": "libharfbuzz0b",
+					"version": "8.3.0-2build2"
+				},
+				{
+					"key": "libgraphite2-3_1.3.14-2build1_amd64",
+					"name": "libgraphite2-3",
+					"version": "1.3.14-2build1"
+				},
+				{
+					"key": "libglib2.0-0t64_2.80.0-6ubuntu1_amd64",
+					"name": "libglib2.0-0t64",
+					"version": "2.80.0-6ubuntu1"
+				},
+				{
+					"key": "libselinux1_3.5-2ubuntu2_amd64",
+					"name": "libselinux1",
+					"version": "3.5-2ubuntu2"
+				},
+				{
+					"key": "libpcre2-8-0_10.42-4ubuntu2_amd64",
+					"name": "libpcre2-8-0",
+					"version": "10.42-4ubuntu2"
+				},
+				{
+					"key": "libmount1_2.39.3-9ubuntu6_amd64",
+					"name": "libmount1",
+					"version": "2.39.3-9ubuntu6"
+				},
+				{
+					"key": "libblkid1_2.39.3-9ubuntu6_amd64",
+					"name": "libblkid1",
+					"version": "2.39.3-9ubuntu6"
+				},
+				{
+					"key": "libffi8_3.4.6-1build1_amd64",
+					"name": "libffi8",
+					"version": "3.4.6-1build1"
+				},
+				{
+					"key": "libfreetype6_2.13.2-p-dfsg-1build3_amd64",
+					"name": "libfreetype6",
+					"version": "2.13.2+dfsg-1build3"
+				},
+				{
+					"key": "libpng16-16t64_1.6.43-5build1_amd64",
+					"name": "libpng16-16t64",
+					"version": "1.6.43-5build1"
+				},
+				{
+					"key": "libbz2-1.0_1.0.8-5.1_amd64",
+					"name": "libbz2-1.0",
+					"version": "1.0.8-5.1"
+				},
+				{
+					"key": "libbrotli1_1.1.0-2build2_amd64",
+					"name": "libbrotli1",
+					"version": "1.1.0-2build2"
+				},
+				{
+					"key": "libfribidi0_1.0.13-3build1_amd64",
+					"name": "libfribidi0",
+					"version": "1.0.13-3build1"
+				},
+				{
+					"key": "fontconfig_2.15.0-1.1ubuntu2_amd64",
+					"name": "fontconfig",
+					"version": "2.15.0-1.1ubuntu2"
+				},
+				{
+					"key": "fontconfig-config_2.15.0-1.1ubuntu2_amd64",
+					"name": "fontconfig-config",
+					"version": "2.15.0-1.1ubuntu2"
+				},
+				{
+					"key": "fonts-dejavu-core_2.37-8_amd64",
+					"name": "fonts-dejavu-core",
+					"version": "2.37-8"
+				},
+				{
+					"key": "fonts-dejavu-mono_2.37-8_amd64",
+					"name": "fonts-dejavu-mono",
+					"version": "2.37-8"
+				},
+				{
+					"key": "libfontconfig1_2.15.0-1.1ubuntu2_amd64",
+					"name": "libfontconfig1",
+					"version": "2.15.0-1.1ubuntu2"
+				},
+				{
+					"key": "libexpat1_2.6.1-2build1_amd64",
+					"name": "libexpat1",
+					"version": "2.6.1-2build1"
+				},
+				{
+					"key": "libpangocairo-1.0-0_1.52.1-p-ds-1build1_amd64",
+					"name": "libpangocairo-1.0-0",
+					"version": "1.52.1+ds-1build1"
+				},
+				{
+					"key": "libcairo2_1.18.0-3build1_amd64",
+					"name": "libcairo2",
+					"version": "1.18.0-3build1"
+				},
+				{
+					"key": "libxrender1_1-0.9.10-1.1build1_amd64",
+					"name": "libxrender1",
+					"version": "1:0.9.10-1.1build1"
+				},
+				{
+					"key": "libx11-6_2-1.8.7-1build1_amd64",
+					"name": "libx11-6",
+					"version": "2:1.8.7-1build1"
+				},
+				{
+					"key": "libx11-data_2-1.8.7-1build1_amd64",
+					"name": "libx11-data",
+					"version": "2:1.8.7-1build1"
+				},
+				{
+					"key": "libxcb1_1.15-1ubuntu2_amd64",
+					"name": "libxcb1",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxdmcp6_1-1.1.3-0ubuntu6_amd64",
+					"name": "libxdmcp6",
+					"version": "1:1.1.3-0ubuntu6"
+				},
+				{
+					"key": "libbsd0_0.12.1-1build1_amd64",
+					"name": "libbsd0",
+					"version": "0.12.1-1build1"
+				},
+				{
+					"key": "libmd0_1.1.0-2build1_amd64",
+					"name": "libmd0",
+					"version": "1.1.0-2build1"
+				},
+				{
+					"key": "libxau6_1-1.0.9-1build6_amd64",
+					"name": "libxau6",
+					"version": "1:1.0.9-1build6"
+				},
+				{
+					"key": "libxext6_2-1.3.4-1build2_amd64",
+					"name": "libxext6",
+					"version": "2:1.3.4-1build2"
+				},
+				{
+					"key": "libxcb-shm0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-shm0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libxcb-render0_1.15-1ubuntu2_amd64",
+					"name": "libxcb-render0",
+					"version": "1.15-1ubuntu2"
+				},
+				{
+					"key": "libpixman-1-0_0.42.2-1build1_amd64",
+					"name": "libpixman-1-0",
+					"version": "0.42.2-1build1"
+				},
+				{
+					"key": "libgdk-pixbuf-2.0-0_2.42.10-p-dfsg-3ubuntu3_amd64",
+					"name": "libgdk-pixbuf-2.0-0",
+					"version": "2.42.10+dfsg-3ubuntu3"
+				},
+				{
+					"key": "libtiff6_4.5.1-p-git230720-4ubuntu2_amd64",
+					"name": "libtiff6",
+					"version": "4.5.1+git230720-4ubuntu2"
+				},
+				{
+					"key": "libzstd1_1.5.5-p-dfsg2-2build1_amd64",
+					"name": "libzstd1",
+					"version": "1.5.5+dfsg2-2build1"
+				},
+				{
+					"key": "libwebp7_1.3.2-0.4build3_amd64",
+					"name": "libwebp7",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "libsharpyuv0_1.3.2-0.4build3_amd64",
+					"name": "libsharpyuv0",
+					"version": "1.3.2-0.4build3"
+				},
+				{
+					"key": "liblerc4_4.0.0-p-ds-4ubuntu2_amd64",
+					"name": "liblerc4",
+					"version": "4.0.0+ds-4ubuntu2"
+				},
+				{
+					"key": "libjpeg8_8c-2ubuntu11_amd64",
+					"name": "libjpeg8",
+					"version": "8c-2ubuntu11"
+				},
+				{
+					"key": "libjpeg-turbo8_2.1.5-2ubuntu2_amd64",
+					"name": "libjpeg-turbo8",
+					"version": "2.1.5-2ubuntu2"
+				},
+				{
+					"key": "libjbig0_2.1-6.1ubuntu2_amd64",
+					"name": "libjbig0",
+					"version": "2.1-6.1ubuntu2"
+				},
+				{
+					"key": "libdeflate0_1.19-1build1_amd64",
+					"name": "libdeflate0",
+					"version": "1.19-1build1"
+				},
+				{
+					"key": "shared-mime-info_2.4-4_amd64",
+					"name": "shared-mime-info",
+					"version": "2.4-4"
+				},
+				{
+					"key": "libgdk-pixbuf2.0-common_2.42.10-p-dfsg-3ubuntu3_amd64",
+					"name": "libgdk-pixbuf2.0-common",
+					"version": "2.42.10+dfsg-3ubuntu3"
+				},
+				{
+					"key": "libcairo-gobject2_1.18.0-3build1_amd64",
+					"name": "libcairo-gobject2",
+					"version": "1.18.0-3build1"
+				},
+				{
+					"key": "librsvg2-2_2.58.0-p-dfsg-1build1_amd64",
+					"name": "librsvg2-2",
+					"version": "2.58.0+dfsg-1build1"
+				}
+			],
+			"key": "librsvg2-bin_2.58.0-p-dfsg-1build1_amd64",
+			"name": "librsvg2-bin",
+			"sha256": "84e6dc1615a63d202ae67699f8fb0ead13c8f4fc2664353cbed2fb662a32a4b4",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/universe/libr/librsvg/librsvg2-bin_2.58.0+dfsg-1build1_amd64.deb"
+			],
+			"version": "2.58.0+dfsg-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpangoft2-1.0-0_1.52.1-p-ds-1build1_amd64",
+			"name": "libpangoft2-1.0-0",
+			"sha256": "cc6bc9d86ef5f329edacaa4895232d8a9b8f95c5cbc77c3c460a3f64cecc213d",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pango1.0/libpangoft2-1.0-0_1.52.1+ds-1build1_amd64.deb"
+			],
+			"version": "1.52.1+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpango-1.0-0_1.52.1-p-ds-1build1_amd64",
+			"name": "libpango-1.0-0",
+			"sha256": "09dfa5c881ab273ec6bc1830adcefdc407fcd619316e68fb26ca3a23d0fc9f54",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pango1.0/libpango-1.0-0_1.52.1+ds-1build1_amd64.deb"
+			],
+			"version": "1.52.1+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libthai0_0.1.29-2build1_amd64",
+			"name": "libthai0",
+			"sha256": "5ada7045c5f84a4b774e6449151800aa6470e8d01dc9d6124ef4a44ae6af5508",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libt/libthai/libthai0_0.1.29-2build1_amd64.deb"
+			],
+			"version": "0.1.29-2build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libdatrie1_0.2.13-3build1_amd64",
+			"name": "libdatrie1",
+			"sha256": "1ae164e40e413eac4fbd38ce1c6ef9591f7a03278ad9076d71fa29258727f447",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libd/libdatrie/libdatrie1_0.2.13-3build1_amd64.deb"
+			],
+			"version": "0.2.13-3build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libthai-data_0.1.29-2build1_amd64",
+			"name": "libthai-data",
+			"sha256": "6035d4a714290b97816bed7f3bf64921c6358ddb84d1dacdddccdc1cf39bffb7",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libt/libthai/libthai-data_0.1.29-2build1_all.deb"
+			],
+			"version": "0.1.29-2build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libpangocairo-1.0-0_1.52.1-p-ds-1build1_amd64",
+			"name": "libpangocairo-1.0-0",
+			"sha256": "98cf5fc9076c2911fe20dfc1e41cd8f686a2bb5d539b1105fab18105b0db1376",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/p/pango1.0/libpangocairo-1.0-0_1.52.1+ds-1build1_amd64.deb"
+			],
+			"version": "1.52.1+ds-1build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libgdk-pixbuf-2.0-0_2.42.10-p-dfsg-3ubuntu3_amd64",
+			"name": "libgdk-pixbuf-2.0-0",
+			"sha256": "d9779cdbb11e5fb6056b39868b689bd2e6a152f60d7fa54fcf7113942eedab24",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/g/gdk-pixbuf/libgdk-pixbuf-2.0-0_2.42.10+dfsg-3ubuntu3_amd64.deb"
+			],
+			"version": "2.42.10+dfsg-3ubuntu3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libgdk-pixbuf2.0-common_2.42.10-p-dfsg-3ubuntu3_amd64",
+			"name": "libgdk-pixbuf2.0-common",
+			"sha256": "851ed73005dad3178d1022191e84311c3eb2a84159347b6542308449dfe402e0",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/g/gdk-pixbuf/libgdk-pixbuf2.0-common_2.42.10+dfsg-3ubuntu3_all.deb"
+			],
+			"version": "2.42.10+dfsg-3ubuntu3"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "libcairo-gobject2_1.18.0-3build1_amd64",
+			"name": "libcairo-gobject2",
+			"sha256": "f5483cbe43455fc9e9cba7f0e166bd0a731c02db2902ba562719848f72e8c403",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/c/cairo/libcairo-gobject2_1.18.0-3build1_amd64.deb"
+			],
+			"version": "1.18.0-3build1"
+		},
+		{
+			"arch": "amd64",
+			"dependencies": [],
+			"key": "librsvg2-2_2.58.0-p-dfsg-1build1_amd64",
+			"name": "librsvg2-2",
+			"sha256": "47178c8632e70a0fd2c620e87c5d4d873b07f76c16e2e3c642693f8176a0af88",
+			"urls": [
+				"https://snapshot.ubuntu.com/ubuntu/pool/main/libr/librsvg/librsvg2-2_2.58.0+dfsg-1build1_amd64.deb"
+			],
+			"version": "2.58.0+dfsg-1build1"
 		}
 	],
 	"version": 1
