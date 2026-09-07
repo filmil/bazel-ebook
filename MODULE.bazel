@@ -25,6 +25,19 @@ bazel_dep(name = "graphviz", version = "0.1.0")
 # binaries out of it; the rootfs here holds only what this repository needs, so
 # no other consumer pays for it.
 bazel_dep(name = "bazel_rootfs", version = "1.1.1")
+
+# Temporarily taken from git rather than the registry. rootfs_binary needed
+# two fixes to run the tools here at all: a rootfs built from a short package
+# list is usr-merged with no /lib64, and gladtex is a "#!/usr/bin/python3"
+# script rather than an ELF binary. Both are on bazel_rootfs main and neither
+# is in 1.1.1. Drop this override once a release carries them; tracked in
+# TRACKING_ISSUE.
+git_override(
+    module_name = "bazel_rootfs",
+    commit = "44f96ea39f5e10fbfab0ebd2d9af96c33184fb4e",
+    remote = "https://github.com/filmil/bazel_rootfs",
+)
+
 bazel_dep(name = "rules_distroless", version = "0.8.0")
 bazel_dep(name = "rules_oci", version = "2.3.0")
 bazel_dep(name = "rules_zstd", version = "1.0.0")

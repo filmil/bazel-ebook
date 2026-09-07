@@ -37,15 +37,19 @@ ebook_toolchain(
         "dot": "@graphviz//:dot",
         # The GraalVM native build, so no JVM is needed.
         "plantuml": "@multitool//tools/plantuml",
-        # No upstream binary release, so it comes out of the Debian rootfs
-        # built in //image.
+        # No upstream binary release, so these come out of the Debian rootfs
+        # built in //image. asymptote and gladtex share most of a TeX closure,
+        # which is why they are added together.
+        "asy": "//image:asy",
         "drawtiming": "//image:drawtiming",
+        "gladtex": "//image:gladtex",
+        "gs": "//image:gs",
+        # pandoc-crossref must be built against the same pandoc; the pair in
+        # multitool.lock.json is matched deliberately.
+        "pandoc": "@multitool//tools/pandoc",
     },
     tools = {
-        "asy": "asy",
         "ebook-convert": "ebook-convert",
-        "gladtex": "gladtex",
-        "pandoc": "pandoc",
     },
     visibility = ["//visibility:public"],
     wrapper = "@rules_bid//build:docker_run",
