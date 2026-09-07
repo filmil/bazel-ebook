@@ -1,5 +1,3 @@
-load(":script.bzl", _script_cmd = "script_cmd")
-
 """
 Pandoc metadata rules.
 
