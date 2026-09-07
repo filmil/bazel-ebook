@@ -13,7 +13,12 @@ load(
 load(":providers.bzl", "EbookInfo")
 load(":script.bzl", _script_cmd = "script_cmd")
 load(":svg.bzl", "RESVG_ATTRS", _rasterise = "rasterise")
-load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE", _ebook_tool = "ebook_tool")
+load(
+    ":toolchain.bzl",
+    "EBOOK_TOOLCHAIN_TYPE",
+    _ebook_path = "ebook_path",
+    _ebook_tool = "ebook_tool",
+)
 
 pandoc_standalone_html = _pandoc_standalone_html
 pandoc_chunked_html = _pandoc_chunked_html
@@ -571,11 +576,15 @@ def _ebook_pdf_impl(ctx):
     # Fixed up paths -- relative to the directory dir_reference, not the
     # directory where the build happens!  This is needed because we can not control
     # figure inclusion.
-    markdowns_paths = _strip_reference_dir_from_files(dir_reference, markdowns)
-
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    script = _tools.wrapper
-    script_cmd = _script_cmd(script.executable.path, dir_reference.path)
+    _pandoc = _ebook_tool(_tools, "pandoc", dir_reference.path, _script_cmd)
+    _path = _ebook_path(_tools)
+
+    markdowns_paths = _maybe_strip_reference_dir_from_files(
+        _pandoc,
+        dir_reference,
+        markdowns,
+    )
 
     # run htexepub to obtain book.epub.
     # This is gonna be fun!
@@ -596,17 +605,19 @@ def _ebook_pdf_impl(ctx):
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
         inputs = inputs + additional_inputs,
-        tools = [script],
+        tools = _pandoc.tools + _path.inputs,
         outputs = [ebook_pdf, log_file],
         command = """\
-            {script} -- \
-                pandoc --epub-metadata={epub_metadata} \
+            PATH="{path}:${{PATH:-}}" \
+            {prefix}{pandoc} --epub-metadata={epub_metadata} \
                   --mathml -o {ebook_pdf} {args} {markdowns} \
                   2>&1 &> {log} || ( cat {log} && exit 1)
         """.format(
-            script = script_cmd,
-            epub_metadata = _strip_reference_dir(dir_reference, epub_metadata.path),
-            ebook_pdf = _strip_reference_dir(dir_reference, ebook_pdf.path),
+            path = _path.value,
+            prefix = _pandoc.prefix,
+            pandoc = _pandoc.cmd,
+            epub_metadata = _maybe_strip_reference_dir(_pandoc, dir_reference, epub_metadata.path),
+            ebook_pdf = _maybe_strip_reference_dir(_pandoc, dir_reference, ebook_pdf.path),
             args = " ".join(args),
             markdowns = " ".join(markdowns_paths),
             log = log_file.path,
@@ -686,26 +697,24 @@ def _ebook_kindle_impl(ctx):
     dir_reference = epub_file
 
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    script = _tools.wrapper
+    _convert = _ebook_tool(_tools, "ebook-convert", epub_file.path, _script_cmd)
     name = ctx.label.name
-    script_cmd = _script_cmd(script.executable.path, epub_file.path)
     log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
     ctx.actions.run_shell(
         progress_message = "Building AZW3 for: {}".format(name),
         inputs = [epub_file, equation_outdir],
-        tools = [script],
+        tools = _convert.tools,
         outputs = [kindle_file, log_file],
         command = """\
-            {script} -- \
-                {ebook_convert} {args} {epub_file} {kindle_file} \
+            {prefix}{ebook_convert} {args} {epub_file} {kindle_file} \
                 2>&1 >& {log} || ( cat {log} && exit 1)
         """.format(
-            script = script_cmd,
-            epub_file = _strip_reference_dir(dir_reference, epub_file.path),
-            kindle_file = _strip_reference_dir(dir_reference, kindle_file.path),
+            prefix = _convert.prefix,
+            epub_file = _maybe_strip_reference_dir(_convert, dir_reference, epub_file.path),
+            kindle_file = _maybe_strip_reference_dir(_convert, dir_reference, kindle_file.path),
             args = " ".join(ctx.attr.args),
             log = log_file.path,
-            ebook_convert = _tools.tools["ebook-convert"],
+            ebook_convert = _convert.cmd,
         ),
     )
     runfiles = ctx.runfiles(files = [kindle_file])
