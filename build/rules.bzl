@@ -15,6 +15,7 @@ load(":svg.bzl", "RESVG_ATTRS", _rasterise = "rasterise")
 load(
     ":toolchain.bzl",
     "EBOOK_TOOLCHAIN_TYPE",
+    _ebook_font = "ebook_font",
     _ebook_path = "ebook_path",
     _ebook_tool = "ebook_tool",
 )
@@ -100,16 +101,18 @@ def _drawtiming_png_impl(ctx):
             log_file = ctx.actions.declare_file("{}.{}..log".format(ctx.attr.name, in_file.basename))
 
             tool = _ebook_tool(tools, "drawtiming", in_file.path)
+            font = _ebook_font(tools)
             ctx.actions.run_shell(
                 progress_message = "timing diagram to PNG: {0}".format(in_file.short_path),
-                inputs = [in_file],
+                inputs = [in_file] + font.inputs,
                 outputs = [out_file, log_file],
                 tools = tool.tools,
                 command = """\
-                {prefix}{cmd} {args} --output "{out_file}" "{in_file}" \
+                {prefix}{cmd} --font "{font}" {args} --output "{out_file}" "{in_file}" \
                   2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
                     cmd = tool.cmd,
+                    font = font.path,
                     out_file = out_file.path,
                     in_file = in_file.path,
                     args = " ".join(ctx.attr.args),

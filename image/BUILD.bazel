@@ -70,10 +70,20 @@ rootfs_binary(
     # configuration from paths compiled into the library, not from anything on
     # PATH. Left alone it finds whichever ImageMagick the host happens to have,
     # or segfaults on a host that has none. Point it inside the rootfs.
+    #
+    # ImageMagick also builds its font list through fontconfig. With no
+    # fontconfig configuration at all it prints "Cannot load default config
+    # file" and then dereferences the null result; with a configuration that
+    # names no font directory it fails to draw text at all. FONTCONFIG_PATH
+    # supplies the configuration and XDG_DATA_HOME supplies the fonts: the
+    # rootfs fonts.conf lists an xdg-prefixed "fonts" directory, which is the
+    # one entry in it that can be redirected without rewriting the file.
     env = {
+        "FONTCONFIG_PATH": "%ROOTFS%/etc/fonts",
         "MAGICK_CODER_MODULE_PATH": "%ROOTFS%/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.12/modules-Q16/coders",
         "MAGICK_CONFIGURE_PATH": "%ROOTFS%/etc/ImageMagick-6",
         "MAGICK_FILTER_MODULE_PATH": "%ROOTFS%/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.12/modules-Q16/filters",
+        "XDG_DATA_HOME": "%ROOTFS%/usr/share",
     },
     rootfs = ":rootfs",
 )
