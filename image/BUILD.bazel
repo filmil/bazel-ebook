@@ -38,6 +38,18 @@ rootfs(
     # symlink inside a tree artifact, so they are dropped during extraction.
     to_remove = [
         "etc/rmt",
+        "usr/share/texlive/texmf-dist/tex/generic/config/language.dat",
+        "usr/share/texlive/texmf-dist/tex/generic/config/language.def",
+        "usr/share/texlive/texmf-dist/tex/generic/config/language.dat.lua",
+        "usr/share/texlive/texmf-dist/ls-R",
+        "usr/share/texmf/ls-R",
+        "usr/share/ghostscript/10.02.1/Resource/CIDFSubst/DroidSansFallback.ttf",
+        "usr/share/texmf/web2c/fmtutil.cnf",
+        "usr/share/texlive/texmf-dist/web2c/fmtutil.cnf",
+        "usr/share/texmf/web2c/updmap.cfg",
+        "usr/share/doc/perl/Changes.gz",
+        "usr/share/texlive/texmf-dist/web2c/updmap.cfg",
+        "usr/share/zoneinfo/localtime",
         "usr/share/doc/libxml2/NEWS.gz",
         # Debian ships /usr/bin/X11 as a symlink to its own directory. Bazel
         # walks a tree artifact and gives up at "Too many levels of symbolic
@@ -49,5 +61,32 @@ rootfs(
 rootfs_binary(
     name = "drawtiming",
     binary_path = "/usr/bin/drawtiming",
+    rootfs = ":rootfs",
+)
+
+rootfs_binary(
+    name = "asy",
+    binary_path = "/usr/bin/asy",
+    # asymptote will not start without being told where its module library
+    # is, and it shells out to ghostscript to write PNG. Both live in the
+    # rootfs, and a Bazel action has no PATH of its own to find them by.
+    env = {
+        "ASYMPTOTE_DIR": "%ROOTFS%/usr/share/asymptote",
+        "ASYMPTOTE_GS": "%ROOTFS%/usr/bin/gs",
+    },
+    rootfs = ":rootfs",
+)
+
+rootfs_binary(
+    name = "gladtex",
+    binary_path = "/usr/bin/gladtex",
+    rootfs = ":rootfs",
+)
+
+# asymptote shells out to ghostscript. Wrapped as its own target so asy is
+# handed something it can exec, rather than a path inside the rootfs.
+rootfs_binary(
+    name = "gs",
+    binary_path = "/usr/bin/gs",
     rootfs = ":rootfs",
 )
