@@ -35,6 +35,8 @@ ebook_toolchain(
     hermetic_tools = {
         # One binary serves every layout engine; the rules pass -K.
         "dot": "@graphviz//:dot",
+        # The GraalVM native build, so no JVM is needed.
+        "plantuml": "@multitool//tools/plantuml",
     },
     tools = {
         "asy": "asy",
@@ -42,7 +44,6 @@ ebook_toolchain(
         "ebook-convert": "ebook-convert",
         "gladtex": "gladtex",
         "pandoc": "pandoc",
-        "plantuml": "plantuml",
     },
     visibility = ["//visibility:public"],
     wrapper = "@rules_bid//build:docker_run",

@@ -23,5 +23,17 @@
         "cpu": "x86_64"
       }
     ]
+  },
+  "plantuml": {
+    "binaries": [
+      {
+        "kind": "archive",
+        "url": "https://github.com/plantuml/plantuml/releases/download/v1.2026.8/native-plantuml-linux-amd64-1.2026.8.zip",
+        "sha256": "38be3f8051a52f64e81e33bfb96ff7e49e176c91d41074f6225800923a7524a2",
+        "os": "linux",
+        "file": "plantuml",
+        "cpu": "x86_64"
+      }
+    ]
   }
 }
