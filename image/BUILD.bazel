@@ -38,6 +38,11 @@ rootfs(
     # symlink inside a tree artifact, so they are dropped during extraction.
     to_remove = [
         "etc/rmt",
+        "usr/share/doc/libchm1/NEWS.gz",
+        "usr/share/doc/openssl/copyright",
+        "usr/share/doc/openssl/changelog.gz",
+        "usr/share/doc/openssl/changelog.Debian.gz",
+        "usr/lib/ssl/cert.pem",
         "usr/share/texlive/texmf-dist/tex/generic/config/language.dat",
         "usr/share/texlive/texmf-dist/tex/generic/config/language.def",
         "usr/share/texlive/texmf-dist/tex/generic/config/language.dat.lua",
@@ -88,5 +93,23 @@ rootfs_binary(
 rootfs_binary(
     name = "gs",
     binary_path = "/usr/bin/gs",
+    rootfs = ":rootfs",
+)
+
+rootfs_binary(
+    name = "ebook-convert",
+    binary_path = "/usr/bin/ebook-convert",
+    # calibre ships its Python package outside the interpreter's own search
+    # path, in /usr/lib/calibre, and its data separately again. Neither is
+    # found without being named.
+    # calibre keeps its Python package, its compiled extensions and its data
+    # in three separate places, and honours an environment variable for each.
+    # None of them are found from a rootfs without being named.
+    env = {
+        "CALIBRE_EXTENSIONS_PATH": "%ROOTFS%/usr/lib/calibre/calibre/plugins",
+        "CALIBRE_PYTHON_PATH": "%ROOTFS%/usr/lib/calibre",
+        "CALIBRE_RESOURCES_PATH": "%ROOTFS%/usr/share/calibre",
+        "PYTHONPATH": "%ROOTFS%/usr/lib/calibre:%ROOTFS%/usr/lib/python3/dist-packages",
+    },
     rootfs = ":rootfs",
 )

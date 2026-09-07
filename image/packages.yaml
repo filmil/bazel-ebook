@@ -12,5 +12,8 @@ archs:
 
 packages:
   - asymptote
+  - calibre
   - drawtiming
   - gladtex
+  # pandoc shells out to rsvg-convert for SVG figures in PDF output.
+  - librsvg2-bin
