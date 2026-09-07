@@ -12,6 +12,17 @@ load("@rules_shell//shell:sh_test.bzl", "sh_test")
 # file at the root of the repository.
 load("//build:rules.bzl", "ebook_pdf", "markdown_lib", "pandoc_chunked_html")
 
+# Not built by `bazel build //...`.
+#
+# The Python plugin depends on go-tree-sitter, whose cgo does not link under
+# lld: the parser package references ts_current_malloc, ts_current_realloc and
+# ts_current_free without linking the tree-sitter runtime that defines them.
+# GNU ld tolerates that, lld does not, and this repository compiles with the
+# hermetic zig toolchain so that everyone gets the same compiler.
+#
+# This is developer tooling for regenerating BUILD files, not part of building
+# a book, so it is marked manual rather than weakening the link settings for
+# every target in the build.
 gazelle_binary(
     name = "gazelle_multilang",
     languages = [
@@ -21,6 +32,7 @@ gazelle_binary(
         #"@bazel_gazelle//language/proto",
         "@rules_python_gazelle_plugin//python",
     ],
+    tags = ["manual"],
 )
 
 buildifier(
@@ -33,6 +45,7 @@ buildifier(
 gazelle(
     name = "gazelle",
     gazelle = ":gazelle_multilang",
+    tags = ["manual"],
 )
 
 markdown_lib(
