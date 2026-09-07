@@ -265,19 +265,23 @@ def _asymptote_impl(ctx):
             gs = _ebook_tool(tools, "gs", in_file.path)
 
             # asymptote typesets labels by writing a LaTeX document and
-            # running pdflatex over it.
+            # running pdflatex over it -- by name, so the wrapped pdflatex has
+            # to be first on PATH.
             texmf = _ebook_texmf(tools)
+            path = _ebook_path(tools)
             ctx.actions.run_shell(
                 progress_message = "ASY to PNG: {0}".format(in_file.short_path),
                 inputs = [in_file] + texmf.inputs,
                 outputs = [out_file, log_file],
-                tools = tool.tools + gs.tools,
+                tools = tool.tools + gs.tools + path.inputs,
                 command = """\
-                {setup}{prefix}{asy} -gs="$(realpath {gs})" -render 5 -f png -o "{out_file}" "{in_file}" \
+                {setup}PATH="{path}:${{PATH:-}}" \
+                {prefix}{asy} -gs="$(realpath {gs})" -render 5 -f png -o "{out_file}" "{in_file}" \
                   2>&1 >{log} || (cat {log} && exit 1)
               """.format(
                     out_file = out_file.path[:-4],
                     in_file = in_file.path,
+                    path = path.value,
                     prefix = tool.prefix,
                     setup = texmf.setup,
                     gs = gs.cmd,
@@ -436,8 +440,12 @@ def _ebook_epub_impl(ctx):
 
     _gladtex = _ebook_tool(_tools, "gladtex", markdowns_paths[0])
 
-    # gladtex renders each equation by running LaTeX over it.
+    # gladtex renders each equation by running LaTeX over it, and turns the
+    # result into an image with dvisvgm or dvipng. All three are started by
+    # name, so the wrapped ones have to be first on PATH: what a rootfs bin
+    # directory holds is the packaged binary, which runs only by accident.
     _texmf = _ebook_texmf(_tools)
+    _gladtex_path = _ebook_path(_tools)
 
     # run gladtex on the resulting htex to obtain html and output directory with figures.
     outdir = ctx.actions.declare_directory("{}.eqn".format(name))
@@ -448,12 +456,14 @@ def _ebook_epub_impl(ctx):
         progress_message = "Extracting equations for: {}".format(name),
         inputs = [htex_file] + additional_inputs + _texmf.inputs,
         outputs = [outdir, html_file, log_file2],
-        tools = _gladtex.tools,
+        tools = _gladtex.tools + _gladtex_path.inputs,
         command = """\
             (
-                {setup}{prefix}env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
+                {setup}PATH="{path}:${{PATH:-}}" \
+                {prefix}env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
                 2>&1 >& {log} || (cat {log} && exit 1) )
         """.format(
+            path = _gladtex_path.value,
             prefix = _gladtex.prefix,
             setup = _texmf.setup,
             outdir = _maybe_strip_reference_dir(_gladtex, dir_reference, outdir.path),
