@@ -115,6 +115,13 @@ rootfs(
         # walks a tree artifact and gives up at "Too many levels of symbolic
         # links", so the loop has to go.
         "usr/bin/X11",
+        # Symlinks to directories that are empty. Bazel's disk cache does not
+        # keep an empty directory inside a tree artifact, so a rootfs restored
+        # from the cache lacks the target and the link is dangling there --
+        # and only there: a fresh extraction is fine, which is why every pull
+        # request passed and the first cached run on main did not.
+        "usr/lib/ssl/certs",
+        "usr/lib/ssl/private",
     ] + COREUTILS_LC_TIME,
 )
 
