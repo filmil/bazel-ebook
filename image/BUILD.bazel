@@ -66,6 +66,15 @@ rootfs(
 rootfs_binary(
     name = "drawtiming",
     binary_path = "/usr/bin/drawtiming",
+    # drawtiming draws through ImageMagick, which loads its coder modules and
+    # configuration from paths compiled into the library, not from anything on
+    # PATH. Left alone it finds whichever ImageMagick the host happens to have,
+    # or segfaults on a host that has none. Point it inside the rootfs.
+    env = {
+        "MAGICK_CODER_MODULE_PATH": "%ROOTFS%/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.12/modules-Q16/coders",
+        "MAGICK_CONFIGURE_PATH": "%ROOTFS%/etc/ImageMagick-6",
+        "MAGICK_FILTER_MODULE_PATH": "%ROOTFS%/usr/lib/x86_64-linux-gnu/ImageMagick-6.9.12/modules-Q16/filters",
+    },
     rootfs = ":rootfs",
 )
 
