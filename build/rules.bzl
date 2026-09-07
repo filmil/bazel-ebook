@@ -84,9 +84,7 @@ plantuml_png = rule(
 )
 
 def _drawtiming_png_impl(ctx):
-    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    cmd = _tools.tools["drawtiming"]
-    docker_run = _tools.wrapper
+    tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
     figures = []
     log_files = []
 
@@ -97,22 +95,21 @@ def _drawtiming_png_impl(ctx):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}..log".format(ctx.attr.name, in_file.basename))
 
-            script_cmd = _script_cmd(docker_run.executable.path, in_file.path)
+            tool = _ebook_tool(tools, "drawtiming", in_file.path, _script_cmd)
             ctx.actions.run_shell(
-                progress_message = "timing diagram to PNG with {1}: {0}".format(in_file.short_path, cmd),
+                progress_message = "timing diagram to PNG: {0}".format(in_file.short_path),
                 inputs = [in_file],
                 outputs = [out_file, log_file],
-                tools = [docker_run],
+                tools = tool.tools,
                 command = """\
-                {script} -- \
-                  {cmd} {args} --output "{out_file}" "{in_file}" \
+                {prefix}{cmd} {args} --output "{out_file}" "{in_file}" \
                   2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
-                    cmd = cmd,
+                    cmd = tool.cmd,
                     out_file = out_file.path,
                     in_file = in_file.path,
                     args = " ".join(ctx.attr.args),
-                    script = script_cmd,
+                    prefix = tool.prefix,
                     log = log_file.path,
                 ),
             )
