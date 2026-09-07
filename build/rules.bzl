@@ -243,8 +243,7 @@ dot_png = rule(
 )
 
 def _asymptote_impl(ctx):
-    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    asycc = _tools.wrapper
+    tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
     figures = []
 
     for target in ctx.attr.srcs:
@@ -254,22 +253,23 @@ def _asymptote_impl(ctx):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
 
-            script_cmd = _script_cmd(asycc.executable.path, in_file.path)
+            tool = _ebook_tool(tools, "asy", in_file.path, _script_cmd)
+            gs = _ebook_tool(tools, "gs", in_file.path, _script_cmd)
             ctx.actions.run_shell(
                 progress_message = "ASY to PNG: {0}".format(in_file.short_path),
                 inputs = [in_file],
                 outputs = [out_file, log_file],
-                tools = [asycc],
+                tools = tool.tools + gs.tools,
                 command = """\
-                {script} -- \
-                  {asy} -render 5 -f png -o "{out_file}" "{in_file}" \
+                {prefix}{asy} -gs="$(realpath {gs})" -render 5 -f png -o "{out_file}" "{in_file}" \
                   2>&1 >{log} || (cat {log} && exit 1)
               """.format(
                     out_file = out_file.path[:-4],
                     in_file = in_file.path,
-                    script = script_cmd,
+                    prefix = tool.prefix,
+                    gs = gs.cmd,
                     log = log_file.path,
-                    asy = _tools.tools["asy"],
+                    asy = tool.cmd,
                 ),
             )
 
@@ -399,8 +399,7 @@ def _ebook_epub_impl(ctx):
     markdowns_paths_stripped = _strip_reference_dir_from_files(dir_reference, markdowns)
 
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    script = _tools.wrapper
-    script_cmd = _script_cmd(script.executable.path, markdowns_paths[0])
+    _pandoc = _ebook_tool(_tools, "pandoc", markdowns_paths[0], _script_cmd)
 
     log_file = ctx.actions.declare_file("{}.pandoc.log".format(ctx.attr.name))
 
@@ -408,20 +407,21 @@ def _ebook_epub_impl(ctx):
         progress_message = "Building equation environments for: {}".format(name),
         inputs = markdowns + additional_inputs,
         outputs = [htex_file, log_file],
-        tools = [script],
+        tools = _pandoc.tools,
         command = """\
-            {script} \
-                {pandoc} -s --gladtex {args} -o {target} {sources} \
+            {prefix}{pandoc} -s --gladtex {args} -o {target} {sources} \
                 2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
-            script = script_cmd,
+            prefix = _pandoc.prefix,
             target = htex_file.path,
             args = " ".join(ctx.attr.args),
             sources = " ".join(markdowns_paths),
             log = log_file.path,
-            pandoc = _tools.tools["pandoc"],
+            pandoc = _pandoc.cmd,
         ),
     )
+
+    _gladtex = _ebook_tool(_tools, "gladtex", markdowns_paths[0], _script_cmd)
 
     # run gladtex on the resulting htex to obtain html and output directory with figures.
     outdir = ctx.actions.declare_directory("{}.eqn".format(name))
@@ -432,18 +432,17 @@ def _ebook_epub_impl(ctx):
         progress_message = "Extracting equations for: {}".format(name),
         inputs = [htex_file] + additional_inputs,
         outputs = [outdir, html_file, log_file2],
-        tools = [script],
+        tools = _gladtex.tools,
         command = """\
             (
-                {script} -- \
-                env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
+                {prefix}env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
                 2>&1 >& {log} || (cat {log} && exit 1) )
         """.format(
-            script = script_cmd,
-            outdir = _strip_reference_dir(dir_reference, outdir.path),
+            prefix = _gladtex.prefix,
+            outdir = _maybe_strip_reference_dir(_gladtex, dir_reference, outdir.path),
             htex_file = htex_file.path,
             log = log_file2.path,
-            gladtex = _tools.tools["gladtex"],
+            gladtex = _gladtex.cmd,
         ),
     )
     outdir_tar = ctx.actions.declare_file("{}.tar".format(outdir.basename))
@@ -472,21 +471,20 @@ def _ebook_epub_impl(ctx):
     ctx.actions.run_shell(
         progress_message = "Building EPUB for: {}".format(name),
         inputs = inputs + additional_inputs,
-        tools = [script],
+        tools = _pandoc.tools,
         outputs = [ebook_epub, log_epub],
         command = """\
-            {script} -- \
-                {pandoc} --epub-metadata={epub_metadata} {args} \
+            {prefix}{pandoc} --epub-metadata={epub_metadata} {args} \
                   -f html -t epub3 -o {ebook_epub} {html_file} \
                   2>&1 >& {log} || (cat {log} && exit 1)
         """.format(
-            script = script_cmd,
-            epub_metadata = _strip_reference_dir(dir_reference, epub_metadata.path),
-            ebook_epub = _strip_reference_dir(dir_reference, ebook_epub.path),
+            prefix = _pandoc.prefix,
+            epub_metadata = _maybe_strip_reference_dir(_pandoc, dir_reference, epub_metadata.path),
+            ebook_epub = _maybe_strip_reference_dir(_pandoc, dir_reference, ebook_epub.path),
             args = " ".join(ctx.attr.args),
-            html_file = _strip_reference_dir(dir_reference, html_file.path),
+            html_file = _maybe_strip_reference_dir(_pandoc, dir_reference, html_file.path),
             log = log_epub.path,
-            pandoc = _tools.tools["pandoc"],
+            pandoc = _pandoc.cmd,
         ),
     )
     runfiles = ctx.runfiles(files = [ebook_epub])
@@ -531,8 +529,26 @@ ebook_epub = rule(
     toolchains = [EBOOK_TOOLCHAIN_TYPE],
 )
 
+def _maybe_strip_reference_dir(tool, reference_dir, path):
+    """Rewrites a path for the container, and leaves it alone otherwise.
+
+    _strip_reference_dir exists because the container mounts a directory and
+    changes into it, so paths have to be relative to that mount. A tool that
+    Bazel runs directly sees ordinary exec-root paths and must not be given
+    rewritten ones.
+    """
+    if tool.prefix == "":
+        return path
+    return _strip_reference_dir(reference_dir, path)
+
 def _strip_reference_dir(reference_dir, path):
     return path
+
+def _maybe_strip_reference_dir_from_files(tool, reference_dir, files):
+    return [
+        _maybe_strip_reference_dir(tool, reference_dir, file.path)
+        for file in files
+    ]
 
 def _strip_reference_dir_from_files(reference_dir, files):
     return [_strip_reference_dir(reference_dir, file.path) for file in files]

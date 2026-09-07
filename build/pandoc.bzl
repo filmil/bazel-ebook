@@ -1,7 +1,7 @@
 load(":attrs.bzl", "ADDITIONAL_INPUTS")
 load(":providers.bzl", "EbookInfo", "PandocMetadata", "merge_EbookInfo")
 load(":script.bzl", _script_cmd = "script_cmd")
-load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE")
+load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE", _ebook_tool = "ebook_tool")
 
 """
 Pandoc metadata rules.
@@ -56,15 +56,24 @@ def _pandoc_html(
     markdowns_paths = [file.path for file in markdowns]
 
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    script = _tools.wrapper
-    script_cmd = _script_cmd(script.executable.path, markdowns_paths[0])
+    pandoc = _ebook_tool(_tools, "pandoc", markdowns_paths[0], _script_cmd)
 
     # I think that run_shell does not support ctx.actions.args().
-    args = [script_cmd, "--", _tools.tools["pandoc"]]
+    # prefix is empty when pandoc runs directly, and enters the container
+    # otherwise.
+    args = [pandoc.prefix + pandoc.cmd]
     args += ["--write", format]  # This is unchunked, standalone
     args += ["-o", "{}{}".format(output_file.path, output_suffix)]
     if title:
-        args += ["--metadata", 'title=\\"{}\\"'.format(title)]
+        # A title with spaces has to survive as one argument, and how many
+        # shells it passes through differs by toolchain. Run directly there is
+        # one, so single quotes are enough. Through the container wrapper there
+        # is a second shell that strips one level, which is why the original
+        # form escaped the quotes.
+        if pandoc.prefix == "":
+            args += ["--metadata", "'title={}'".format(title)]
+        else:
+            args += ["--metadata", 'title=\\"{}\\"'.format(title)]
     if ctx.attr.toc:
         args += ["--toc"]
     if resource_paths:
@@ -85,7 +94,7 @@ def _pandoc_html(
         progress_message = "Building equation environments for: {}".format(name),
         inputs = markdowns + figures + data_p.additional_inputs + filters,
         outputs = [output_file, log_file],
-        tools = [script] + filters_tools,
+        tools = pandoc.tools + filters_tools,
         command = " ".join(args),
     )
     runfiles_files = []

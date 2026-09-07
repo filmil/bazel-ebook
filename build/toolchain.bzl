@@ -32,6 +32,9 @@ EBOOK_TOOLCHAIN_TYPE = "//build/toolchains:toolchain_type"
 EBOOK_TOOLS = [
     # Renders .asy figures to PNG.
     "asy",
+    # Ghostscript. asymptote shells out to it to write PNG, and a rootfs
+    # binary cannot simply be exec'd, so it has to be a tool in its own right.
+    "gs",
     # Graphviz. One binary serves every layout engine; the engine is
     # selected with -K, which is how upstream ships neato, fdp and the rest.
     "dot",

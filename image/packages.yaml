@@ -11,4 +11,6 @@ archs:
   - amd64
 
 packages:
+  - asymptote
   - drawtiming
+  - gladtex
