@@ -1,6 +1,5 @@
 load(":attrs.bzl", "ADDITIONAL_INPUTS")
 load(":providers.bzl", "EbookInfo", "PandocMetadata", "merge_EbookInfo")
-load(":script.bzl", _script_cmd = "script_cmd")
 load(":toolchain.bzl", "EBOOK_TOOLCHAIN_TYPE", _ebook_tool = "ebook_tool")
 
 """
@@ -56,7 +55,7 @@ def _pandoc_html(
     markdowns_paths = [file.path for file in markdowns]
 
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    pandoc = _ebook_tool(_tools, "pandoc", markdowns_paths[0], _script_cmd)
+    pandoc = _ebook_tool(_tools, "pandoc", markdowns_paths[0])
 
     # I think that run_shell does not support ctx.actions.args().
     # prefix is empty when pandoc runs directly, and enters the container
