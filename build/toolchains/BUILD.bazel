@@ -22,7 +22,8 @@ toolchain_type(
     visibility = ["//visibility:public"],
 )
 
-# The default toolchain, part hermetic and part container-based.
+# The default toolchain. Every tool is now provided by Bazel; nothing is left
+# for the container to supply, so `tools` and `wrapper` are both gone.
 #
 # dot comes from the Bazel-native graphviz module and runs directly; it
 # serves neato and the other engines too, selected with -K.
@@ -44,15 +45,15 @@ ebook_toolchain(
         "drawtiming": "//image:drawtiming",
         "gladtex": "//image:gladtex",
         "gs": "//image:gs",
+        "ebook-convert": "//image:ebook-convert",
         # pandoc-crossref must be built against the same pandoc; the pair in
         # multitool.lock.json is matched deliberately.
         "pandoc": "@multitool//tools/pandoc",
     },
-    tools = {
-        "ebook-convert": "ebook-convert",
-    },
+    # pandoc starts rsvg-convert and pdflatex itself, so they have to be on
+    # PATH rather than named as arguments.
+    path_roots = ["//image:rootfs"],
     visibility = ["//visibility:public"],
-    wrapper = "@rules_bid//build:docker_run",
 )
 
 toolchain(

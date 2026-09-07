@@ -63,6 +63,12 @@ EbookToolchainInfo = provider(
                     "entirely; anything absent falls back to `tools` and the " +
                     "wrapper. This is what lets the migration off the " +
                     "container happen one tool at a time.",
+        "path_roots": "list of File: rootfs directories whose bin and usr/bin " +
+                      "are put on PATH. Some tools start other programs " +
+                      "themselves rather than being told where they are: " +
+                      "pandoc runs rsvg-convert for SVG figures and pdflatex " +
+                      "to make a PDF. Those cannot be passed as arguments, so " +
+                      "they have to be findable.",
         "wrapper": "FilesToRunProvider: an executable that every non-hermetic " +
                    "invocation is routed through, or None when the tools are " +
                    "invoked directly. Carrying the whole provider (rather " +
@@ -104,6 +110,7 @@ def _ebook_toolchain_impl(ctx):
     return [platform_common.ToolchainInfo(
         ebook = EbookToolchainInfo(
             hermetic = hermetic,
+            path_roots = ctx.files.path_roots,
             tools = ctx.attr.tools,
             wrapper = ctx.attr.wrapper[DefaultInfo].files_to_run if ctx.attr.wrapper else None,
         ),
@@ -117,6 +124,11 @@ ebook_toolchain = rule(
             doc = "Maps a name in EBOOK_TOOLS to an executable target that " +
                   "Bazel provides. Such a tool is run directly, without the " +
                   "wrapper.",
+        ),
+        "path_roots": attr.label_list(
+            allow_files = True,
+            doc = "Rootfs directories to put on PATH for tools that start " +
+                  "other programs themselves.",
         ),
         "tools": attr.string_dict(
             doc = "Maps each name in EBOOK_TOOLS not covered by " +
@@ -157,4 +169,20 @@ def ebook_tool(info, name, dir_reference, script_cmd):
         cmd = info.tools[name],
         prefix = script_cmd(info.wrapper.executable.path, dir_reference) + " -- ",
         tools = [info.wrapper],
+    )
+
+def ebook_path(info):
+    """Returns a PATH value covering the toolchain's rootfs directories.
+
+    Returns:
+        A struct with `value`, the PATH string, and `inputs`, the files that
+        have to reach the action for it to be usable.
+    """
+    entries = []
+    for root in info.path_roots:
+        entries.append("{}/usr/bin".format(root.path))
+        entries.append("{}/bin".format(root.path))
+    return struct(
+        inputs = info.path_roots,
+        value = ":".join(entries),
     )
