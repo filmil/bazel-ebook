@@ -162,24 +162,27 @@ rootfs_binary(
     rootfs = ":rootfs",
 )
 
+# Ghostscript looks for gs_init.ps and its resources under paths compiled into
+# the library. On a machine that has ghostscript installed it finds the host's
+# and appears to work; on one that does not it stops with "Can't find
+# initialization file gs_init.ps". GS_LIB names them explicitly so neither
+# happens. This applies to anything that links libgs, not only to gs itself:
+# dvisvgm renders PostScript specials through the library in-process.
+GS_ENV = {
+    "GS_LIB": ":".join([
+        "%ROOTFS%/usr/share/ghostscript/10.02.1/Resource/Init",
+        "%ROOTFS%/usr/share/ghostscript/10.02.1/lib",
+        "%ROOTFS%/usr/share/ghostscript/10.02.1/Resource/Font",
+        "%ROOTFS%/usr/share/ghostscript/fonts",
+    ]),
+}
+
 # asymptote shells out to ghostscript. Wrapped as its own target so asy is
 # handed something it can exec, rather than a path inside the rootfs.
 rootfs_binary(
     name = "gs",
     binary_path = "/usr/bin/gs",
-    # Ghostscript looks for gs_init.ps and its resources under paths compiled
-    # into the binary. On a machine that has ghostscript installed it finds the
-    # host's and appears to work; on one that does not it stops with
-    # "Can't find initialization file gs_init.ps". GS_LIB names them
-    # explicitly so neither happens.
-    env = {
-        "GS_LIB": ":".join([
-            "%ROOTFS%/usr/share/ghostscript/10.02.1/Resource/Init",
-            "%ROOTFS%/usr/share/ghostscript/10.02.1/lib",
-            "%ROOTFS%/usr/share/ghostscript/10.02.1/Resource/Font",
-            "%ROOTFS%/usr/share/ghostscript/fonts",
-        ]),
-    },
+    env = GS_ENV,
     rootfs = ":rootfs",
 )
 
@@ -247,6 +250,10 @@ rootfs_binary(
 rootfs_binary(
     name = "dvisvgm_binary",
     binary_path = "/usr/bin/dvisvgm",
+    # dvisvgm links libgs and initialises it in-process, so it needs the same
+    # resource paths as gs. Without them: "Can't find initialization file
+    # gs_init.ps", which gleetex reports as "Could not parse dvisvgm output".
+    env = GS_ENV,
     rootfs = ":rootfs",
 )
 

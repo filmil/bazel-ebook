@@ -19,7 +19,7 @@ local_path_override(
 # release carries them; tracked in #82.
 git_override(
     module_name = "bazel_rootfs",
-    commit = "c06079a7122d8d9bb488d38df95420edbcf6a2fd",
+    commit = "9300a6882ea721e3319177f2dbdccab4a1ae2df7",
     remote = "https://github.com/filmil/bazel_rootfs",
 )
 
