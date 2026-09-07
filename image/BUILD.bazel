@@ -102,6 +102,19 @@ rootfs_binary(
 rootfs_binary(
     name = "gs",
     binary_path = "/usr/bin/gs",
+    # Ghostscript looks for gs_init.ps and its resources under paths compiled
+    # into the binary. On a machine that has ghostscript installed it finds the
+    # host's and appears to work; on one that does not it stops with
+    # "Can't find initialization file gs_init.ps". GS_LIB names them
+    # explicitly so neither happens.
+    env = {
+        "GS_LIB": ":".join([
+            "%ROOTFS%/usr/share/ghostscript/10.02.1/Resource/Init",
+            "%ROOTFS%/usr/share/ghostscript/10.02.1/lib",
+            "%ROOTFS%/usr/share/ghostscript/10.02.1/Resource/Font",
+            "%ROOTFS%/usr/share/ghostscript/fonts",
+        ]),
+    },
     rootfs = ":rootfs",
 )
 
