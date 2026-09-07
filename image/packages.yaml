@@ -17,3 +17,21 @@ packages:
   - gladtex
   # pandoc shells out to rsvg-convert for SVG figures in PDF output.
   - librsvg2-bin
+  # gladtex renders each equation to PNG with dvipng, which is a Recommends
+  # of gladtex rather than a Depends and so does not arrive on its own.
+  - dvipng
+  # The TeX that pandoc, asymptote and gladtex all end up in. This is the set
+  # the container this repository used to build in installed; unpacking the
+  # .debs alone leaves the formats out, so //image:texmf compiles them.
+  - texlive-fonts-recommended
+  - texlive-latex-extra
+  # pandoc's default LaTeX template asks for Latin Modern. apt would have
+  # brought it in as a Recommends of texlive-latex-recommended; rules_distroless
+  # installs only what is named, so name it.
+  - lmodern
+  # updmap links pdftex.map to the variant it picked by shelling out to `ln`,
+  # and asymptote and TeX shell out too. PATH inside a wrapped tool points at
+  # the rootfs, so a rootfs with no coreutils means those calls quietly find
+  # nothing. This is not bash: the shell stays out, because Debian ships
+  # /usr/bin/X11 as a symlink to its own directory and Bazel will not walk it.
+  - coreutils
