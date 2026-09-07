@@ -6,6 +6,9 @@ load("@rules_python_gazelle_plugin//manifest:defs.bzl", "gazelle_python_manifest
 load("@rules_python_gazelle_plugin//modules_mapping:def.bzl", "modules_mapping")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 
+# //doc strips the CI badge table out of this before it goes into the book.
+exports_files(["README.md"])
+
 # Copyright (C) 2020 Google Inc.
 #
 # This file has been licensed under Apache 2.0 license.  Please see the LICENSE
@@ -51,7 +54,7 @@ gazelle(
 markdown_lib(
     name = "manual_src",
     srcs = [
-        "README.md",
+        "//doc:readme_for_book",
         "empty.md",  # This shouldn't be happening.
         "//doc:md",
         "//tests:dot_png_test",

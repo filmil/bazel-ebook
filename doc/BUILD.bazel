@@ -18,3 +18,24 @@ markdown_lib(
         "01-introduction.md",
     ],
 )
+
+# The badge table at the top of README.md is five images served by
+# github.com. pandoc fetches each one while making the PDF -- so the build
+# needs the network to run at all -- and what comes back is an SVG, which
+# pandoc hands to LaTeX as \includesvg. The svg package then wants to run
+# Inkscape, which is not here and should not be.
+#
+# None of that belongs in a book: a table of CI badges is something you look
+# at on a repository page. Take it out on the way in, and keep the rest.
+#
+# It lives here rather than next to README.md because markdown_lib copies each
+# source to <package>/<basename>, which would collide with a generated file of
+# the same name in the same package.
+genrule(
+    name = "readme_for_book",
+    srcs = ["//:README.md"],
+    outs = ["README.book.md"],
+    cmd = "awk '!/badge[.]svg/ && " +
+          "!/^[|] Workflow [|] Status [|]$$/ && " +
+          "!/^[|]---[|]---[|]$$/' $< > $@",
+)

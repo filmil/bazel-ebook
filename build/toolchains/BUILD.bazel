@@ -42,12 +42,17 @@ ebook_toolchain(
         "gladtex": "//image:gladtex",
         "gs": "//image:gs",
         "ebook-convert": "//image:ebook-convert",
+        "pdflatex": "//image/bin:pdflatex",
         # pandoc-crossref must be built against the same pandoc; the pair in
         # multitool.lock.json is matched deliberately.
         "pandoc": "@multitool//tools/pandoc",
     },
-    # pandoc starts rsvg-convert and pdflatex itself, so they have to be on
-    # PATH rather than named as arguments.
+    # pandoc starts rsvg-convert and pdflatex itself, so they have to be
+    # findable by name rather than named as arguments.
+    path_binaries = [
+        "//image/bin:pdflatex",
+        "//image/bin:rsvg-convert",
+    ],
     path_roots = ["//image:rootfs"],
     # TeX comes out of the rootfs, but the formats pdflatex needs are made by
     # a maintainer script that never runs when a .deb is merely unpacked.

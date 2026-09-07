@@ -210,6 +210,24 @@ rootfs_binary(
     rootfs = ":rootfs",
 )
 
+# pandoc's PDF engine. pandoc would otherwise find /usr/bin/pdflatex on the
+# PATH built from the rootfs and run it directly, without the loader and
+# library path that make a rootfs binary work at all.
+rootfs_binary(
+    name = "pdflatex_binary",
+    binary_path = "/usr/bin/pdflatex",
+    rootfs = ":rootfs",
+)
+
+# pandoc converts an SVG figure to PDF with this before handing the document
+# to LaTeX. It is never named on a command line -- pandoc looks for it on
+# PATH -- so it is wrapped here and put on PATH by //image/bin.
+rootfs_binary(
+    name = "rsvg-convert_binary",
+    binary_path = "/usr/bin/rsvg-convert",
+    rootfs = ":rootfs",
+)
+
 # updmap turns the font map fragments into the maps pdfTeX reads, which is
 # what makes Latin Modern arrive as Type 1 rather than as bitmaps.
 rootfs_binary(
