@@ -6,6 +6,7 @@
 load("@bazel_rootfs//bin:defs.bzl", "rootfs_binary")
 load("@bazel_rootfs//image:rules.bzl", "rootfs")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
+load(":texmf.bzl", "texmf_tree")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -30,6 +31,59 @@ filegroup(
     srcs = [":load"],
     output_group = "tarball",
 )
+
+# coreutils ships one of these per language, each pointing at a translation
+# that lives in a package we have no reason to install.
+COREUTILS_LC_TIME = [
+    "usr/share/locale/{}/LC_TIME/coreutils.mo".format(locale)
+    for locale in [
+        "af",
+        "be",
+        "bg",
+        "ca",
+        "cs",
+        "da",
+        "de",
+        "el",
+        "eo",
+        "es",
+        "et",
+        "eu",
+        "fi",
+        "fr",
+        "ga",
+        "gl",
+        "hr",
+        "hu",
+        "ia",
+        "id",
+        "it",
+        "ja",
+        "ka",
+        "kk",
+        "ko",
+        "lg",
+        "lt",
+        "ms",
+        "nb",
+        "nl",
+        "pl",
+        "pt",
+        "pt_BR",
+        "ro",
+        "ru",
+        "sk",
+        "sl",
+        "sr",
+        "sv",
+        "ta",
+        "tr",
+        "uk",
+        "vi",
+        "zh_CN",
+        "zh_TW",
+    ]
+]
 
 rootfs(
     name = "rootfs",
@@ -56,11 +110,12 @@ rootfs(
         "usr/share/texlive/texmf-dist/web2c/updmap.cfg",
         "usr/share/zoneinfo/localtime",
         "usr/share/doc/libxml2/NEWS.gz",
+        "usr/share/texlive/texmf-dist/tex/latex/pdfx/sRGB_IEC61966-2-1_black_scaled.icc",
         # Debian ships /usr/bin/X11 as a symlink to its own directory. Bazel
         # walks a tree artifact and gives up at "Too many levels of symbolic
         # links", so the loop has to go.
         "usr/bin/X11",
-    ],
+    ] + COREUTILS_LC_TIME,
 )
 
 rootfs_binary(
@@ -144,4 +199,41 @@ rootfs_binary(
         "PYTHONPATH": "%ROOTFS%/usr/lib/calibre:%ROOTFS%/usr/lib/python3/dist-packages",
     },
     rootfs = ":rootfs",
+)
+
+# fmtutil compiles TeX format files. It is only ever run by //image:texmf,
+# never by a rule, but it has to be wrapped like any other rootfs binary
+# because it is a Perl script that starts pdftex.
+rootfs_binary(
+    name = "fmtutil",
+    binary_path = "/usr/bin/fmtutil",
+    rootfs = ":rootfs",
+)
+
+# updmap turns the font map fragments into the maps pdfTeX reads, which is
+# what makes Latin Modern arrive as Type 1 rather than as bitmaps.
+rootfs_binary(
+    name = "updmap",
+    binary_path = "/usr/bin/updmap",
+    # Debian patches updmap's `unshift(@INC, ...)` to a literal
+    # /usr/share/texlive/tlpkg, so unlike fmtutil next to it, it does not look
+    # for its own Perl modules under the TEXMFROOT it just asked kpsewhich
+    # for. PERL5LIB is the way back in.
+    env = {"PERL5LIB": "%ROOTFS%/usr/share/texlive/tlpkg"},
+    rootfs = ":rootfs",
+)
+
+# pdflatex is what pandoc and asymptote both reach for. latex and tex are what
+# a document that asks for DVI gets, and are cheap to add once the machinery
+# is running.
+texmf_tree(
+    name = "texmf",
+    fmtutil = ":fmtutil",
+    formats = [
+        "tex",
+        "latex",
+        "pdflatex",
+    ],
+    rootfs = ":rootfs",
+    updmap = ":updmap",
 )

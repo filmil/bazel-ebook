@@ -17,6 +17,7 @@ load(
     "EBOOK_TOOLCHAIN_TYPE",
     _ebook_font = "ebook_font",
     _ebook_path = "ebook_path",
+    _ebook_texmf = "ebook_texmf",
     _ebook_tool = "ebook_tool",
 )
 
@@ -262,18 +263,23 @@ def _asymptote_impl(ctx):
 
             tool = _ebook_tool(tools, "asy", in_file.path)
             gs = _ebook_tool(tools, "gs", in_file.path)
+
+            # asymptote typesets labels by writing a LaTeX document and
+            # running pdflatex over it.
+            texmf = _ebook_texmf(tools)
             ctx.actions.run_shell(
                 progress_message = "ASY to PNG: {0}".format(in_file.short_path),
-                inputs = [in_file],
+                inputs = [in_file] + texmf.inputs,
                 outputs = [out_file, log_file],
                 tools = tool.tools + gs.tools,
                 command = """\
-                {prefix}{asy} -gs="$(realpath {gs})" -render 5 -f png -o "{out_file}" "{in_file}" \
+                {setup}{prefix}{asy} -gs="$(realpath {gs})" -render 5 -f png -o "{out_file}" "{in_file}" \
                   2>&1 >{log} || (cat {log} && exit 1)
               """.format(
                     out_file = out_file.path[:-4],
                     in_file = in_file.path,
                     prefix = tool.prefix,
+                    setup = texmf.setup,
                     gs = gs.cmd,
                     log = log_file.path,
                     asy = tool.cmd,
@@ -430,6 +436,9 @@ def _ebook_epub_impl(ctx):
 
     _gladtex = _ebook_tool(_tools, "gladtex", markdowns_paths[0])
 
+    # gladtex renders each equation by running LaTeX over it.
+    _texmf = _ebook_texmf(_tools)
+
     # run gladtex on the resulting htex to obtain html and output directory with figures.
     outdir = ctx.actions.declare_directory("{}.eqn".format(name))
     html_file = ctx.actions.declare_file("{}.html".format(name))
@@ -437,15 +446,16 @@ def _ebook_epub_impl(ctx):
     log_file2 = ctx.actions.declare_file("{}.gladtex.log".format(ctx.attr.name))
     ctx.actions.run_shell(
         progress_message = "Extracting equations for: {}".format(name),
-        inputs = [htex_file] + additional_inputs,
+        inputs = [htex_file] + additional_inputs + _texmf.inputs,
         outputs = [outdir, html_file, log_file2],
         tools = _gladtex.tools,
         command = """\
             (
-                {prefix}env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
+                {setup}{prefix}env LC_ALL=en_US {gladtex} -f 12 -d {outdir} {htex_file} \
                 2>&1 >& {log} || (cat {log} && exit 1) )
         """.format(
             prefix = _gladtex.prefix,
+            setup = _texmf.setup,
             outdir = _maybe_strip_reference_dir(_gladtex, dir_reference, outdir.path),
             htex_file = htex_file.path,
             log = log_file2.path,
@@ -604,18 +614,22 @@ def _ebook_pdf_impl(ctx):
     if ctx.attr.toc:
         args += ["--toc"]
 
+    # pandoc makes a PDF by writing LaTeX and running pdflatex over it.
+    _texmf = _ebook_texmf(_tools)
+
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
-        inputs = inputs + additional_inputs,
+        inputs = inputs + additional_inputs + _texmf.inputs,
         tools = _pandoc.tools + _path.inputs,
         outputs = [ebook_pdf, log_file],
         command = """\
-            PATH="{path}:${{PATH:-}}" \
+            {setup}PATH="{path}:${{PATH:-}}" \
             {prefix}{pandoc} --epub-metadata={epub_metadata} \
                   --mathml -o {ebook_pdf} {args} {markdowns} \
                   2>&1 &> {log} || ( cat {log} && exit 1)
         """.format(
             path = _path.value,
+            setup = _texmf.setup,
             prefix = _pandoc.prefix,
             pandoc = _pandoc.cmd,
             epub_metadata = _maybe_strip_reference_dir(_pandoc, dir_reference, epub_metadata.path),

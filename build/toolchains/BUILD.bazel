@@ -49,6 +49,9 @@ ebook_toolchain(
     # pandoc starts rsvg-convert and pdflatex itself, so they have to be on
     # PATH rather than named as arguments.
     path_roots = ["//image:rootfs"],
+    # TeX comes out of the rootfs, but the formats pdflatex needs are made by
+    # a maintainer script that never runs when a .deb is merely unpacked.
+    texmf = "//image:texmf",
     # drawtiming asks ImageMagick for "Helvetica" and ImageMagick looks it up
     # in a font map full of absolute paths that exist only on an installed
     # Debian. Name a file in the rootfs instead.

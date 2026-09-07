@@ -61,6 +61,9 @@ EbookToolchainInfo = provider(
                     "entirely; anything absent falls back to `tools` and the " +
                     "wrapper. This is what lets the migration off the " +
                     "container happen one tool at a time.",
+        "texmf": "File: the tree of TeX formats and fmtutil.cnf that a " +
+                 "Debian texlive builds in its postinst, which an unpacked " +
+                 ".deb does not carry. See //image:texmf.",
         "text_font": "string: path of a font file, relative to the first " +
                      "entry in path_roots. ImageMagick's font map names " +
                      "absolute paths like /usr/share/fonts/type1/..., which " +
@@ -115,6 +118,7 @@ def _ebook_toolchain_impl(ctx):
         ebook = EbookToolchainInfo(
             hermetic = hermetic,
             path_roots = ctx.files.path_roots,
+            texmf = ctx.file.texmf,
             text_font = ctx.attr.text_font,
             tools = ctx.attr.tools,
             wrapper = ctx.attr.wrapper[DefaultInfo].files_to_run if ctx.attr.wrapper else None,
@@ -134,6 +138,11 @@ ebook_toolchain = rule(
             allow_files = True,
             doc = "Rootfs directories to put on PATH for tools that start " +
                   "other programs themselves.",
+        ),
+        "texmf": attr.label(
+            allow_single_file = True,
+            doc = "Tree of compiled TeX formats and fmtutil.cnf, as built " +
+                  "by //image:texmf.",
         ),
         "text_font": attr.string(
             doc = "Path of a font file to draw text with, relative to the " +
@@ -207,4 +216,72 @@ def ebook_font(info):
     return struct(
         inputs = [root],
         path = "{}/{}".format(root.path, info.text_font),
+    )
+
+# Where a Debian texlive installation keeps each of its trees, relative to the
+# root it was unpacked under.
+def tex_environment(rootfs, texmf):
+    """Returns the environment that points TeX inside a rootfs.
+
+    Every path in Debian's texmf.cnf is absolute -- TEXMFROOT is
+    /usr/share/texlive, TEXMFSYSVAR is /var/lib/texmf, and so on -- so a
+    texlive unpacked anywhere else finds nothing, or worse, finds whatever the
+    build machine has installed at those paths. kpathsea lets the environment
+    override each of them, which is what this does.
+
+    TEXMF is overridden as well, and deliberately without the `!!` prefixes
+    Debian uses. Those tell kpathsea to consult only the ls-R database, which
+    mktexlsr writes at install time and an unpacked .deb therefore does not
+    have.
+
+    Args:
+        rootfs: the directory the distribution was unpacked into.
+        texmf: the tree holding fmtutil.cnf and the compiled formats, which
+            are made by //image:texmf rather than shipped in the packages.
+
+    Returns:
+        A dict of environment variable name to value, meant to be placed
+        inside double quotes in a shell command. References kpathsea expands
+        itself, `$HOME` and `$TEXMFDIST` among them, are escaped so that the
+        shell leaves them alone; anything the caller puts in `rootfs` or
+        `texmf` is not, so `$PWD` there still works.
+    """
+    return {
+        "TEXMF": "{\\$TEXMFCONFIG,\\$TEXMFVAR,\\$TEXMFHOME,\\$TEXMFSYSCONFIG,\\$TEXMFSYSVAR,\\$TEXMFLOCAL,\\$TEXMFDEBIAN,\\$TEXMFDIST}",
+        "TEXMFCNF": "{}/usr/share/texmf/web2c".format(rootfs),
+        "TEXMFCONFIG": "\\$HOME/texmf-config",
+        "TEXMFDBS": "",
+        "TEXMFDEBIAN": "{}/usr/share/texmf".format(rootfs),
+        "TEXMFDIST": "{}/usr/share/texlive/texmf-dist".format(rootfs),
+        "TEXMFHOME": "\\$HOME/texmf",
+        "TEXMFLOCAL": "{}/usr/local/share/texmf".format(rootfs),
+        "TEXMFROOT": "{}/usr/share/texlive".format(rootfs),
+        "TEXMFSYSCONFIG": "{}/etc/texmf".format(rootfs),
+        "TEXMFSYSVAR": texmf,
+        "TEXMFVAR": "\\$HOME/texmf-var",
+    }
+
+def ebook_texmf(info):
+    """Returns shell that puts a rootfs TeX on the environment of an action.
+
+    Returns:
+        A struct with `setup`, shell to place before the command, and
+        `inputs`, the files that have to reach the action.
+    """
+    if not info.texmf:
+        fail("ebook_toolchain provides no texmf tree")
+    if not info.path_roots:
+        fail("ebook_toolchain sets texmf but no path_roots to find TeX in")
+    root = info.path_roots[0]
+    env = tex_environment(
+        rootfs = '$PWD/{}'.format(root.path),
+        texmf = '$PWD/{}'.format(info.texmf.path),
+    )
+    setup = "".join([
+        'export {}="{}"; '.format(name, value)
+        for name, value in sorted(env.items())
+    ])
+    return struct(
+        inputs = [root, info.texmf],
+        setup = setup,
     )
