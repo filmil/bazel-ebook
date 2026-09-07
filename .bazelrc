@@ -7,3 +7,10 @@ try-import %workspace%/user.bazelrc
 # which means "#!/usr/bin/env python3" and whatever python3 the machine has.
 # The script bootstrap starts it from bash and uses the toolchain interpreter.
 common --@rules_python//python/config_settings:bootstrap_impl=script
+
+# The rootfs is a tree artifact full of directory symlinks and empty
+# directories, and neither survives a round trip through the disk cache: a
+# restored copy is missing what the fresh one had, and the next action to
+# use it fails setting up its sandbox. Extract it every time; it takes a
+# minute, and everything built from it still caches.
+build --modify_execution_info=xrootfs=+no-remote-cache
