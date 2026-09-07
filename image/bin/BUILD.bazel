@@ -31,3 +31,23 @@ renamed_binary(
     name = "rsvg-convert",
     binary = "//image:rsvg-convert_binary",
 )
+
+# gladtex runs latex over each equation. The name matters here too: TeX picks
+# the format it loads from the name it was started under, so this has to be
+# `latex` for latex.fmt rather than pdflatex.fmt.
+renamed_binary(
+    name = "latex",
+    binary = "//image:latex_binary",
+)
+
+# ...and turns the resulting DVI into a PNG with this.
+renamed_binary(
+    name = "dvipng",
+    binary = "//image:dvipng_binary",
+)
+
+# gladtex renders an equation destined for HTML as SVG, with this.
+renamed_binary(
+    name = "dvisvgm",
+    binary = "//image:dvisvgm_binary",
+)

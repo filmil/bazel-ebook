@@ -50,6 +50,9 @@ ebook_toolchain(
     # pandoc starts rsvg-convert and pdflatex itself, so they have to be
     # findable by name rather than named as arguments.
     path_binaries = [
+        "//image/bin:dvipng",
+        "//image/bin:dvisvgm",
+        "//image/bin:latex",
         "//image/bin:pdflatex",
         "//image/bin:rsvg-convert",
     ],

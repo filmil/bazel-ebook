@@ -228,6 +228,28 @@ rootfs_binary(
     rootfs = ":rootfs",
 )
 
+# gladtex typesets each equation with latex and turns the DVI into a PNG with
+# dvipng. Both are started by name, so both are wrapped and put on PATH.
+rootfs_binary(
+    name = "latex_binary",
+    binary_path = "/usr/bin/latex",
+    rootfs = ":rootfs",
+)
+
+rootfs_binary(
+    name = "dvipng_binary",
+    binary_path = "/usr/bin/dvipng",
+    rootfs = ":rootfs",
+)
+
+# ...or with dvisvgm, which is what it reaches for when the equation is going
+# into HTML rather than a bitmap.
+rootfs_binary(
+    name = "dvisvgm_binary",
+    binary_path = "/usr/bin/dvisvgm",
+    rootfs = ":rootfs",
+)
+
 # updmap turns the font map fragments into the maps pdfTeX reads, which is
 # what makes Latin Modern arrive as Type 1 rather than as bitmaps.
 rootfs_binary(

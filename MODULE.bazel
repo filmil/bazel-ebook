@@ -34,7 +34,7 @@ bazel_dep(name = "bazel_rootfs", version = "1.1.1")
 # in #82.
 git_override(
     module_name = "bazel_rootfs",
-    commit = "7e33405537413e69aa54a66a83ee15e8fbb950e5",
+    commit = "c06079a7122d8d9bb488d38df95420edbcf6a2fd",
     remote = "https://github.com/filmil/bazel_rootfs",
 )
 
