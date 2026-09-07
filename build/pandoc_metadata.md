@@ -1,6 +1,8 @@
 <!-- Generated with Stardoc: http://skydoc.bazel.build -->
 
+Pandoc metadata rules.
 
+Use to add metadata that would otherwise become additional parameters.
 
 <a id="PandocMetadata"></a>
 

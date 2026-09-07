@@ -22,15 +22,11 @@ toolchain_type(
     visibility = ["//visibility:public"],
 )
 
-# The default toolchain. Every tool is now provided by Bazel; nothing is left
-# for the container to supply, so `tools` and `wrapper` are both gone.
+# The default toolchain. Every tool is provided by Bazel, so there is no
+# `tools` map and no `wrapper`: nothing is left for a container to supply.
 #
-# dot comes from the Bazel-native graphviz module and runs directly; it
-# serves neato and the other engines too, selected with -K.
-# Everything still named in `tools` is a bare name resolved on the PATH inside
-# the ebook-buildenv container, reached through rules_bid's docker_run. Moving
-# a tool from `tools` to `hermetic_tools` is what retires the container one
-# program at a time.
+# dot comes from the Bazel-native graphviz module and serves neato and the
+# other engines too, selected with -K.
 ebook_toolchain(
     name = "default_tools",
     hermetic_tools = {
