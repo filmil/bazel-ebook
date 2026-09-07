@@ -12,19 +12,21 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     steps:
-      - name: Setup Bazel
-        uses: abhinavsingh/setup-bazel@v3
-        with:
-          version: 9.2.0
-      # This remaps directories, which doesn't work well with BID.
-      #- name: Setup bazel
-        #uses: bazel-contrib/setup-bazel@0.15.0
-        #with:
-          #bazelisk-cache: true
-          #disk-cache: ${{ github.workflow }}
-          #repository-cache: true
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.19.0
+        with:
+          # Bazel's version comes from .bazelversion, so there is one place to
+          # change it.
+          bazelisk-cache: true
+          # The action cache and the fetched repositories, kept between runs.
+          # Without these every run starts cold: it fetches every apt package,
+          # extracts the rootfs twice and compiles graphviz and the TeX
+          # formats again. The comment that used to sit here said the
+          # directory remapping broke rules_bid; rules_bid is gone.
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: Build error sentinel
         run: bazel build //tests/include-files:html --subcommands
       - name: Build one target
