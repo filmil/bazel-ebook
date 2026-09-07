@@ -11,7 +11,6 @@ load(
     _pandoc_standalone_html = "pandoc_standalone_html",
 )
 load(":providers.bzl", "EbookInfo")
-load(":script.bzl", _script_cmd = "script_cmd")
 load(":svg.bzl", "RESVG_ATTRS", _rasterise = "rasterise")
 load(
     ":toolchain.bzl",
@@ -39,7 +38,7 @@ def _plantuml_png_impl(ctx):
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
             log_files += [log_file]
 
-            tool = _ebook_tool(tools, "plantuml", in_file.path, _script_cmd)
+            tool = _ebook_tool(tools, "plantuml", in_file.path)
             ctx.actions.run_shell(
                 progress_message = "plantuml diagram to PNG: {0}".format(
                     in_file.short_path,
@@ -100,7 +99,7 @@ def _drawtiming_png_impl(ctx):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}..log".format(ctx.attr.name, in_file.basename))
 
-            tool = _ebook_tool(tools, "drawtiming", in_file.path, _script_cmd)
+            tool = _ebook_tool(tools, "drawtiming", in_file.path)
             ctx.actions.run_shell(
                 progress_message = "timing diagram to PNG: {0}".format(in_file.short_path),
                 inputs = [in_file],
@@ -176,7 +175,7 @@ def _generalized_graphviz_rule_impl(ctx, engine):
             out_file = ctx.actions.declare_file(in_file.basename + ".png")
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
-            tool = _ebook_tool(tools, "dot", in_file.path, _script_cmd)
+            tool = _ebook_tool(tools, "dot", in_file.path)
 
             ctx.actions.run_shell(
                 progress_message = "graphviz to SVG with {1}: {0}".format(in_file.short_path, engine),
@@ -258,8 +257,8 @@ def _asymptote_impl(ctx):
             figures += [out_file]
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
 
-            tool = _ebook_tool(tools, "asy", in_file.path, _script_cmd)
-            gs = _ebook_tool(tools, "gs", in_file.path, _script_cmd)
+            tool = _ebook_tool(tools, "asy", in_file.path)
+            gs = _ebook_tool(tools, "gs", in_file.path)
             ctx.actions.run_shell(
                 progress_message = "ASY to PNG: {0}".format(in_file.short_path),
                 inputs = [in_file],
@@ -404,7 +403,7 @@ def _ebook_epub_impl(ctx):
     markdowns_paths_stripped = _strip_reference_dir_from_files(dir_reference, markdowns)
 
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    _pandoc = _ebook_tool(_tools, "pandoc", markdowns_paths[0], _script_cmd)
+    _pandoc = _ebook_tool(_tools, "pandoc", markdowns_paths[0])
 
     log_file = ctx.actions.declare_file("{}.pandoc.log".format(ctx.attr.name))
 
@@ -426,7 +425,7 @@ def _ebook_epub_impl(ctx):
         ),
     )
 
-    _gladtex = _ebook_tool(_tools, "gladtex", markdowns_paths[0], _script_cmd)
+    _gladtex = _ebook_tool(_tools, "gladtex", markdowns_paths[0])
 
     # run gladtex on the resulting htex to obtain html and output directory with figures.
     outdir = ctx.actions.declare_directory("{}.eqn".format(name))
@@ -577,7 +576,7 @@ def _ebook_pdf_impl(ctx):
     # directory where the build happens!  This is needed because we can not control
     # figure inclusion.
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    _pandoc = _ebook_tool(_tools, "pandoc", dir_reference.path, _script_cmd)
+    _pandoc = _ebook_tool(_tools, "pandoc", dir_reference.path)
     _path = _ebook_path(_tools)
 
     markdowns_paths = _maybe_strip_reference_dir_from_files(
@@ -697,7 +696,7 @@ def _ebook_kindle_impl(ctx):
     dir_reference = epub_file
 
     _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    _convert = _ebook_tool(_tools, "ebook-convert", epub_file.path, _script_cmd)
+    _convert = _ebook_tool(_tools, "ebook-convert", epub_file.path)
     name = ctx.label.name
     log_file = ctx.actions.declare_file("{}.log".format(ctx.attr.name))
     ctx.actions.run_shell(

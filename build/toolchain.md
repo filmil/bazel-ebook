@@ -2,21 +2,19 @@
 
 A toolchain describing the external programs the ebook rules invoke.
 
-Historically every rule in this repository hardcoded both the name of the
-program it ran (`pandoc`, `plantuml`, ...) and the mechanism used to run it
-(`@rules_bid//build:docker_run`, i.e. a container). That made the set of
-required binaries invisible: it could only be recovered by reading the rule
-implementations and the `docker/Dockerfile` side by side.
+Every rule used to hardcode both the name of the program it ran (`pandoc`,
+`plantuml`, ...) and the mechanism used to run it, which was a container. That
+made the set of required binaries invisible: it could only be recovered by
+reading the rule implementations and the Dockerfile side by side.
 
 This toolchain makes the set explicit. A toolchain supplies, for each logical
 tool name, the command used to invoke it, plus an optional `wrapper`
 executable that every invocation is routed through.
 
-The `wrapper` is what allows the container-based implementation to keep
-working unchanged: for the docker toolchain the commands are bare names
-resolved on the container's `PATH`, and the wrapper enters the container. A
-future hermetic toolchain instead supplies real paths to binaries built or
-fetched by Bazel and no wrapper at all.
+Every tool is now supplied by Bazel, so the toolchain in this repository sets
+`hermetic_tools` and neither `tools` nor `wrapper`. The wrapper fields remain
+in the provider so that a toolchain outside this repository can still route a
+tool through something else.
 
 <a id="ebook_toolchain"></a>
 
@@ -96,7 +94,7 @@ A struct with `value`, the PATH string, and `inputs`, the files that
 <pre>
 load("@bazel_ebook//build:toolchain.bzl", "ebook_tool")
 
-ebook_tool(<a href="#ebook_tool-info">info</a>, <a href="#ebook_tool-name">name</a>, <a href="#ebook_tool-dir_reference">dir_reference</a>, <a href="#ebook_tool-script_cmd">script_cmd</a>)
+ebook_tool(<a href="#ebook_tool-info">info</a>, <a href="#ebook_tool-name">name</a>, <a href="#ebook_tool-dir_reference">dir_reference</a>)
 </pre>
 
 Describes how to invoke one tool.
@@ -108,8 +106,7 @@ Describes how to invoke one tool.
 | :------------- | :------------- | :------------- |
 | <a id="ebook_tool-info"></a>info |  the EbookToolchainInfo from the resolved toolchain.   |  none |
 | <a id="ebook_tool-name"></a>name |  a logical tool name from EBOOK_TOOLS.   |  none |
-| <a id="ebook_tool-dir_reference"></a>dir_reference |  path used by the wrapper to locate the build root.   |  none |
-| <a id="ebook_tool-script_cmd"></a>script_cmd |  function(wrapper_path, dir_reference) -> wrapper invocation.   |  none |
+| <a id="ebook_tool-dir_reference"></a>dir_reference |  retained for the wrapper case, which no longer has an implementation in this repository.   |  none |
 
 **RETURNS**
 
