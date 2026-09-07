@@ -12,16 +12,6 @@ local_path_override(
     path = "../",
 )
 
-# The same override the parent module carries. An override in a module that is
-# not the root is ignored, so this one has to be repeated here, or this build
-# resolves bazel_rootfs 1.1.1 from the registry and gets a rootfs_binary
-# without any of the fixes the ebook tools need. Both go away together, once a
-# release carries them; tracked in #82.
-git_override(
-    module_name = "bazel_rootfs",
-    commit = "9300a6882ea721e3319177f2dbdccab4a1ae2df7",
-    remote = "https://github.com/filmil/bazel_rootfs",
-)
 
 # graphviz is built from source, and bazel_ebook registers the toolchain that
 # builds it as a dev_dependency -- which does not reach a module that depends

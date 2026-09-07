@@ -23,20 +23,8 @@ bazel_dep(name = "graphviz", version = "0.1.0")
 # instead. bazel_rootfs turns an apt package list into a rootfs and wraps
 # binaries out of it; the rootfs here holds only what this repository needs, so
 # no other consumer pays for it.
-bazel_dep(name = "bazel_rootfs", version = "1.1.1")
+bazel_dep(name = "bazel_rootfs", version = "1.2.1")
 
-# Temporarily taken from git rather than the registry. rootfs_binary needed
-# several fixes to run the tools here at all: a rootfs built from a short
-# package list is usr-merged with no /lib64, gladtex is a "#!/usr/bin/python3"
-# script rather than an ELF binary, and the PATH the runner built was relative,
-# so TeX lost it the moment it changed directory (bazel_rootfs#30). None of
-# them are in 1.1.1. Drop this override once a release carries them; tracked
-# in #82.
-git_override(
-    module_name = "bazel_rootfs",
-    commit = "9300a6882ea721e3319177f2dbdccab4a1ae2df7",
-    remote = "https://github.com/filmil/bazel_rootfs",
-)
 
 bazel_dep(name = "rules_distroless", version = "0.8.0")
 bazel_dep(name = "rules_oci", version = "2.3.0")
