@@ -2,3 +2,8 @@ common --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main
 common --registry=https://bcr.bazel.build
 
 try-import %workspace%/user.bazelrc
+
+# rules_python starts a py_binary through a Python stage-1 script by default,
+# which means "#!/usr/bin/env python3" and whatever python3 the machine has.
+# The script bootstrap starts it from bash and uses the toolchain interpreter.
+common --@rules_python//python/config_settings:bootstrap_impl=script
