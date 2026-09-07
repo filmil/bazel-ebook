@@ -61,6 +61,12 @@ EbookToolchainInfo = provider(
                     "entirely; anything absent falls back to `tools` and the " +
                     "wrapper. This is what lets the migration off the " +
                     "container happen one tool at a time.",
+        "text_font": "string: path of a font file, relative to the first " +
+                     "entry in path_roots. ImageMagick's font map names " +
+                     "absolute paths like /usr/share/fonts/type1/..., which " +
+                     "resolve only on a machine that has those packages " +
+                     "installed, so a tool that draws text has to be handed " +
+                     "a file instead of a family name.",
         "path_roots": "list of File: rootfs directories whose bin and usr/bin " +
                       "are put on PATH. Some tools start other programs " +
                       "themselves rather than being told where they are: " +
@@ -109,6 +115,7 @@ def _ebook_toolchain_impl(ctx):
         ebook = EbookToolchainInfo(
             hermetic = hermetic,
             path_roots = ctx.files.path_roots,
+            text_font = ctx.attr.text_font,
             tools = ctx.attr.tools,
             wrapper = ctx.attr.wrapper[DefaultInfo].files_to_run if ctx.attr.wrapper else None,
         ),
@@ -127,6 +134,10 @@ ebook_toolchain = rule(
             allow_files = True,
             doc = "Rootfs directories to put on PATH for tools that start " +
                   "other programs themselves.",
+        ),
+        "text_font": attr.string(
+            doc = "Path of a font file to draw text with, relative to the " +
+                  "first entry in path_roots.",
         ),
         "tools": attr.string_dict(
             doc = "Maps each name in EBOOK_TOOLS not covered by " +
@@ -179,4 +190,21 @@ def ebook_path(info):
     return struct(
         inputs = info.path_roots,
         value = ":".join(entries),
+    )
+
+def ebook_font(info):
+    """Returns the font file the toolchain nominates for drawing text.
+
+    Returns:
+        A struct with `path`, the font file, and `inputs`, the files that have
+        to reach the action for it to be readable.
+    """
+    if not info.text_font:
+        fail("ebook_toolchain sets no text_font")
+    if not info.path_roots:
+        fail("ebook_toolchain sets text_font but no path_roots to find it in")
+    root = info.path_roots[0]
+    return struct(
+        inputs = [root],
+        path = "{}/{}".format(root.path, info.text_font),
     )
