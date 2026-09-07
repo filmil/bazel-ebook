@@ -34,20 +34,28 @@ def _pandoc_html(
         figures += provider.figures or []
     data_p = merge_EbookInfo([p[EbookInfo] for p in ctx.attr.deps])
 
+    # A filter is either an executable target, passed with --filter, or a
+    # plain file: a .lua script goes to --lua-filter, anything else to --filter.
+    # An executable is carried as its FilesToRunProvider rather than its bare
+    # File, so its runfiles reach the action. Passing only the File dropped
+    # them, and dropping the path entirely -- which is what this did before --
+    # meant the filter was fetched, built and staged, and then never run.
     filters = []
     filters_paths = []
-    lua_filters = []
     lua_filters_paths = []
     filters_tools = []
     for filter in ctx.attr.filters:
-        maybe_exec = filter[DefaultInfo].files_to_run.executable
-        if maybe_exec:
-            filters_tools += [maybe_exec]
-        else:
-            filter_files = filter.files.to_list()
-            for file in filter_files:
-                if file.extension == "lua":
-                    lua_filters_paths += [file.path]
+        files_to_run = filter[DefaultInfo].files_to_run
+        if files_to_run and files_to_run.executable:
+            filters_tools += [files_to_run]
+            filters_paths += [files_to_run.executable.path]
+            continue
+        for file in filter.files.to_list():
+            filters += [file]
+            if file.extension == "lua":
+                lua_filters_paths += [file.path]
+            else:
+                filters_paths += [file.path]
 
     resource_paths = [file.dirname for file in markdowns + figures]
     dir_reference = markdowns[0]
@@ -60,7 +68,23 @@ def _pandoc_html(
     # I think that run_shell does not support ctx.actions.args().
     # prefix is empty when pandoc runs directly, and enters the container
     # otherwise.
-    args = [pandoc.prefix + pandoc.cmd]
+    # A filter may run pandoc itself: pandoc-include does, over each included
+    # file, and finds it on PATH. (It also honours PANDOC_BIN, but the panflute
+    # call it goes through re-enters convert_text for a panflute-typed input
+    # and loses the path on the way, so PATH is what actually works.) That
+    # inner pandoc applies the filter again, by name -- pandoc-include's
+    # default options are `--filter=pandoc-include` -- so each executable
+    # filter's own directory goes on PATH as well. Absolute, because a filter
+    # is not run from the action's directory.
+    path_dirs = [pandoc.cmd.rsplit("/", 1)[0]]
+    for tool in filters_tools:
+        directory = tool.executable.dirname
+        if directory not in path_dirs:
+            path_dirs.append(directory)
+    args = [
+        'PATH="{}:${{PATH:-}}"'.format(":".join(["$PWD/" + d for d in path_dirs])),
+        pandoc.prefix + pandoc.cmd,
+    ]
     args += ["--write", format]  # This is unchunked, standalone
     args += ["-o", "{}{}".format(output_file.path, output_suffix)]
     if title:

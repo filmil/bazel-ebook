@@ -3,13 +3,26 @@ load("@rules_python//python:py_library.bzl", "py_library")
 
 package(default_visibility = ["//visibility:public"])
 
+# Named for what pandoc-include looks for. Its default pandoc-options are
+# `--filter=pandoc-include`: every included file is run through pandoc with
+# the filter applied again, by name, so an executable called exactly this has
+# to be on PATH. build/pandoc.bzl puts each filter's directory there.
 py_binary(
-    name = "filter",
-    srcs = ["@pandoc_include//:srcs"],
-    main = "@pandoc_include//:pandoc_include/main.py",
+    name = "pandoc-include",
+    srcs = [
+        "filter.py",
+        "@pandoc_include//:srcs",
+    ],
+    # Not pandoc_include/main.py itself: see filter.py.
+    main = "filter.py",
     deps = [
         "@pypi//lxml",
         "@pypi//natsort",
         "@pypi//panflute",
     ],
+)
+
+alias(
+    name = "filter",
+    actual = ":pandoc-include",
 )
