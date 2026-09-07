@@ -616,19 +616,22 @@ def _ebook_pdf_impl(ctx):
 
     # pandoc makes a PDF by writing LaTeX and running pdflatex over it.
     _texmf = _ebook_texmf(_tools)
+    _pdflatex = _ebook_tool(_tools, "pdflatex", markdowns_paths[0])
 
     ctx.actions.run_shell(
         progress_message = "Building PDF for: {}".format(name),
         inputs = inputs + additional_inputs + _texmf.inputs,
-        tools = _pandoc.tools + _path.inputs,
+        tools = _pandoc.tools + _pdflatex.tools + _path.inputs,
         outputs = [ebook_pdf, log_file],
         command = """\
             {setup}PATH="{path}:${{PATH:-}}" \
             {prefix}{pandoc} --epub-metadata={epub_metadata} \
+                  --pdf-engine="$PWD/{pdflatex}" \
                   --mathml -o {ebook_pdf} {args} {markdowns} \
                   2>&1 &> {log} || ( cat {log} && exit 1)
         """.format(
             path = _path.value,
+            pdflatex = _pdflatex.cmd,
             setup = _texmf.setup,
             prefix = _pandoc.prefix,
             pandoc = _pandoc.cmd,

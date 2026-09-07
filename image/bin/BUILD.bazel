@@ -1,0 +1,33 @@
+# Copyright (C) 2020 Google Inc.
+#
+# This file has been licensed under Apache 2.0 license.  Please see the LICENSE
+# file at the root of the repository.
+
+# The tools pandoc starts by itself, under the names it looks for.
+#
+# This package exists to be a PATH entry. Putting the rootfs's own bin
+# directories on PATH does not work: what is in there is the packaged binary,
+# which needs the rootfs loader and library path to run at all, and finds
+# neither when started directly. On a machine that happens to have the same
+# libraries installed it works anyway, which is why this went unnoticed.
+#
+# Everything here is a rootfs_binary wrapper presented under the name the
+# caller looks for, and nothing else is in this directory.
+
+load("//image:rename.bzl", "renamed_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+# pandoc's PDF engine. pandoc also decides which LaTeX dialect it is talking
+# to from this name, so it has to be exactly "pdflatex".
+renamed_binary(
+    name = "pdflatex",
+    binary = "//image:pdflatex_binary",
+)
+
+# Started for each SVG figure in PDF output. Without it pandoc gives up and
+# emits \includesvg, and LaTeX then asks for an Inkscape that is not there.
+renamed_binary(
+    name = "rsvg-convert",
+    binary = "//image:rsvg-convert_binary",
+)

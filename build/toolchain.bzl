@@ -44,6 +44,10 @@ EBOOK_TOOLS = [
     "gladtex",
     # The document converter everything else is built around.
     "pandoc",
+    # pandoc makes a PDF by running a LaTeX engine over what it wrote. It
+    # would find one on PATH, but a binary reached that way is the one out of
+    # the rootfs with none of its libraries, so it has to be named.
+    "pdflatex",
     # Renders UML diagrams to PNG.
     "plantuml",
 ]
@@ -70,6 +74,13 @@ EbookToolchainInfo = provider(
                      "resolve only on a machine that has those packages " +
                      "installed, so a tool that draws text has to be handed " +
                      "a file instead of a family name.",
+        "path_binaries": "list of FilesToRunProvider: wrapped tools whose " +
+                         "directory goes on PATH, for the programs a tool " +
+                         "starts by name rather than by path. Their " +
+                         "directory is used rather than a rootfs bin, " +
+                         "because what is in a rootfs bin is the packaged " +
+                         "binary, which cannot run without the rootfs " +
+                         "loader and library path.",
         "path_roots": "list of File: rootfs directories whose bin and usr/bin " +
                       "are put on PATH. Some tools start other programs " +
                       "themselves rather than being told where they are: " +
@@ -117,6 +128,10 @@ def _ebook_toolchain_impl(ctx):
     return [platform_common.ToolchainInfo(
         ebook = EbookToolchainInfo(
             hermetic = hermetic,
+            path_binaries = [
+                target[DefaultInfo].files_to_run
+                for target in ctx.attr.path_binaries
+            ],
             path_roots = ctx.files.path_roots,
             texmf = ctx.file.texmf,
             text_font = ctx.attr.text_font,
@@ -133,6 +148,11 @@ ebook_toolchain = rule(
             doc = "Maps a name in EBOOK_TOOLS to an executable target that " +
                   "Bazel provides. Such a tool is run directly, without the " +
                   "wrapper.",
+        ),
+        "path_binaries": attr.label_list(
+            cfg = "exec",
+            doc = "Wrapped tools whose directory is put on PATH, for the " +
+                  "programs a tool starts by name.",
         ),
         "path_roots": attr.label_list(
             allow_files = True,
@@ -186,18 +206,31 @@ def ebook_tool(info, name, dir_reference):
     fail("ebook_toolchain provides no hermetic binary for '{}'".format(name))
 
 def ebook_path(info):
-    """Returns a PATH value covering the toolchain's rootfs directories.
+    """Returns a PATH value for the programs a tool starts by name.
+
+    The wrapped binaries come first: where a name appears in both, the one
+    that can actually run is the one that should be found.
+
+    Every entry is absolute. A relative one stops resolving the moment
+    anything changes directory, and pandoc runs LaTeX in a directory of its
+    own making.
 
     Returns:
-        A struct with `value`, the PATH string, and `inputs`, the files that
-        have to reach the action for it to be usable.
+        A struct with `value`, the PATH string, and `inputs`, what has to
+        reach the action for it to be usable.
     """
     entries = []
+    directories = []
+    for binary in info.path_binaries:
+        directory = binary.executable.dirname
+        if directory not in directories:
+            directories.append(directory)
+            entries.append("$PWD/{}".format(directory))
     for root in info.path_roots:
-        entries.append("{}/usr/bin".format(root.path))
-        entries.append("{}/bin".format(root.path))
+        entries.append("$PWD/{}/usr/bin".format(root.path))
+        entries.append("$PWD/{}/bin".format(root.path))
     return struct(
-        inputs = info.path_roots,
+        inputs = info.path_roots + info.path_binaries,
         value = ":".join(entries),
     )
 
