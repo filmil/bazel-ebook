@@ -19,9 +19,7 @@ pandoc_standalone_html = _pandoc_standalone_html
 pandoc_chunked_html = _pandoc_chunked_html
 
 def _plantuml_png_impl(ctx):
-    _tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
-    cmd = _tools.tools["plantuml"]
-    docker_run = _tools.wrapper
+    tools = ctx.toolchains[EBOOK_TOOLCHAIN_TYPE].ebook
     figures = []
     log_files = []
 
@@ -36,25 +34,22 @@ def _plantuml_png_impl(ctx):
             log_file = ctx.actions.declare_file("{}.{}.log".format(ctx.attr.name, in_file.basename))
             log_files += [log_file]
 
-            script_cmd = _script_cmd(docker_run.executable.path, in_file.path)
+            tool = _ebook_tool(tools, "plantuml", in_file.path, _script_cmd)
             ctx.actions.run_shell(
-                progress_message = "plantuml diagram to PNG with {1}: {0}".format(
+                progress_message = "plantuml diagram to PNG: {0}".format(
                     in_file.short_path,
-                    cmd,
                 ),
                 inputs = [in_file],
                 outputs = [out_file, log_file],
-                tools = [docker_run],
+                tools = tool.tools,
                 command = """\
-                {script} -- \
-                  {cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}" \
+                {prefix}{cmd} -Djava.awt.headless=true -o "$(realpath {out_dir})" "{in_file}" \
                   2>&1 >{log} || ( cat {log} && exit 1)
               """.format(
-                    cmd = cmd,
+                    cmd = tool.cmd,
                     out_dir = out_file.dirname,
                     in_file = in_file.path,
-                    asy = _tools.tools["asy"],
-                    script = script_cmd,
+                    prefix = tool.prefix,
                     log = log_file.path,
                 ),
             )
