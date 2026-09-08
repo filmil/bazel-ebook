@@ -26,6 +26,7 @@ jobs:
       # This is the fork of `registry`. It can be the same repo.
       registry_fork: filmil/bazel-registry
       attest: false
+      draft: false
     permissions:
       contents: write
       id-token: write
