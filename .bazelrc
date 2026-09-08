@@ -9,8 +9,14 @@ try-import %workspace%/user.bazelrc
 common --@rules_python//python/config_settings:bootstrap_impl=script
 
 # The rootfs is a tree artifact full of directory symlinks and empty
-# directories, and neither survives a round trip through the disk cache: a
-# restored copy is missing what the fresh one had, and the next action to
-# use it fails setting up its sandbox. Extract it every time; it takes a
-# minute, and everything built from it still caches.
-build --modify_execution_info=xrootfs=+no-remote-cache
+# directories, and neither survives a round trip through a cache: a restored
+# copy is missing what the fresh one had, and the next action to use it fails
+# setting up its sandbox with "No such file or directory". Extract it every
+# time; it takes a minute, and everything built from it still caches.
+#
+# The tag has to be no-cache. With no-remote-cache the disk cache still
+# serves the tree, and CI has one: setup-bazel passes --disk_cache. A run
+# whose extraction came from there failed on a path under
+# usr/lib/x86_64-linux-gnu/perl that the restored tree did not have, in
+# https://github.com/filmil/bazel-ebook/actions/runs/34212539812
+build --modify_execution_info=xrootfs=+no-cache
