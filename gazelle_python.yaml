@@ -13,4 +13,4 @@ manifest:
     yaml: pyyaml
   pip_repository:
     name: pip
-integrity: 831508c05908ca6ac8f87fde9f2e7b085cd0190473e924de93716358c7a41f0b
+integrity: 3ffd3441cf7290e80fec65b5da52c33167052ade4f847bd0e7a701e1eb386f9d

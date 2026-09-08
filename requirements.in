@@ -1,4 +1,6 @@
 panflute
 natsort
-lxml
-
+# 6.1.0 is the first release in which iterparse() and ETCompatXMLParser()
+# resolve no external entities by default. Earlier ones read local files
+# named by a document's DTD: CVE-2026-41066, GHSA-vfmq-68hx-4jfw.
+lxml>=6.1.0
