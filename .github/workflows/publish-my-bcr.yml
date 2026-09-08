@@ -1,3 +1,6 @@
+# Publishes a release to filmil/bazel-registry, as a pull request there.
+# Tag and Release calls this after the release; the dispatch is for
+# publishing a release by hand, when the automatic publish did not happen.
 # Based on the instructions at https://github.com/bazel-contrib/publish-to-bcr
 name: Publish to my custom Bazel registry
 
@@ -16,15 +19,19 @@ on:
 
 jobs:
   publish:
-    uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.2.2"
+    uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.5.0"
     with:
       tag_name: ${{ inputs.tag_name }}
       # This is the registry for which the PR will be open.
-      # For this module I am not using BCR, since this is not worth publishing
-      # to BCR.
       registry: filmil/bazel-registry
       # This is the fork of `registry`. It can be the same repo.
       registry_fork: filmil/bazel-registry
+      # Only the Bazel Central Registry publish attests. Every attesting
+      # publish uploads MODULE.bazel.intoto.jsonl and source.json.intoto.jsonl
+      # to the release under those fixed names and records their hashes in
+      # the entry it writes, so a second attesting publish overwrites the
+      # files the first entry names. This registry verifies nothing, so this
+      # is the one that goes without.
       attest: false
       draft: false
     permissions:
@@ -33,4 +40,3 @@ jobs:
       attestations: write
     secrets:
       publish_token: ${{ secrets.BCR_PUBLISH_TOKEN }}
-
