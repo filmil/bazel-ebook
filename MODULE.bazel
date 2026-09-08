@@ -6,7 +6,7 @@ module(
 
 bazel_dep(
     name = "gazelle",
-    version = "0.51.3",
+    version = "0.54.0",
     repo_name = "bazel_gazelle",
 )
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1.4")
@@ -27,7 +27,7 @@ bazel_dep(name = "graphviz", version = "14.0.0.bcr.1")
 # instead. bazel_rootfs turns an apt package list into a rootfs and wraps
 # binaries out of it; the rootfs here holds only what this repository needs, so
 # no other consumer pays for it.
-bazel_dep(name = "bazel_rootfs", version = "1.2.1")
+bazel_dep(name = "bazel_rootfs", version = "2.0.0")
 
 
 bazel_dep(name = "rules_distroless", version = "0.8.0")
