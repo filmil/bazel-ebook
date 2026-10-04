@@ -27,7 +27,7 @@ bazel_dep(name = "graphviz", version = "14.0.0.bcr.2")
 # instead. bazel_rootfs turns an apt package list into a rootfs and wraps
 # binaries out of it; the rootfs here holds only what this repository needs, so
 # no other consumer pays for it.
-bazel_dep(name = "bazel_rootfs", version = "2.0.0")
+bazel_dep(name = "bazel_rootfs", version = "2.1.1")
 
 
 bazel_dep(name = "rules_distroless", version = "0.8.0")
