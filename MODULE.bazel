@@ -63,7 +63,12 @@ bazel_dep(name = "rules_go", version = "0.63.0")
 
 bazel_dep(name = "stardoc", version = "0.8.1", dev_dependency = True)
 
-bazel_dep(name = "protobuf", version = "36.1.bcr.1")
+# protobuf is not used here. The pin only raises the version this module's
+# own build gets, so it is a dev dependency. As a regular one it raised every
+# consumer to protobuf 36, whose crate_universe extension has no lockfile;
+# with rules_rust 0.74.0 in the consumer's graph that fails `bazel mod deps`
+# and `bazel mod tidy` (#103).
+bazel_dep(name = "protobuf", version = "36.1.bcr.1", dev_dependency = True)
 bazel_dep(name = "rules_android", version = "0.7.3")
 
 #bazel_dep(name = "platforms", version = "1.1.0")
